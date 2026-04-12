@@ -1,0 +1,1086 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🎾 Tennis Analyzer</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background: #0f172a;
+    color: #e2e8f0;
+    min-height: 100vh;
+    padding: 20px;
+  }
+
+  h1 {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 8px;
+    color: #22c55e;
+  }
+
+  .subtitle {
+    text-align: center;
+    color: #94a3b8;
+    margin-bottom: 32px;
+    font-size: 0.95rem;
+  }
+
+  .card {
+    background: #1e293b;
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 20px;
+    border: 1px solid #334155;
+  }
+
+  .form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    position: relative;
+  }
+
+  label {
+    font-size: 0.85rem;
+    color: #94a3b8;
+    font-weight: 500;
+  }
+
+  input, select {
+    background: #0f172a;
+    border: 1px solid #334155;
+    border-radius: 8px;
+    padding: 10px 14px;
+    color: #e2e8f0;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.2s;
+    width: 100%;
+  }
+
+  input:focus, select:focus {
+    border-color: #22c55e;
+  }
+
+  .autocomplete-list {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: #1e293b;
+    border: 1px solid #22c55e;
+    border-radius: 8px;
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 100;
+    margin-top: 4px;
+  }
+
+  .autocomplete-item {
+    padding: 10px 14px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    border-bottom: 1px solid #334155;
+  }
+
+  .autocomplete-item:hover {
+    background: #334155;
+  }
+
+  .btn {
+    width: 100%;
+    padding: 14px;
+    background: #22c55e;
+    color: #0f172a;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s;
+    margin-top: 8px;
+  }
+
+  .btn:hover { background: #16a34a; }
+  .btn:disabled { background: #334155; color: #64748b; cursor: not-allowed; }
+
+  .verdict-card {
+    border-radius: 12px;
+    padding: 28px;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .verdict-high   { background: #14532d; border: 2px solid #22c55e; }
+  .verdict-medium { background: #431407; border: 2px solid #f97316; }
+  .verdict-low    { background: #1e293b; border: 2px solid #64748b; }
+
+  .verdict-favori {
+    font-size: 1.8rem;
+    font-weight: 800;
+    margin-bottom: 8px;
+  }
+
+  .verdict-ecart {
+    font-size: 1.1rem;
+    margin-bottom: 8px;
+    color: #94a3b8;
+  }
+
+  .verdict-confiance {
+    font-size: 1.3rem;
+    font-weight: 600;
+  }
+
+  .match-header {
+    text-align: center;
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+
+  .match-meta {
+    text-align: center;
+    color: #94a3b8;
+    font-size: 0.9rem;
+    margin-bottom: 20px;
+  }
+
+  h2 {
+    font-size: 1.1rem;
+    color: #22c55e;
+    margin-bottom: 16px;
+    border-bottom: 1px solid #334155;
+    padding-bottom: 8px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+  }
+
+  th {
+    background: #0f172a;
+    color: #94a3b8;
+    padding: 8px 10px;
+    text-align: left;
+    font-weight: 500;
+  }
+
+  td {
+    padding: 8px 10px;
+    border-bottom: 1px solid #1e293b;
+  }
+
+  tr.win  { background: rgba(34, 197, 94, 0.08); }
+  tr.loss { background: rgba(239, 68, 68, 0.08); }
+
+  .badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+
+  .badge-same  { background: #14532d; color: #22c55e; }
+  .badge-close { background: #431407; color: #f97316; }
+  .badge-diff  { background: #1e293b; color: #64748b; }
+
+  .score-pos { color: #22c55e; font-weight: 600; }
+  .score-neg { color: #ef4444; font-weight: 600; }
+  .score-nd  { color: #64748b; }
+
+  .adv-j1 { color: #22c55e; }
+  .adv-j2 { color: #f97316; }
+
+  .total-row {
+    background: #0f172a !important;
+    font-weight: 700;
+    font-size: 1rem;
+  }
+
+  .total-row td { border-top: 2px solid #334155; }
+
+  .regles-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .regle-item {
+    background: #431407;
+    border: 1px solid #dc2626;
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 0.85rem;
+    color: #fca5a5;
+  }
+
+  .btn-reset {
+    width: 100%;
+    padding: 12px;
+    background: transparent;
+    color: #22c55e;
+    border: 1px solid #22c55e;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 8px;
+    transition: all 0.2s;
+  }
+
+  .btn-reset:hover {
+    background: #22c55e;
+    color: #0f172a;
+  }
+
+  #section-resultats { display: none; }
+
+  @media (max-width: 640px) {
+    .form-grid { grid-template-columns: 1fr; }
+    table { font-size: 0.75rem; }
+    th, td { padding: 6px 6px; }
+}
+#card-history {
+  margin-top: 20px;
+}
+
+#history-list > div {
+  width: 100%;
+}
+
+</style>
+</head>
+<body>
+
+<h1>🎾 Tennis Analyzer</h1>
+<p class="subtitle">Système de scoring professionnel A→O · 15 critères · Données réelles</p>
+
+<!-- FORMULAIRE -->
+<!-- FORMULAIRE -->
+<div id="section-form">
+  <div class="card">
+    <div class="form-grid">
+      <div class="form-group">
+        <label>Joueur 1</label>
+        <input type="text" id="joueur1" placeholder="Ex: Lehecka J." autocomplete="off">
+        <div class="autocomplete-list" id="autocomplete1" style="display:none"></div>
+      </div>
+
+      <div class="form-group">
+        <label>Joueur 2</label>
+        <input type="text" id="joueur2" placeholder="Ex: Tabilo A." autocomplete="off">
+        <div class="autocomplete-list" id="autocomplete2" style="display:none"></div>
+      </div>
+
+      <div class="form-group">
+        <label>Surface</label>
+        <select id="surface">
+          <option value="clay">🔴 Clay (Terre battue)</option>
+          <option value="hard">🔵 Hard (Dur)</option>
+          <option value="indoor_hard">🟣 Indoor Hard (Dur intérieur)</option>
+          <option value="grass">🟢 Grass (Gazon)</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Tournoi</label>
+        <input type="text" id="tournoi" placeholder="Ex: Monte Carlo" autocomplete="off">
+        <div class="autocomplete-list" id="autocomplete-tournoi" style="display:none"></div>
+      </div>
+    </div>
+
+    <button class="btn" id="btn-analyze" type="button">🔍 Analyser ce match</button>
+  </div>
+</div>
+
+<!-- HISTORIQUE -->
+<div class="card" id="card-history">
+  <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:16px;">
+    <h2 style="margin-bottom:0;">🕘 Historique des analyses</h2>
+    <button type="button" class="btn-reset" style="width:auto;margin-top:0;" onclick="clearAnalysisHistory()">
+      Vider
+    </button>
+  </div>
+
+  <div id="history-list" style="display:flex;flex-direction:column;gap:10px;"></div>
+</div>
+
+<!-- RÉSULTATS -->
+<div id="section-resultats">
+  <div id="match-header" class="match-header"></div>
+  <div id="match-meta" class="match-meta"></div>
+
+
+  <div id="match-header" class="match-header"></div>
+  <div id="match-meta" class="match-meta"></div>
+
+  <!-- VERDICT -->
+  <div id="verdict-card" class="verdict-card verdict-medium">
+    <div id="verdict-favori" class="verdict-favori"></div>
+    <div id="verdict-ecart" class="verdict-ecart"></div>
+    <div id="verdict-confiance" class="verdict-confiance"></div>
+  </div>
+
+  <!-- SCORE A JOUEUR 1 -->
+  <div class="card">
+    <h2>📊 Score A v3.0 — <span id="titre-j1"></span></h2>
+    <div style="overflow-x:auto">
+      <table id="table-scoreA1">
+        <thead>
+  <tr>
+    <th>#</th>
+    <th>Source</th>
+    <th>5 derniers</th>
+    <th>10 derniers</th>
+    <th>Diff. jeux</th>
+    <th>Bloc forme</th>
+    <th>Commentaire</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+</thead>
+
+        <tbody></tbody>
+        <tfoot>
+          <tr class="total-row">
+            <td colspan="9" style="text-align:right">TOTAL Score A</td>
+            <td id="total-scoreA1" class="score-pos"></td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+
+  <!-- SCORE A JOUEUR 2 -->
+  <div class="card">
+    <h2>📊 Score A v3.0 — <span id="titre-j2"></span></h2>
+    <div style="overflow-x:auto">
+      <table id="table-scoreA2">
+       <thead>
+  <tr>
+    <th>#</th>
+    <th>Source</th>
+    <th>5 derniers</th>
+    <th>10 derniers</th>
+    <th>Diff. jeux</th>
+    <th>Bloc forme</th>
+    <th>Commentaire</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+</thead>
+
+        <tbody></tbody>
+        <tfoot>
+          <tr class="total-row">
+            <td colspan="9" style="text-align:right">TOTAL Score A</td>
+            <td id="total-scoreA2" class="score-pos"></td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+
+  <!-- CRITÈRES B→O -->
+  <div class="card">
+    <h2>📋 Scores détaillés A → O</h2>
+    <div style="overflow-x:auto">
+      <table id="table-criteres">
+        <thead>
+          <tr>
+            <th>Critère</th>
+            <th id="col-j1"></th>
+            <th id="col-j2"></th>
+            <th>Avantage</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+        <tfoot>
+          <tr class="total-row">
+            <td><strong>TOTAL</strong></td>
+            <td id="total-j1" class="score-pos"></td>
+            <td id="total-j2" class="score-pos"></td>
+            <td id="total-adv"></td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+
+  <!-- RÈGLES -->
+  <div class="card" id="card-regles" style="display:none">
+    <h2>⚠️ Règles activées</h2>
+    <ul class="regles-list" id="regles-list"></ul>
+  </div>
+
+  <!-- STATS JOUEURS -->
+  <div class="card" id="card-stats" style="display:none">
+    <h2>📈 Stats globales</h2>
+    <div style="overflow-x:auto">
+      <table id="table-stats">
+        <thead>
+          <tr>
+            <th>Indicateur</th>
+            <th id="stats-col-j1"></th>
+            <th id="stats-col-j2"></th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ANALYSE IA -->
+  <div class="card" id="card-ai" style="display:none">
+    <h2>🤖 Analyse IA</h2>
+    <div id="ai-analysis" style="
+      white-space: pre-wrap;
+      line-height: 1.7;
+      font-size: 0.95rem;
+      color: #e2e8f0;
+    "></div>
+  </div>
+
+  <button class="btn-reset" onclick="nouvelleAnalyse()">🔄 Nouvelle analyse</button>
+</div>
+
+<script>
+// ─── Helpers ────────────────────────────────────────────────────────────────
+
+function esc(s) {
+  return String(s ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+function fmtScore(v) {
+  if (v === null || v === undefined) return '<span class="score-nd">N/D</span>';
+  const n = Number(v);
+  const cls = n > 0 ? 'score-pos' : n < 0 ? 'score-neg' : '';
+  return `<span class="${cls}">${n >= 0 ? '+' : ''}${n.toFixed(1)}</span>`;
+}
+
+// ─── Autocomplete ────────────────────────────────────────────────────────────
+
+function setupAutocomplete(inputId, listId, apiUrl) {
+  const input = document.getElementById(inputId);
+  const list  = document.getElementById(listId);
+  let timer;
+
+  input.addEventListener('input', () => {
+    clearTimeout(timer);
+    const q = input.value.trim();
+    if (q.length < 2) { list.style.display = 'none'; return; }
+    timer = setTimeout(async () => {
+      try {
+        const res  = await fetch(apiUrl + encodeURIComponent(q));
+        const data = await res.json();
+        if (!data.length) { list.style.display = 'none'; return; }
+        list.innerHTML = data.map(n =>
+          `<div class="autocomplete-item" data-name="${esc(n)}">${esc(n)}</div>`
+        ).join('');
+        list.style.display = 'block';
+      } catch(e) { list.style.display = 'none'; }
+    }, 250);
+  });
+
+  list.addEventListener('mousedown', (e) => {
+    const item = e.target.closest('.autocomplete-item');
+    if (item) {
+      input.value = item.dataset.name;
+      list.style.display = 'none';
+    }
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!input.contains(e.target) && !list.contains(e.target)) {
+      list.style.display = 'none';
+    }
+  });
+}
+
+setupAutocomplete('joueur1', 'autocomplete1', '/api/players?q=');
+setupAutocomplete('joueur2', 'autocomplete2', '/api/players?q=');
+setupAutocomplete('tournoi', 'autocomplete-tournoi', '/api/tournaments?q=');
+
+// ─── Analyse ────────────────────────────────────────────────────────────────
+
+document.getElementById('btn-analyze').addEventListener('click', async () => {
+  const btn = document.getElementById('btn-analyze');
+  const body = {
+    joueur1: document.getElementById('joueur1').value.trim(),
+    joueur2: document.getElementById('joueur2').value.trim(),
+    surface: document.getElementById('surface').value,
+    tournoi: document.getElementById('tournoi').value.trim()
+  };
+
+  console.log('[analyze] body envoyé :', body);
+
+  if (!body.joueur1 || !body.joueur2) {
+    alert('Remplis les deux noms de joueurs');
+    return;
+  }
+
+  btn.textContent = '⏳ Analyse en cours...';
+  btn.disabled = true;
+
+  try {
+    const res  = await fetch('/api/analyze', {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body:    JSON.stringify(body)
+    });
+    const data = await res.json();
+    console.log('[analyze] réponse reçue :', data);
+
+    if (data.error || data.erreur) {
+      alert('Erreur : ' + (data.error || data.erreur));
+      return;
+    }
+
+    saveAnalysisToHistory(data);
+renderAnalysisHistory();
+afficherResultats(data);
+
+
+  } catch(err) {
+    console.error('[analyze] erreur fetch :', err);
+    alert('Erreur de connexion : ' + err.message);
+  } finally {
+    btn.textContent = '🔍 Analyser ce match';
+    btn.disabled = false;
+  }
+});
+
+// ─── Affichage résultats ─────────────────────────────────────────────────────
+
+const CRITERE_LABELS = {
+  A: 'Forme générale (Score A)',
+  B: 'Niveau offensif (winners)',
+  C: 'Premier service (%)',
+  D: 'Points à défendre',
+  E: 'Tie-breaks (%)',
+  F: '3e set / décisif (%)',
+  G: 'Momentum (A5 vs A10)',
+  H: 'Fatigue physique',
+  I: 'Head-to-Head',
+  J: 'Qualité adversaires',
+  K: 'Âge',
+  L: 'Conditions (météo/surface)',
+  M: 'Momentum global',
+  N: 'Série outsider',
+  O: 'Maîtrise surface',
+};
+const ANALYSIS_STORAGE_KEY = 'tennisAnalyzerHistory';
+
+function loadAnalysisHistory() {
+  try {
+    const raw = localStorage.getItem(ANALYSIS_STORAGE_KEY);
+    return raw ? JSON.parse(raw) : [];
+  } catch (e) {
+    console.error('Erreur lecture historique :', e);
+    return [];
+  }
+}
+
+function saveAnalysisToHistory(data) {
+  try {
+    const history = loadAnalysisHistory();
+
+    const item = {
+      id: Date.now(),
+      createdAt: new Date().toISOString(),
+      match: data.match,
+      verdict: data.verdict,
+      scoreA: data.scoreA,
+      scores: data.scores,
+      reglesActivees: data.reglesActivees,
+      playerStats: data.playerStats,
+      aiAnalysis: data.aiAnalysis || null,
+      comparison: data.comparison || null,
+      hybrid: data.hybrid || null,
+      fullData: data
+    };
+
+    history.unshift(item);
+
+    const limited = history.slice(0, 30);
+    localStorage.setItem(ANALYSIS_STORAGE_KEY, JSON.stringify(limited));
+  } catch (e) {
+    console.error('Erreur sauvegarde historique :', e);
+  }
+}
+
+function renderAnalysisHistory() {
+  const container = document.getElementById('history-list');
+  if (!container) return;
+
+  const history = loadAnalysisHistory();
+
+  if (!history.length) {
+    container.innerHTML = `
+      <div style="color:#94a3b8;font-size:0.9rem">
+        Aucune analyse enregistrée pour le moment.
+      </div>
+    `;
+    return;
+  }
+
+  container.innerHTML = history.map(item => {
+    const p1 = item.match?.joueur1 || 'Joueur 1';
+    const p2 = item.match?.joueur2 || 'Joueur 2';
+    const surface = item.match?.surface || '-';
+    const tournoi = item.match?.tournoi || '-';
+    const favori = item.verdict?.favori || '-';
+    const ecart = Number(item.verdict?.ecart ?? 0).toFixed(1);
+
+    const dateTxt = new Date(item.createdAt).toLocaleString('fr-BE', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    });
+
+    return `
+      <div style="border:1px solid #334155;border-radius:10px;padding:12px;background:#0f172a;">
+        <div style="font-weight:700;margin-bottom:6px;">
+          ${esc(p1)} vs ${esc(p2)}
+        </div>
+        <div style="color:#94a3b8;font-size:0.85rem;margin-bottom:6px;">
+          ${esc(surface)} , ${esc(tournoi)} , ${esc(dateTxt)}
+        </div>
+        <div style="margin-bottom:10px;">
+          Favori : <strong>${esc(favori)}</strong> , Écart : ${ecart}
+        </div>
+        <button
+          type="button"
+          onclick="ouvrirAnalyseHistorique(${item.id})"
+          class="btn"
+          style="margin-top:0;padding:10px;font-size:0.95rem;"
+        >
+          Ouvrir cette analyse
+        </button>
+      </div>
+    `;
+  }).join('');
+}
+
+function ouvrirAnalyseHistorique(id) {
+  const history = loadAnalysisHistory();
+  const item = history.find(x => x.id === id);
+
+  if (!item || !item.fullData) {
+    alert('Analyse introuvable.');
+    return;
+  }
+
+  afficherResultats(item.fullData);
+}
+
+function clearAnalysisHistory() {
+  localStorage.removeItem(ANALYSIS_STORAGE_KEY);
+  renderAnalysisHistory();
+}
+
+function afficherResultats(data) {
+  console.log('[DEBUG] data reçu :', JSON.stringify(data, null, 2));
+
+  if (!data || !data.verdict) {
+    alert('Structure inattendue : ' + Object.keys(data || {}).join(', '));
+    return;
+  }
+
+  const p1 = data.match.joueur1;
+  const p2 = data.match.joueur2;
+
+  // En-tête match
+  document.getElementById('match-header').textContent = p1 + '  vs  ' + p2;
+  document.getElementById('match-meta').textContent =
+    (data.match.surface || '').toUpperCase() + (data.match.tournoi ? '  ·  ' + data.match.tournoi : '');
+
+  // Verdict
+  const lvl = data.verdict.niveauConfiance ?? 0;
+  const vCard = document.getElementById('verdict-card');
+  vCard.className = 'verdict-card ' + (lvl >= 2 ? 'verdict-high' : lvl === 1 ? 'verdict-medium' : 'verdict-low');
+  document.getElementById('verdict-favori').textContent    = '🏆 ' + data.verdict.favori.toUpperCase() + ' favori';
+  document.getElementById('verdict-ecart').textContent     = 'Écart : +' + Number(data.verdict.ecart).toFixed(1) + ' pts';
+  document.getElementById('verdict-confiance').textContent = data.verdict.confiance;
+
+  // Titres Score A
+  document.getElementById('titre-j1').textContent = p1;
+  document.getElementById('titre-j2').textContent = p2;
+
+  // Tables Score A
+  remplirTableScoreA('table-scoreA1', 'total-scoreA1', data.scoreA.joueur1);
+  remplirTableScoreA('table-scoreA2', 'total-scoreA2', data.scoreA.joueur2);
+
+  // Tableau critères
+  document.getElementById('col-j1').textContent = p1;
+  document.getElementById('col-j2').textContent = p2;
+  remplirTableCriteres(data.scores.joueur1, data.scores.joueur2, p1, p2);
+
+  // Totaux
+  const t1 = data.scores.joueur1.TOTAL;
+  const t2 = data.scores.joueur2.TOTAL;
+  document.getElementById('total-j1').innerHTML = fmtScore(t1);
+  document.getElementById('total-j2').innerHTML = fmtScore(t2);
+  document.getElementById('total-adv').innerHTML =
+    t1 > t2 ? `<span class="adv-j1">← ${esc(p1)}</span>` :
+    t2 > t1 ? `<span class="adv-j2">${esc(p2)} →</span>` : '=';
+
+  // Règles
+  const regles = [
+    ...(data.reglesActivees.joueur1 || []).map(r => p1 + ' : ' + r),
+    ...(data.reglesActivees.joueur2 || []).map(r => p2 + ' : ' + r),
+  ];
+  const cardRegles = document.getElementById('card-regles');
+  if (regles.length > 0) {
+    document.getElementById('regles-list').innerHTML =
+      regles.map(r => `<li class="regle-item">${esc(r)}</li>`).join('');
+    cardRegles.style.display = '';
+  } else {
+    cardRegles.style.display = 'none';
+  }
+
+  // Stats joueurs (STATS / STATS_1Y / STATS_TOP50)
+  if (data.playerStats) {
+    document.getElementById('stats-col-j1').textContent = p1;
+    document.getElementById('stats-col-j2').textContent = p2;
+    remplirTableStats(data.playerStats.joueur1, data.playerStats.joueur2);
+    document.getElementById('card-stats').style.display = '';
+  } else {
+    document.getElementById('card-stats').style.display = 'none';
+  }
+
+  // Analyse IA
+  if (data.aiAnalysis) {
+    document.getElementById('ai-analysis').textContent = data.aiAnalysis;
+    document.getElementById('card-ai').style.display = '';
+  } else {
+    document.getElementById('card-ai').style.display = 'none';
+  }
+
+  // Afficher résultats, cacher formulaire
+  document.getElementById('section-form').style.display = 'none';
+  document.getElementById('section-resultats').style.display = 'block';
+  window.scrollTo(0, 0);
+}
+function remplirTableScoreA(tableId, totalId, scoreAData) {
+  const tbody = document.querySelector('#' + tableId + ' tbody');
+
+  const details = Array.isArray(scoreAData?.details)
+  ? scoreAData.details
+  : (scoreAData?.details ? [scoreAData.details] : []);
+
+
+  if (details.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="10" style="color:#64748b;text-align:center;padding:16px">Aucun détail disponible</td></tr>';
+  } else {
+    const m = details[0];
+
+    tbody.innerHTML = `
+      <tr>
+        <td>1</td>
+        <td>${esc(m.source ?? '-')}</td>
+        <td>${m.last5Wins ?? 0}/${m.last5Total ?? 0}</td>
+        <td>${m.last10Wins ?? 0}/${m.last10Total ?? 0}</td>
+        <td>${Number(m.avgDiff ?? 0).toFixed(2)}</td>
+        <td>${Number(m.recentFormBlock ?? 0).toFixed(4)}</td>
+        <td colspan="4" style="color:#94a3b8">Forme récente (modèle statistique)</td>
+      </tr>
+    `;
+  }
+
+  const total = Number(scoreAData?.total ?? 0);
+  const totalEl = document.getElementById(totalId);
+  if (totalEl) totalEl.innerHTML = fmtScore(total);
+}
+
+
+function remplirTableCriteres(s1, s2, p1, p2) {
+  const tbody = document.querySelector('#table-criteres tbody');
+  const KEYS  = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O'];
+
+  tbody.innerHTML = KEYS.map(k => {
+    const v1  = s1[k];
+    const v2  = s2[k];
+    let adv   = '';
+    if (v1 !== null && v2 !== null) {
+      if      (v1 > v2) adv = `<span class="adv-j1">← ${esc(p1)}</span>`;
+      else if (v2 > v1) adv = `<span class="adv-j2">${esc(p2)} →</span>`;
+      else              adv = '=';
+    }
+    return `<tr>
+      <td><strong>${k}</strong> <span style="color:#64748b;font-size:0.78rem">— ${esc(CRITERE_LABELS[k] || '')}</span></td>
+      <td>${fmtScore(v1)}</td>
+      <td>${fmtScore(v2)}</td>
+      <td>${adv}</td>
+    </tr>`;
+  }).join('');
+}
+
+// ─── Stats joueurs ────────────────────────────────────────────────────────────
+
+const STATS_LABELS = {
+  // STATS (long terme)
+  win_rate_total:      'Win rate global (LT)',
+  win_rate_clay:       'Win rate clay (LT)',
+  win_rate_hard:       'Win rate hard (LT)',
+  aces_avg:            'Aces / match (LT)',
+  double_faults_avg:   'DF / match (LT)',
+  service_points_won_avg:  '% pts service gagnés (LT)',
+  return_points_won_avg:   '% pts retour gagnés (LT)',
+  breaks_converted_avg:    '% breaks convertis (LT)',
+  breaks_saved_avg:        '% breaks sauvés (LT)',
+  games_diff_avg:      'Diff. jeux / match (LT)',
+  // STATS_1Y (12 mois)
+  win_rate_total_1y:   'Win rate global (1 an)',
+  win_rate_clay_1y:    'Win rate clay (1 an)',
+  win_rate_hard_1y:    'Win rate hard (1 an)',
+  aces_avg_1y:         'Aces / match (1 an)',
+  service_points_won_avg_1y: '% pts service gagnés (1 an)',
+  return_points_won_avg_1y:  '% pts retour gagnés (1 an)',
+  breaks_converted_avg_1y:   '% breaks convertis (1 an)',
+  breaks_saved_avg_1y:       '% breaks sauvés (1 an)',
+  // STATS_TOP50
+  win_rate_vs_top50:       'Win rate vs Top 50',
+  win_rate_clay_vs_top50:  'Win rate clay vs Top 50',
+  win_rate_hard_vs_top50:  'Win rate hard vs Top 50',
+};
+
+function fmt(v) {
+  if (v === null || v === undefined || v === '') return '<span style="color:#64748b">—</span>';
+  const n = parseFloat(v);
+  if (!isNaN(n)) return n.toFixed(1);
+  return esc(String(v));
+}
+function toNumber(v) {
+  if (v === null || v === undefined || v === '') return null;
+  const s = String(v).replace('%', '').replace(',', '.').trim();
+  const n = parseFloat(s);
+  return isNaN(n) ? null : n;
+}
+
+function clamp(v, min, max) {
+  return Math.min(Math.max(v, min), max);
+}
+
+function calculateStatsNote(playerStats, surface = 'clay') {
+  const stats = playerStats?.stats || {};
+  const stats1y = playerStats?.stats1y || {};
+
+  const winRateTotal = toNumber(stats.win_rate_total);
+  const winRateTotal1y = toNumber(stats1y.win_rate_total_1y);
+  const gamesDiff = toNumber(stats.games_diff_avg);
+
+  const globalBase = (
+    ((winRateTotal ?? 50) * 0.5) +
+    ((winRateTotal1y ?? 50) * 0.5)
+  ) / 10;
+
+  const globalBonus = gamesDiff !== null ? clamp(gamesDiff * 0.15, -1, 1) : 0;
+  const global = clamp(globalBase + globalBonus, 0, 10);
+
+  let winRateSurface = null;
+  let winRateSurface1y = null;
+  let matchesSurface = null;
+
+  if (surface === 'clay') {
+    winRateSurface = toNumber(stats.win_rate_clay);
+    winRateSurface1y = toNumber(stats1y.win_rate_clay_1y);
+    matchesSurface = toNumber(stats.matches_clay);
+  } else if (surface === 'hard' || surface === 'indoor_hard') {
+    winRateSurface = toNumber(stats.win_rate_hard);
+    winRateSurface1y = toNumber(stats1y.win_rate_hard_1y);
+    matchesSurface = toNumber(stats.matchs_hard || stats.matches_hard);
+  } else {
+    winRateSurface = toNumber(stats.win_rate_total);
+    winRateSurface1y = toNumber(stats1y.win_rate_total_1y);
+    matchesSurface = toNumber(stats.matches_total);
+  }
+
+  const surfaceBase = (
+    ((winRateSurface ?? 50) * 0.5) +
+    ((winRateSurface1y ?? 50) * 0.5)
+  ) / 10;
+
+  let experienceBonus = 0;
+  if (matchesSurface !== null) {
+    if (matchesSurface >= 150) experienceBonus = 1.0;
+    else if (matchesSurface >= 100) experienceBonus = 0.7;
+    else if (matchesSurface >= 50) experienceBonus = 0.4;
+    else if (matchesSurface >= 20) experienceBonus = 0.2;
+  }
+
+  const surfaceNote = clamp(surfaceBase + experienceBonus, 0, 10);
+
+  const service = toNumber(stats.service_points_won_avg);
+  const retour = toNumber(stats.return_points_won_avg);
+  const breaks = toNumber(stats.breaks_converted_avg);
+  const saved = toNumber(stats.break_saved_avg);
+
+  const serviceScore = service !== null ? clamp((service - 50) / 2, 0, 10) : 5;
+  const retourScore = retour !== null ? clamp((retour - 30) / 1.5, 0, 10) : 5;
+  const breaksScore = breaks !== null ? clamp((breaks - 20) / 2.5, 0, 10) : 5;
+  const savedScore = saved !== null ? clamp((saved - 40) / 2, 0, 10) : 5;
+
+  const performance = clamp(
+    (serviceScore * 0.20) +
+    (retourScore * 0.35) +
+    (breaksScore * 0.30) +
+    (savedScore * 0.15),
+    0, 10
+  );
+
+  const final = clamp(
+    (global * 0.30) +
+    (surfaceNote * 0.40) +
+    (performance * 0.30),
+    0, 10
+  );
+
+  return {
+    global: parseFloat(global.toFixed(1)),
+    surface: parseFloat(surfaceNote.toFixed(1)),
+    performance: parseFloat(performance.toFixed(1)),
+    final: parseFloat(final.toFixed(1))
+  };
+}
+function remplirTableStats(ps1, ps2) {
+  const tbody = document.querySelector('#table-stats tbody');
+  const rows  = [];
+
+  const note1 = calculateStatsNote(ps1, 'clay');
+  const note2 = calculateStatsNote(ps2, 'clay');
+let avantageStats = '=';
+
+if (note1.final > note2.final) {
+  avantageStats = 'Joueur 1';
+} else if (note2.final > note1.final) {
+  avantageStats = 'Joueur 2';
+}
+  rows.push(`
+    <tr>
+      <td colspan="3" style="background:#14532d;color:#dcfce7;font-weight:700;padding:12px;border-bottom:1px solid #334155">
+        🧠 Note stats finale , ${note1.final}/10 pour ${esc(ps1?.stats?.player || 'Joueur 1')} , ${note2.final}/10 pour ${esc(ps2?.stats?.player || 'Joueur 2')}
+      </td>
+    </tr>
+  `);
+
+  rows.push(`
+    <tr>
+      <td style="color:#94a3b8;font-size:0.82rem">Détail des notes</td>
+      <td style="text-align:center">
+        Global ${note1.global}/10 , Surface ${note1.surface}/10 , Performance ${note1.performance}/10
+      </td>
+      <td style="text-align:center">
+        Global ${note2.global}/10 , Surface ${note2.surface}/10 , Performance ${note2.performance}/10
+      </td>
+    </tr>
+  `);
+  rows.push(`
+  <tr>
+    <td style="color:#94a3b8;font-size:0.82rem">Avantage stats</td>
+    <td colspan="2" style="text-align:center;font-weight:700">
+      ${avantageStats}
+    </td>
+  </tr>
+`);
+
+  // Fusionner les clés de stats + stats1y + statsTop50
+  const sources1 = [ps1?.stats, ps1?.stats1y, ps1?.statsTop50];
+  const sources2 = [ps2?.stats, ps2?.stats1y, ps2?.statsTop50];
+  const allKeys  = new Set();
+
+  [sources1, sources2].forEach(srcs =>
+    srcs.forEach(src => { if (src) Object.keys(src).forEach(k => allKeys.add(k)); })
+  );
+
+  // Clés connues dans l'ordre défini, puis les autres
+ const statBlocks = [
+    {
+      title: '📊 Niveau global',
+      keys: [
+        'win_rate_total',
+        'win_rate_total_1y',
+        'games_diff_avg'
+      ]
+    },
+    {
+      title: '🎾 Niveau surface',
+      keys: [
+        'win_rate_clay',
+        'win_rate_clay_1y',
+        'matches_clay',
+        'wins_clay'
+      ]
+    },
+    {
+      title: '⚙️ Performance',
+      keys: [
+        'service_points_won_avg',
+        'return_points_won_avg',
+        'breaks_converted_avg',
+        'break_saved_avg'
+      ]
+    }
+  ];
+
+  statBlocks.forEach(block => {
+    const visibleKeys = block.keys.filter(key => allKeys.has(key));
+
+    if (visibleKeys.length > 0) {
+      rows.push(`
+        <tr>
+          <td colspan="3" style="background:#0f172a;color:#22c55e;font-weight:700;padding:10px 12px;border-top:1px solid #334155">
+            ${esc(block.title)}
+          </td>
+        </tr>
+      `);
+
+      visibleKeys.forEach(key => {
+        const label = STATS_LABELS[key] || key;
+        const v1 = sources1.map(s => s?.[key]).find(v => v !== null && v !== undefined);
+        const v2 = sources2.map(s => s?.[key]).find(v => v !== null && v !== undefined);
+
+        rows.push(`<tr>
+          <td style="color:#94a3b8;font-size:0.82rem">${esc(label)}</td>
+          <td style="text-align:center">${fmt(v1)}</td>
+          <td style="text-align:center">${fmt(v2)}</td>
+        </tr>`);
+      });
+    }
+  });
+  tbody.innerHTML = rows.length > 0
+    ? rows.join('')
+    : '<tr><td colspan="3" style="color:#64748b;text-align:center;padding:16px">Aucune stat disponible</td></tr>';
+}
+
+// ─── Nouvelle analyse ────────────────────────────────────────────────────────
+
+function nouvelleAnalyse() {
+  document.getElementById('section-resultats').style.display = 'none';
+  document.getElementById('section-form').style.display = 'block';
+  window.scrollTo(0, 0);
+}
+renderAnalysisHistory();
+</script>
+</body>
+</html>

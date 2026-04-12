@@ -1,0 +1,28 @@
+{
+  "name": "tennis-scoring",
+  "version": "1.0.0",
+  "description": "Système d'analyse et de scoring de matchs de tennis",
+  "main": "src/index.js",
+  "type": "commonjs",
+  "scripts": {
+    "analyze": "node src/index.js",
+    "test": "node src/index.js",
+    "test-sheets": "node test-sheets.js",
+    "test-player": "node test-player.js",
+    "web": "node src/server.js",
+    "web:dev": "node --watch src/server.js",
+    "start": "node src/index.js",
+    "dev": "node --watch src/index.js"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.85.0",
+    "axios": "^1.7.0",
+    "cheerio": "^1.0.0",
+    "dotenv": "^16.4.0",
+    "express": "^5.2.1",
+    "googleapis": "^144.0.0",
+    "node-fetch": "^3.3.0"
+  },
+  "author": "",
+  "license": "ISC"
+}
