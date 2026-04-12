@@ -332,6 +332,11 @@
     <div id="verdict-ecart" class="verdict-ecart"></div>
     <div id="verdict-confiance" class="verdict-confiance"></div>
   </div>
+ <!-- H2H -->
+  <div class="card" id="card-h2h" style="display:none">
+    <h2>🤝 Confrontations directes</h2>
+    <div id="h2h-content" style="line-height:1.8;font-size:0.95rem;"></div>
+  </div>
 
   <!-- SCORE A JOUEUR 1 -->
   <div class="card">
@@ -758,6 +763,24 @@ function afficherResultats(data) {
   document.getElementById('verdict-favori').textContent    = '🏆 ' + data.verdict.favori.toUpperCase() + ' favori';
   document.getElementById('verdict-ecart').textContent     = 'Écart : +' + Number(data.verdict.ecart).toFixed(1) + ' pts';
   document.getElementById('verdict-confiance').textContent = data.verdict.confiance;
+
+  // H2H
+const h2hCard = document.getElementById('card-h2h');
+const h2hContent = document.getElementById('h2h-content');
+
+const h2h = data?.comparison?.details?.h2h;
+
+if (h2h && typeof h2h.total !== 'undefined') {
+  h2hContent.innerHTML = `
+    <div><strong>Total des confrontations :</strong> ${h2h.total}</div>
+    <div><strong>${esc(p1)}</strong> : ${h2h.winsA ?? 0} victoire(s)</div>
+    <div><strong>${esc(p2)}</strong> : ${h2h.winsB ?? 0} victoire(s)</div>
+    <div><strong>Déjà sur cette surface :</strong> ${h2h.onSurface ? 'Oui' : 'Non'}</div>
+  `;
+  h2hCard.style.display = '';
+} else {
+  h2hCard.style.display = 'none';
+}
 
   // Titres Score A
   document.getElementById('titre-j1').textContent = p1;
