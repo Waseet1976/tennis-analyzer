@@ -298,6 +298,26 @@ async function analyzeMatch(player1Name, player2Name, surface, tournament) {
     fetchCompletePlayerData(player1Name, surface),
     fetchCompletePlayerData(player2Name, surface),
   ]);
+console.log('DEBUG PLAYER 1', {
+  name: player1Name,
+  allMatches: baseData1?.allMatches?.length,
+  last10ATP: baseData1?.last10ATP?.length,
+  stats: !!baseData1?.stats,
+  stats1y: !!baseData1?.stats1y,
+  statsTop50: !!baseData1?.statsTop50,
+  source: baseData1?.source
+});
+
+console.log('DEBUG PLAYER 2', {
+  name: player2Name,
+  allMatches: baseData2?.allMatches?.length,
+  last10ATP: baseData2?.last10ATP?.length,
+  stats: !!baseData2?.stats,
+  stats1y: !!baseData2?.stats1y,
+  statsTop50: !!baseData2?.statsTop50,
+  source: baseData2?.source
+});
+
 
   console.log(` ${player1Name} : ${baseData1.source.sheets} matchs Sheets + ${baseData1.source.web} matchs web`);
   console.log(` ${player2Name} : ${baseData2.source.sheets} matchs Sheets + ${baseData2.source.web} matchs web`);
