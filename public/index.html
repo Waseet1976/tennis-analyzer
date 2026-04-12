@@ -515,21 +515,21 @@ function setupAutocomplete(inputId, listId, apiUrl) {
 
     timer = setTimeout(async () => {
       try {
-       const res = await fetch(apiUrl + encodeURIComponent(q));
+        const res = await fetch(apiUrl + encodeURIComponent(q));
         const data = await res.json();
 
         console.log('AUTOCOMPLETE API URL =', apiUrl + encodeURIComponent(q));
         console.log('AUTOCOMPLETE API DATA =', data);
 
         if (!Array.isArray(data) || data.length === 0) {
-          list.innerHTML = '<div class="autocomplete-item">Aucun résultat</div>';
+          list.innerHTML = <div class="autocomplete-item">Aucun résultat</div>;
           list.style.display = 'block';
           return;
         }
 
         list.innerHTML = data.map(name =>
-  <div class="autocomplete-item" data-name="${esc(name)}">${esc(name)}</div>
-).join('');
+          <div class="autocomplete-item" data-name="${esc(name)}">${esc(name)}</div>
+        ).join('');
 
         list.style.display = 'block';
       } catch (e) {
@@ -576,8 +576,8 @@ function setupAutocompleteLocal(inputId, listId, sourceArray) {
     }
 
     list.innerHTML = results.map(item =>
-  <div class="autocomplete-item" data-name="${esc(item)}">${esc(item)}</div>
-).join('');
+      <div class="autocomplete-item" data-name="${esc(item)}">${esc(item)}</div>
+    ).join('');
 
     list.style.display = 'block';
   });
