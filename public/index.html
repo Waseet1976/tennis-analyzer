@@ -498,7 +498,58 @@ const TOURNAMENTS = [
   "Wimbledon",
   "US Open"
 ];
+<script>
 
+function setupAutocomplete(inputId, listId, apiUrl) {
+  const input = document.getElementById(inputId);
+  const list = document.getElementById(listId);
+  let timer;
+
+  input.addEventListener('input', () => {
+    clearTimeout(timer);
+    const q = input.value.trim();
+
+    if (q.length < 2) {
+      list.style.display = 'none';
+      return;
+    }
+
+    timer = setTimeout(async () => {
+      try {
+        const res = await fetch(apiUrl + encodeURIComponent(q));
+        const data = await res.json();
+
+        if (!Array.isArray(data) || data.length === 0) {
+          list.style.display = 'none';
+          return;
+        }
+
+        list.innerHTML = data.map(name =>
+          <div class="autocomplete-item" data-name="${esc(name)}">${esc(name)}</div>
+        ).join('');
+
+        list.style.display = 'block';
+      } catch (e) {
+        console.error('Autocomplete API error:', e);
+        list.style.display = 'none';
+      }
+    }, 250);
+  });
+
+  list.addEventListener('mousedown', (e) => {
+    const item = e.target.closest('.autocomplete-item');
+    if (item) {
+      input.value = item.dataset.name;
+      list.style.display = 'none';
+    }
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!input.contains(e.target) && !list.contains(e.target)) {
+      list.style.display = 'none';
+    }
+  });
+}
 
 function setupAutocompleteLocal(inputId, listId, sourceArray) {
   const input = document.getElementById(inputId);
@@ -522,7 +573,7 @@ function setupAutocompleteLocal(inputId, listId, sourceArray) {
     }
 
     list.innerHTML = results.map(item =>
-      `<div class="autocomplete-item" data-name="${esc(item)}">${esc(item)}</div>`
+      <div class="autocomplete-item" data-name="${esc(item)}">${esc(item)}</div>
     ).join('');
 
     list.style.display = 'block';
@@ -543,11 +594,9 @@ function setupAutocompleteLocal(inputId, listId, sourceArray) {
   });
 }
 
-setupAutocompleteLocal('joueur1', 'autocomplete1', PLAYERS);
-setupAutocompleteLocal('joueur2', 'autocomplete2', PLAYERS);
+setupAutocomplete('joueur1', 'autocomplete1', '/api/players?q=');
+setupAutocomplete('joueur2', 'autocomplete2', '/api/players?q=');
 setupAutocompleteLocal('tournoi', 'autocomplete-tournoi', TOURNAMENTS);
-
-
 // ─── Analyse ────────────────────────────────────────────────────────────────
 
 document.getElementById('btn-analyze').addEventListener('click', async () => {
