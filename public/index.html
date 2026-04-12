@@ -522,7 +522,8 @@ function setupAutocomplete(inputId, listId, apiUrl) {
         console.log('AUTOCOMPLETE API DATA =', data);
 
         if (!Array.isArray(data) || data.length === 0) {
-  list.innerHTML = <div class="autocomplete-item">Aucun résultat</div>;
+  list.innerHTML = `<div class="autocomplete-item">Aucun résultat</div>`;
+
   list.style.display = 'block';
   console.log('LIST ELEMENT =', list);
   console.log('LIST HTML =', list.innerHTML);
@@ -530,7 +531,7 @@ function setupAutocomplete(inputId, listId, apiUrl) {
 }
 
 list.innerHTML = data.map(name =>
-  <div class="autocomplete-item" data-name="${esc(name)}">${esc(name)}</div>
+  `<div class="autocomplete-item" data-name="${esc(name)}">${esc(name)}</div>`
 ).join('');
 
 list.style.display = 'block';
@@ -605,7 +606,7 @@ function setupAutocompleteLocal(inputId, listId, sourceArray) {
 
 setupAutocomplete('joueur1', 'autocomplete1', '/api/players?q=');
 setupAutocomplete('joueur2', 'autocomplete2', '/api/players?q=');
-setupAutocompleteLocal('tournoi', 'autocomplete-tournoi', TOURNAMENTS);
+setupAutocomplete('tournoi', 'autocomplete-tournoi', '/api/tournaments?q=');
 
 // ─── Affichage résultats ─────────────────────────────────────────────────────
 
