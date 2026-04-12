@@ -1123,4 +1123,70 @@ function nouvelleAnalyse() {
 renderAnalysisHistory();
 </script>
 </body>
+git add .
+git commit -m "fix remaining autocomplete html errors"
+git push
+
+
+
+const analyzeBtn = document.getElementById('btn-analyze');
+console.log('BTN ANALYZE =', analyzeBtn);
+
+if (analyzeBtn) {
+  analyzeBtn.addEventListener('click', async () => {
+    console.log('CLICK ANALYZE DETECTED');
+
+    const btn = document.getElementById('btn-analyze');
+
+    const body = {
+      joueur1: document.getElementById('joueur1').value.trim(),
+      joueur2: document.getElementById('joueur2').value.trim(),
+      surface: document.getElementById('surface').value,
+      tournoi: document.getElementById('tournoi').value.trim()
+    };
+
+    console.log('[analyze] body envoyé :', body);
+
+    if (!body.joueur1 || !body.joueur2) {
+      alert('Remplis les deux noms de joueurs');
+      return;
+    }
+
+    btn.textContent = '⏳ Analyse en cours...';
+    btn.disabled = true;
+
+    try {
+      const res = await fetch('/api/analyze', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body)
+      });
+
+      console.log('ANALYZE STATUS =', res.status);
+
+      const data = await res.json();
+      console.log('[analyze] réponse reçue :', data);
+
+      if (data.error || data.erreur) {
+        alert('Erreur : ' + (data.error || data.erreur));
+        return;
+      }
+
+      saveAnalysisToHistory(data);
+      renderAnalysisHistory();
+      afficherResultats(data);
+
+    } catch (err) {
+      console.error('[analyze] erreur fetch :', err);
+      alert('Erreur de connexion : ' + err.message);
+    } finally {
+      btn.textContent = '🔍 Analyser ce match';
+      btn.disabled = false;
+    }
+  });
+} else {
+  console.error('btn-analyze introuvable');
+}
+
+
 </html>
