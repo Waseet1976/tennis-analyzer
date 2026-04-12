@@ -516,11 +516,15 @@ function setupAutocomplete(inputId, listId, apiUrl) {
 
     timer = setTimeout(async () => {
       try {
-        const res = await fetch(apiUrl + encodeURIComponent(q));
+       const res = await fetch(apiUrl + encodeURIComponent(q));
         const data = await res.json();
 
+        console.log('AUTOCOMPLETE API URL =', apiUrl + encodeURIComponent(q));
+        console.log('AUTOCOMPLETE API DATA =', data);
+
         if (!Array.isArray(data) || data.length === 0) {
-          list.style.display = 'none';
+          list.innerHTML = '<div class="autocomplete-item">Aucun résultat</div>';
+          list.style.display = 'block';
           return;
         }
 
