@@ -478,26 +478,53 @@ function fmtScore(v) {
 
 // ─── Autocomplete ────────────────────────────────────────────────────────────
 
-function setupAutocomplete(inputId, listId, apiUrl) {
+const PLAYERS = [
+  "Lehecka J.",
+  "Tabilo A.",
+  "Djokovic N.",
+  "Nadal R.",
+  "Alcaraz C.",
+  "Sinner J.",
+  "Medvedev D."
+];
+
+const TOURNAMENTS = [
+  "Monte Carlo ATP",
+  "Roland Garros",
+  "Madrid ATP",
+  "Rome ATP",
+  "Barcelona ATP",
+  "Australian Open",
+  "Wimbledon",
+  "US Open"
+];
+
+function setupAutocompleteLocal(inputId, listId, sourceArray) {
   const input = document.getElementById(inputId);
-  const list  = document.getElementById(listId);
-  let timer;
+  const list = document.getElementById(listId);
 
   input.addEventListener('input', () => {
-    clearTimeout(timer);
-    const q = input.value.trim();
-    if (q.length < 2) { list.style.display = 'none'; return; }
-    timer = setTimeout(async () => {
-      try {
-        const res  = await fetch(apiUrl + encodeURIComponent(q));
-        const data = await res.json();
-        if (!data.length) { list.style.display = 'none'; return; }
-        list.innerHTML = data.map(n =>
-          `<div class="autocomplete-item" data-name="${esc(n)}">${esc(n)}</div>`
-        ).join('');
-        list.style.display = 'block';
-      } catch(e) { list.style.display = 'none'; }
-    }, 250);
+    const q = input.value.toLowerCase().trim();
+
+    if (q.length < 2) {
+      list.style.display = 'none';
+      return;
+    }
+
+    const results = sourceArray.filter(item =>
+      item.toLowerCase().includes(q)
+    );
+
+    if (!results.length) {
+      list.style.display = 'none';
+      return;
+    }
+
+    list.innerHTML = results.map(item =>
+      `<div class="autocomplete-item" data-name="${esc(item)}">${esc(item)}</div>`
+    ).join('');
+
+    list.style.display = 'block';
   });
 
   list.addEventListener('mousedown', (e) => {
@@ -515,9 +542,10 @@ function setupAutocomplete(inputId, listId, apiUrl) {
   });
 }
 
-setupAutocomplete('joueur1', 'autocomplete1', '/api/players?q=');
-setupAutocomplete('joueur2', 'autocomplete2', '/api/players?q=');
-setupAutocomplete('tournoi', 'autocomplete-tournoi', '/api/tournaments?q=');
+setupAutocompleteLocal('joueur1', 'autocomplete1', PLAYERS);
+setupAutocompleteLocal('joueur2', 'autocomplete2', PLAYERS);
+setupAutocompleteLocal('tournoi', 'autocomplete-tournoi', TOURNAMENTS);
+
 
 // ─── Analyse ────────────────────────────────────────────────────────────────
 
