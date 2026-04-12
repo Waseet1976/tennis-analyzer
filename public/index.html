@@ -522,13 +522,13 @@ function setupAutocomplete(inputId, listId, apiUrl) {
         console.log('AUTOCOMPLETE API DATA =', data);
 
         if (!Array.isArray(data) || data.length === 0) {
-          list.innerHTML = <div class="autocomplete-item">Aucun résultat</div>;
+          list.innerHTML = `<div class="autocomplete-item">Aucun résultat</div>`;
           list.style.display = 'block';
           return;
         }
 
         list.innerHTML = data.map(name =>
-          <div class="autocomplete-item" data-name="${esc(name)}">${esc(name)}</div>
+          `<div class="autocomplete-item" data-name="${esc(name)}">${esc(name)}</div>`
         ).join('');
 
         list.style.display = 'block';
@@ -576,7 +576,7 @@ function setupAutocompleteLocal(inputId, listId, sourceArray) {
     }
 
     list.innerHTML = results.map(item =>
-      <div class="autocomplete-item" data-name="${esc(item)}">${esc(item)}</div>
+      `<div class="autocomplete-item" data-name="${esc(item)}">${esc(item)}</div>`
     ).join('');
 
     list.style.display = 'block';
@@ -600,54 +600,6 @@ function setupAutocompleteLocal(inputId, listId, sourceArray) {
 setupAutocomplete('joueur1', 'autocomplete1', '/api/players?q=');
 setupAutocomplete('joueur2', 'autocomplete2', '/api/players?q=');
 setupAutocompleteLocal('tournoi', 'autocomplete-tournoi', TOURNAMENTS);
-// ─── Analyse ────────────────────────────────────────────────────────────────
-
-document.getElementById('btn-analyze').addEventListener('click', async () => {
-  const btn = document.getElementById('btn-analyze');
-  const body = {
-    joueur1: document.getElementById('joueur1').value.trim(),
-    joueur2: document.getElementById('joueur2').value.trim(),
-    surface: document.getElementById('surface').value,
-    tournoi: document.getElementById('tournoi').value.trim()
-  };
-
-  console.log('[analyze] body envoyé :', body);
-
-  if (!body.joueur1 || !body.joueur2) {
-    alert('Remplis les deux noms de joueurs');
-    return;
-  }
-
-  btn.textContent = '⏳ Analyse en cours...';
-  btn.disabled = true;
-
-  try {
-    const res  = await fetch('/api/analyze', {
-      method:  'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body:    JSON.stringify(body)
-    });
-    const data = await res.json();
-    console.log('[analyze] réponse reçue :', data);
-
-    if (data.error || data.erreur) {
-      alert('Erreur : ' + (data.error || data.erreur));
-      return;
-    }
-
-    saveAnalysisToHistory(data);
-renderAnalysisHistory();
-afficherResultats(data);
-
-
-  } catch(err) {
-    console.error('[analyze] erreur fetch :', err);
-    alert('Erreur de connexion : ' + err.message);
-  } finally {
-    btn.textContent = '🔍 Analyser ce match';
-    btn.disabled = false;
-  }
-});
 
 // ─── Affichage résultats ─────────────────────────────────────────────────────
 
