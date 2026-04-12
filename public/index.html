@@ -522,16 +522,22 @@ function setupAutocomplete(inputId, listId, apiUrl) {
         console.log('AUTOCOMPLETE API DATA =', data);
 
         if (!Array.isArray(data) || data.length === 0) {
-          list.innerHTML = `<div class="autocomplete-item">Aucun résultat</div>`;
-          list.style.display = 'block';
-          return;
-        }
+  list.innerHTML = <div class="autocomplete-item">Aucun résultat</div>;
+  list.style.display = 'block';
+  console.log('LIST ELEMENT =', list);
+  console.log('LIST HTML =', list.innerHTML);
+  return;
+}
 
-        list.innerHTML = data.map(name =>
-          `<div class="autocomplete-item" data-name="${esc(name)}">${esc(name)}</div>`
-        ).join('');
+list.innerHTML = data.map(name =>
+  <div class="autocomplete-item" data-name="${esc(name)}">${esc(name)}</div>
+).join('');
 
-        list.style.display = 'block';
+list.style.display = 'block';
+
+console.log('LIST ELEMENT =', list);
+console.log('LIST HTML =', list.innerHTML);
+console.log('LIST DISPLAY =', list.style.display);
       } catch (e) {
         console.error('Autocomplete API error:', e);
         list.style.display = 'none';
