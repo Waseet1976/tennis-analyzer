@@ -1049,13 +1049,15 @@ const globalBase = (winRateTotal1y ?? 50) / 10;
   matchesSurface ?? 0
 );
 
-console.log('DEBUG SURFACE NOTE', {
-  player: playerStats?.stats?.player,
-  surface,
-  winRateSurface1y,
-  matchesSurface,
-  surfaceBase
-});
+alert(
+  'DEBUG SURFACE NOTE - ' +
+  (playerStats?.stats?.player || 'joueur') +
+  ' | surface=' + surface +
+  ' | winRateSurface1y=' + winRateSurface1y +
+  ' | matchesSurface=' + matchesSurface +
+  ' | surfaceBase=' + surfaceBase
+);
+
 
 
   let experienceBonus = 0;
