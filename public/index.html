@@ -771,75 +771,24 @@ function afficherResultats(data) {
   document.getElementById('verdict-ecart').textContent = 'Écart : +' + Number(data.verdict.ecart).toFixed(1) + ' pts';
   document.getElementById('verdict-confiance').textContent = data.verdict.confiance;
 
-  function ouvrirAnalyseHistorique(id) {
-  const history = loadAnalysisHistory();
-  const item = history.find(x => x.id === id);
-
-
-  if (!item || !item.fullData) {
-    alert('Analyse introuvable.');
-    return;
-  }
-
-
-  afficherResultats(item.fullData);
-}
-
-
-function clearAnalysisHistory() {
-  localStorage.removeItem(ANALYSIS_STORAGE_KEY);
-  renderAnalysisHistory();
-}
-
-
-function afficherResultats(data) {
-  console.log('[DEBUG] data reçu :', JSON.stringify(data, null, 2));
-
-
-  if (!data || !data.verdict) {
-    alert('Structure inattendue : ' + Object.keys(data || {}).join(', '));
-    return;
-  }
-
-
-  const p1 = data.match.joueur1;
-  const p2 = data.match.joueur2;
-
-
-  // En-tête match
-  document.getElementById('match-header').textContent = p1 + '  vs  ' + p2;
-  document.getElementById('match-meta').textContent =
-    (data.match.surface || '').toUpperCase() + (data.match.tournoi ? '  ·  ' + data.match.tournoi : '');
-
-
-  // Verdict
-  const lvl = data.verdict.niveauConfiance ?? 0;
-  const vCard = document.getElementById('verdict-card');
-  vCard.className = 'verdict-card ' + (lvl >= 2 ? 'verdict-high' : lvl === 1 ? 'verdict-medium' : 'verdict-low');
-  document.getElementById('verdict-favori').textContent = '🏆 ' + data.verdict.favori.toUpperCase() + ' favori';
-  document.getElementById('verdict-ecart').textContent = 'Écart : +' + Number(data.verdict.ecart).toFixed(1) + ' pts';
-  document.getElementById('verdict-confiance').textContent = data.verdict.confiance;
-
-
   // H2H
   const h2hCard = document.getElementById('card-h2h');
   const h2hContent = document.getElementById('h2h-content');
-  let h2h = data?.comparison?.details?.h2h;
+  const h2hData = data?.comparison?.details?.h2h;
 
-
-  if (h2hCard && h2hContent && h2h) {
+  if (h2hCard && h2hContent && h2hData) {
     h2hContent.innerHTML = `
       <div style="font-size:1.6rem;font-weight:800;margin-bottom:6px;">
-        ${h2h.winsA ?? 0} - ${h2h.winsB ?? 0}
+        ${h2hData.winsA ?? 0} - ${h2hData.winsB ?? 0}
       </div>
       <div style="color:#94a3b8;margin-bottom:10px;">
         ${esc(p1)} vs ${esc(p2)}
       </div>
       <div style="margin-bottom:6px;">
-        Total : <strong>${h2h.total ?? 0}</strong>
+        Total : <strong>${h2hData.total ?? 0}</strong>
       </div>
-      <div style="color:${h2h.onSurface ? '#22c55e' : '#f97316'};">
-        ${h2h.onSurface ? '✔ Déjà joué sur cette surface' : '✖ Jamais joué sur cette surface'}
+      <div style="color:${h2hData.onSurface ? '#22c55e' : '#f97316'};">
+        ${h2hData.onSurface ? '✔ Déjà joué sur cette surface' : '✖ Jamais joué sur cette surface'}
       </div>
     `;
     h2hCard.style.display = 'block';
@@ -847,49 +796,35 @@ function afficherResultats(data) {
     h2hCard.style.display = 'none';
   }
 
+  // Résumé intelligent
+  const summaryCard = document.getElementById('card-summary');
+  const summaryBox = document.getElementById('match-summary');
+  const favori = data?.verdict?.favori || p1;
+  const confiance = data?.verdict?.confiance || 'Analyse serrée';
+  const ecart = Number(data?.verdict?.ecart ?? 0).toFixed(2);
 
-   // Résumé intelligent
-const summaryCard = document.getElementById('card-summary');
-const summaryBox = document.getElementById('match-summary');
+  if (summaryCard && summaryBox) {
+    let summary = `${favori} part avec un avantage selon le modèle. `;
+    summary += `Niveau de confiance : ${confiance.toLowerCase()}, écart estimé : ${ecart}. `;
 
+    if (h2hData) {
+      if ((h2hData.total ?? 0) === 0) {
+        summary += `Aucune confrontation directe connue entre les deux joueurs.`;
+      } else if ((h2hData.winsA ?? 0) === (h2hData.winsB ?? 0)) {
+        summary += `Les confrontations directes sont équilibrées.`;
+      } else {
+        const leader = (h2hData.winsA ?? 0) > (h2hData.winsB ?? 0) ? p1 : p2;
+        summary += `${leader} mène dans les confrontations directes.`;
+      }
+    }
 
-const favori = data?.verdict?.favori || p1;
-const confiance = data?.verdict?.confiance || 'Analyse serrée';
-const ecart = Number(data?.verdict?.ecart ?? 0).toFixed(2);
-
-
-if (summaryCard && summaryBox) {
- let summary = `${favori} part avec un avantage selon le modèle. `;
-summary += `Niveau de confiance : ${confiance.toLowerCase()}, écart estimé : ${ecart}. `;
-
-
-if (h2h) {
-  if ((h2h.total ?? 0) === 0) {
-    summary += `Aucune confrontation directe connue entre les deux joueurs.`;
-  } else if ((h2h.winsA ?? 0) === (h2h.winsB ?? 0)) {
-    summary += `Les confrontations directes sont équilibrées.`;
-  } else {
-    const leader = (h2h.winsA ?? 0) > (h2h.winsB ?? 0) ? p1 : p2;
-    summary += `${leader} mène dans les confrontations directes.`;
+    summaryBox.textContent = summary;
+    summaryCard.style.display = 'block';
+  } else if (summaryCard) {
+    summaryCard.style.display = 'none';
   }
-}
-
-
-summaryBox.textContent = summary;
-summaryCard.style.display = 'block';
-} else if (summaryCard) {
-  summaryCard.style.display = 'none';
-}
-
-
-
-
-
-
-
 
   // Titres Score A
-
   document.getElementById('titre-j1').textContent = p1;
   document.getElementById('titre-j2').textContent = p2;
 
@@ -948,6 +883,7 @@ summaryCard.style.display = 'block';
   document.getElementById('section-resultats').style.display = 'block';
   window.scrollTo(0, 0);
 }
+
 function remplirTableScoreA(tableId, totalId, scoreAData) {
   const tbody = document.querySelector('#' + tableId + ' tbody');
 
