@@ -164,6 +164,19 @@ async function buildPlayerData(playerName, surface, baseData) {
  * @param {number} ptsToDefend   - points ATP à défendre
  * @param {string} surface       - surface cible
  */
+
+function getTop50ReliabilityPenalty(statsTop50) {
+  const matchs = Number(statsTop50?.matches_vs_top50 || 0);
+
+  if (matchs >= 50) return 1.0;
+  if (matchs >= 20) return 0.9;
+  if (matchs >= 10) return 0.8;
+  if (matchs >= 5) return 0.6;
+
+  return 0.4;
+}
+
+
 function buildScores(pd, od, scoreAResult, surfaceStats, h2hPct, h2hSurface, ptsToDefend, surface) {
   const rank1    = pd.ranking ?? 100;
   const rank2    = od.ranking ?? 100;
@@ -177,6 +190,15 @@ function buildScores(pd, od, scoreAResult, surfaceStats, h2hPct, h2hSurface, pts
   const scoreA5val    = scoreA5Result.score ?? scoreAResult.score; // fallback sur A10
 
   const safeSurfaceStats = surfaceStats ?? { pct: 50, titres: 0, finales: 0 };
+
+   const rawO = calculateScoreO(
+    safeSurfaceStats,
+    pd.notableWinsOnSurface,
+    pd.seasonRecord
+  ).score;
+
+  const top50Penalty = getTop50ReliabilityPenalty(pd.statsTop50);
+
 
   return {
     A: scoreAResult.score,
@@ -193,8 +215,8 @@ function buildScores(pd, od, scoreAResult, surfaceStats, h2hPct, h2hSurface, pts
     L: calculateScoreL(pd.wind, pd.temp, pd.humidity, pd.style, age, surface).score,
     M: calculateScoreM(scoreAResult.score).score,
     N: calculateScoreN(pd.consecutiveOutsiderWins).score,
-    O: calculateScoreO(safeSurfaceStats, pd.notableWinsOnSurface, pd.seasonRecord).score,
-    notes: [],
+O:  O: rawO * top50Penalty,
+ notes: [],
   };
 }
 function normalizeMainScores(total1, total2) {
