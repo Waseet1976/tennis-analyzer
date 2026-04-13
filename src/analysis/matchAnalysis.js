@@ -175,6 +175,36 @@ function getTop50ReliabilityPenalty(statsTop50) {
 
   return 0.4;
 }
+function getTop50SurfaceScore(statsTop50, surface = 'clay') {
+  if (!statsTop50) return 0;
+
+  let matches = 0;
+  let winRate = null;
+
+  if (surface === 'clay') {
+    matches = Number(statsTop50.matches_clay_vs_top50 || 0);
+    winRate = parseFloat(String(statsTop50.win_rate_clay_vs_top50 || '').replace(',', '.'));
+  } else if (surface === 'hard' || surface === 'indoor_hard') {
+    matches = Number(statsTop50.matches_hard_vs_top50 || 0);
+    winRate = parseFloat(String(statsTop50.win_rate_hard_vs_top50 || '').replace(',', '.'));
+  } else {
+    matches = Number(statsTop50.matches_vs_top50 || 0);
+    winRate = parseFloat(String(statsTop50.win_rate_vs_top50 || '').replace(',', '.'));
+  }
+
+  if (isNaN(winRate)) return 0;
+
+  // convertir si format 0–1 → %
+  if (winRate > 0 && winRate <= 1) {
+    winRate = winRate * 100;
+  }
+
+  // correction fiabilité
+  const facteur = matches / (matches + 20);
+  const score = (winRate * facteur) + (50 * (1 - facteur));
+
+  return score; // sur 100
+}
 
 
 function buildScores(pd, od, scoreAResult, surfaceStats, h2hPct, h2hSurface, ptsToDefend, surface) {
@@ -198,6 +228,13 @@ function buildScores(pd, od, scoreAResult, surfaceStats, h2hPct, h2hSurface, pts
   ).score;
 
   const top50Penalty = getTop50ReliabilityPenalty(pd.statsTop50);
+const top50SurfaceScore = getTop50SurfaceScore(pd.statsTop50, surface);
+
+// convertir sur 0–10
+const top50Note = top50SurfaceScore / 10;
+
+// bonus/malus léger autour de 5
+const top50Adjustment = (top50Note - 5) * 0.3;
 
 
   return {
@@ -215,7 +252,7 @@ function buildScores(pd, od, scoreAResult, surfaceStats, h2hPct, h2hSurface, pts
     L: calculateScoreL(pd.wind, pd.temp, pd.humidity, pd.style, age, surface).score,
   M: calculateScoreM(scoreAResult.score).score,
 N: calculateScoreN(pd.consecutiveOutsiderWins).score,
-O: rawO * top50Penalty,
+O: (rawO * top50Penalty) + top50Adjustment,
 notes: [],
 
   };
