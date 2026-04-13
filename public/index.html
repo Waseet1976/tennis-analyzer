@@ -1013,6 +1013,27 @@ function ajusterFiabilite(winrate, matchs) {
   return score / 10;
 }
 
+function calculNoteTop50(statsTop50, surface = 'clay') {
+  if (!statsTop50) return 5;
+
+  let winRate = null;
+  let matches = 0;
+
+  if (surface === 'clay') {
+    winRate = toNumber(statsTop50.win_rate_clay_vs_top50);
+    matches = toNumber(statsTop50.matches_clay_vs_top50) ?? 0;
+  } else if (surface === 'hard' || surface === 'indoor_hard') {
+    winRate = toNumber(statsTop50.win_rate_hard_vs_top50);
+    matches = toNumber(statsTop50.matches_hard_vs_top50) ?? 0;
+  } else {
+    winRate = toNumber(statsTop50.win_rate_vs_top50);
+    matches = toNumber(statsTop50.matches_vs_top50) ?? 0;
+  }
+
+  return ajusterFiabilite(winRate ?? 50, matches);
+}
+
+
 
 function calculateStatsNote(playerStats, surface = 'clay') {
   const stats = playerStats?.stats || {};
@@ -1107,8 +1128,16 @@ function remplirTableStats(ps1, ps2) {
   const tbody = document.querySelector('#table-stats tbody');
   const rows  = [];
 
-  const note1 = calculateStatsNote(ps1, 'clay');
-  const note2 = calculateStatsNote(ps2, 'clay');
+  const currentSurface = document.getElementById('surface')?.value || 'clay';
+
+const note1 = calculateStatsNote(ps1, currentSurface);
+const note2 = calculateStatsNote(ps2, currentSurface);
+
+const top50Note1 = calculNoteTop50(ps1?.statsTop50, currentSurface);
+const top50Note2 = calculNoteTop50(ps2?.statsTop50, currentSurface);
+
+let avantageStats = '=';
+
 let avantageStats = '=';
 
 if (note1.final > note2.final) {
@@ -1135,8 +1164,16 @@ if (note1.final > note2.final) {
       </td>
     </tr>
   `);
-  rows.push(`
+rows.push(`
   <tr>
+    <td style="color:#94a3b8;font-size:0.82rem">Top 50 corrigé fiabilité</td>
+    <td style="text-align:center">${top50Note1.toFixed(1)}/10</td>
+    <td style="text-align:center">${top50Note2.toFixed(1)}/10</td>
+  </tr>
+`);
+ 
+
+<tr>
     <td style="color:#94a3b8;font-size:0.82rem">Avantage stats</td>
     <td colspan="2" style="text-align:center;font-weight:700">
       ${avantageStats}
