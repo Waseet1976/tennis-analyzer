@@ -800,8 +800,29 @@ function afficherResultats(data) {
 const summaryCard = document.getElementById('card-summary');
 const summaryBox = document.getElementById('match-summary');
 
+const favori = data?.verdict?.favori || p1;
+const confiance = data?.verdict?.confiance || 'Analyse serrée';
+const ecart = Number(data?.verdict?.ecart ?? 0).toFixed(2);
+const h2h = data?.comparison?.details?.h2h;
+
+
 if (summaryCard && summaryBox) {
-  summaryBox.textContent = 'TEST RÉSUMÉ MATCH';
+ let summary = `${favori} part avec un avantage selon le modèle. `;
+summary += `Niveau de confiance : ${confiance.toLowerCase()}, écart estimé : ${ecart}. `;
+
+if (h2h) {
+  if ((h2h.total ?? 0) === 0) {
+    summary += `Aucune confrontation directe connue entre les deux joueurs.`;
+  } else if ((h2h.winsA ?? 0) === (h2h.winsB ?? 0)) {
+    summary += `Les confrontations directes sont équilibrées.`;
+  } else {
+    const leader = (h2h.winsA ?? 0) > (h2h.winsB ?? 0) ? p1 : p2;
+    summary += `${leader} mène dans les confrontations directes.`;
+  }
+}
+
+summaryBox.textContent = summary;
+
   summaryCard.style.display = 'block';
 } else if (summaryCard) {
   summaryCard.style.display = 'none';
