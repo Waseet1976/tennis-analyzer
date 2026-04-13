@@ -965,6 +965,17 @@ const STATS_LABELS = {
   win_rate_vs_top50:       'Win rate vs Top 50',
   win_rate_clay_vs_top50:  'Win rate clay vs Top 50',
   win_rate_hard_vs_top50:  'Win rate hard vs Top 50',
+matches_vs_top50:       'Matchs vs Top 50',
+wins_vs_top50:          'Victoires vs Top 50',
+losses_vs_top50:        'Défaites vs Top 50',
+matches_clay_vs_top50:  'Matchs clay vs Top 50',
+wins_clay_vs_top50:     'Victoires clay vs Top 50',
+losses_clay_vs_top50:   'Défaites clay vs Top 50',
+matches_hard_vs_top50:  'Matchs hard vs Top 50',
+wins_hard_vs_top50:     'Victoires hard vs Top 50',
+losses_hard_vs_top50:   'Défaites hard vs Top 50',
+
+
 };
 
 function fmt(v) {
@@ -1143,6 +1154,17 @@ if (note1.final > note2.final) {
         'break_saved_avg'
       ]
     }
+  ,
+  {
+    title: '🏆 Niveau vs Top 50',
+    keys: [
+      'matches_vs_top50',
+      'wins_vs_top50',
+      'losses_vs_top50',
+      'win_rate_vs_top50'
+    ]
+  }
+
   ];
 
   statBlocks.forEach(block => {
