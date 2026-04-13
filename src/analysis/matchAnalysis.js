@@ -373,6 +373,26 @@ async function analyzeMatch(player1Name, player2Name, surface, tournament) {
     fetchCompletePlayerData(player1Name, surface),
     fetchCompletePlayerData(player2Name, surface),
   ]);
+
+const player1HasMinimumData =
+  (baseData1?.allMatches?.length ?? 0) > 0 ||
+  !!baseData1?.stats ||
+  !!baseData1?.stats1y;
+
+const player2HasMinimumData =
+  (baseData2?.allMatches?.length ?? 0) > 0 ||
+  !!baseData2?.stats ||
+  !!baseData2?.stats1y;
+
+if (!player1HasMinimumData || !player2HasMinimumData) {
+  throw new Error(
+    `Données insuffisantes pour l'analyse : ${
+      !player1HasMinimumData ? player1Name : player2Name
+    }`
+  );
+}
+
+
 console.log('DEBUG PLAYER 1', {
   name: player1Name,
   allMatches: baseData1?.allMatches?.length,
