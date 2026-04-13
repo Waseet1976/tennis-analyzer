@@ -1171,15 +1171,16 @@ rows.push(`
     <td style="text-align:center">${top50Note2.toFixed(1)}/10</td>
   </tr>
 `);
- 
 
-<tr>
+rows.push(`
+  <tr>
     <td style="color:#94a3b8;font-size:0.82rem">Avantage stats</td>
     <td colspan="2" style="text-align:center;font-weight:700">
       ${avantageStats}
     </td>
   </tr>
 `);
+
 
   // Fusionner les clés de stats + stats1y + statsTop50
   const sources1 = [ps1?.stats, ps1?.stats1y, ps1?.statsTop50];
