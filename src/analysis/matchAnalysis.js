@@ -284,6 +284,17 @@ function calculateScoreAFromDataModel(allMatches, targetSurface = 'clay') {
 const last5 = recentMatches.slice(0, 5);
 const last10 = recentMatches;
 
+console.log('DEBUG SCORE A MATCHES =', last10.map(m => ({
+  adversaire: m.adversaire,
+  niveau: m.niveau,
+  tournament: m.tournament,
+  rangAdversaire: m.rangAdversaire,
+  surface: m.surface,
+  resultat: m.resultat,
+  date: m.date
+})));
+
+
 const weightedWins5 = last5.reduce((sum, m) => {
   const w = getMatchWeight(m, targetSurface);
   return sum + (m.resultat === 'V' ? w : 0);
@@ -391,8 +402,9 @@ console.log('DEBUG PLAYER 2', {
   const data2 = await buildPlayerData(player2Name, surface, baseData2);
 
   // Score A pondéré par niveau tournoi + classement adverse + surface
-  const scoreA1 = calculateScoreAFromDataModel(data1.last10ATP ?? data1.allMatches ?? [], surface);
-  const scoreA2 = calculateScoreAFromDataModel(data2.last10ATP ?? data2.allMatches ?? [], surface);
+ const scoreA1 = calculateScoreAFromDataModel(data1.allMatches ?? [], surface);
+const scoreA2 = calculateScoreAFromDataModel(data2.allMatches ?? [], surface);
+
 
   // Points à défendre
   const pts1ToDefend = await getPointsToDefend(player1Name, tournament);
