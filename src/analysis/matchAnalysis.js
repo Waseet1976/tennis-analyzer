@@ -217,7 +217,52 @@ function clampValue(v, min, max) {
   return Math.min(Math.max(v, min), max);
 }
 
-function calculateScoreAFromDataModel(allMatches) {
+function getTournamentWeight(niveau, tournament = '') {
+  const n = String(niveau || '').toLowerCase();
+  const t = String(tournament || '').toLowerCase();
+
+  if (t.includes('grand slam') || n === 'gs') return 1.40;
+  if (t.includes('masters') || t.includes('atp1000') || n === 'masters' || n === 'atp1000') return 1.25;
+  if (t.includes('atp 500') || t.includes('atp500') || n === 'atp500') return 1.15;
+  if (t.includes('atp 250') || t.includes('atp250') || n === 'atp250') return 1.00;
+  if (t.includes('challenger') || n === 'challenger') return 0.65;
+
+  return 1.00;
+}
+
+function getOpponentRankWeight(rank) {
+  const r = Number(rank);
+
+  if (!r || isNaN(r)) return 1.00;
+  if (r <= 10) return 1.40;
+  if (r <= 20) return 1.30;
+  if (r <= 50) return 1.15;
+  if (r <= 100) return 1.00;
+
+  return 0.85;
+}
+
+function getSurfaceWeight(matchSurface, targetSurface) {
+  const ms = String(matchSurface || '').toLowerCase();
+  const ts = String(targetSurface || '').toLowerCase();
+
+  if (!ms || !ts) return 1.00;
+  if (ms === ts) return 1.20;
+
+  return 0.90;
+}
+
+function getMatchWeight(match, targetSurface) {
+  const tournoiWeight = getTournamentWeight(match.niveau, match.tournament);
+  const rankWeight = getOpponentRankWeight(match.rangAdversaire);
+  const surfaceWeight = getSurfaceWeight(match.surface, targetSurface);
+
+  return tournoiWeight * rankWeight * surfaceWeight;
+}
+
+
+function calculateScoreAFromDataModel(allMatches, targetSurface = 'clay') {
+
   if (!allMatches || allMatches.length === 0) {
     return {
       score: 0,
@@ -235,15 +280,34 @@ function calculateScoreAFromDataModel(allMatches) {
     };
   }
 
-  const atpMatches = allMatches.filter(m => m.niveau !== 'Challenger');
-  const last5 = atpMatches.slice(0, 5);
-  const last10 = atpMatches.slice(0, 10);
+  const recentMatches = allMatches.slice(0, 10);
+const last5 = recentMatches.slice(0, 5);
+const last10 = recentMatches;
 
-  const last5Wins = last5.filter(m => m.resultat === 'V').length;
-  const last10Wins = last10.filter(m => m.resultat === 'V').length;
+const weightedWins5 = last5.reduce((sum, m) => {
+  const w = getMatchWeight(m, targetSurface);
+  return sum + (m.resultat === 'V' ? w : 0);
+}, 0);
 
-  const last5Rate = last5.length > 0 ? last5Wins / last5.length : 0.5;
-  const last10Rate = last10.length > 0 ? last10Wins / last10.length : 0.5;
+const weightedTotal5 = last5.reduce((sum, m) => {
+  return sum + getMatchWeight(m, targetSurface);
+}, 0);
+
+const weightedWins10 = last10.reduce((sum, m) => {
+  const w = getMatchWeight(m, targetSurface);
+  return sum + (m.resultat === 'V' ? w : 0);
+}, 0);
+
+const weightedTotal10 = last10.reduce((sum, m) => {
+  return sum + getMatchWeight(m, targetSurface);
+}, 0);
+
+const last5Wins = last5.filter(m => m.resultat === 'V').length;
+const last10Wins = last10.filter(m => m.resultat === 'V').length;
+
+const last5Rate = weightedTotal5 > 0 ? weightedWins5 / weightedTotal5 : 0.5;
+const last10Rate = weightedTotal10 > 0 ? weightedWins10 / weightedTotal10 : 0.5;
+
 
   const withDiff = last10.filter(m => m.gameDiff !== null && m.gameDiff !== undefined);
   const avgDiff = withDiff.length > 0
@@ -322,39 +386,28 @@ console.log('DEBUG PLAYER 2', {
   console.log(` ${player1Name} : ${baseData1.source.sheets} matchs Sheets + ${baseData1.source.web} matchs web`);
   console.log(` ${player2Name} : ${baseData2.source.sheets} matchs Sheets + ${baseData2.source.web} matchs web`);
 
-  // Enrichissement : stats calculées + scraping tiebreaks/deciding sets
-  const [data1, data2] = await Promise.all([
-    buildPlayerData(player1Name, surface, baseData1),
-    buildPlayerData(player2Name, surface, baseData2),
-  ]);
+ // ─── ÉTAPE 2 : ENRICHISSEMENT DES DONNÉES ─────────────────────────────────
+  const data1 = await buildPlayerData(player1Name, surface, baseData1);
+  const data2 = await buildPlayerData(player2Name, surface, baseData2);
 
-  // ─── ÉTAPE 2 : CALCUL SCORE A ───────────────────────────────────────────────
-const scoreA1 = calculateScoreAFromDataModel(data1.allMatches);
-const scoreA2 = calculateScoreAFromDataModel(data2.allMatches);
-console.log('🔎 NEW SCORE A', {
-  joueur1: player1Name,
-  A1: scoreA1,
-  joueur2: player2Name,
-  A2: scoreA2
-});
+  // Score A pondéré par niveau tournoi + classement adverse + surface
+  const scoreA1 = calculateScoreAFromDataModel(data1.last10ATP ?? data1.allMatches ?? [], surface);
+  const scoreA2 = calculateScoreAFromDataModel(data2.last10ATP ?? data2.allMatches ?? [], surface);
 
-  // ─── ÉTAPE 3 : CALCUL SCORES B À O ─────────────────────────────────────────
-  const [
-    pts1ToDefend,
-    pts2ToDefend,
-    h2h,
-  ] = await Promise.all([
-    getPointsToDefend(player1Name, tournament),
-    getPointsToDefend(player2Name, tournament),
-    getH2H(player1Name, player2Name),
-  ]);
+  // Points à défendre
+  const pts1ToDefend = await getPointsToDefend(player1Name, tournament);
+  const pts2ToDefend = await getPointsToDefend(player2Name, tournament);
 
-  // Stats surface dérivées depuis STATS/STATS_1Y (Stats_Surface supprimée)
-  const surfaceStats1 = deriveSurfaceStats(baseData1.stats, baseData1.stats1y, surface);
-  const surfaceStats2 = deriveSurfaceStats(baseData2.stats, baseData2.stats1y, surface);
+  // H2H
+  const h2h = await getH2H(player1Name, player2Name);
 
   const h2hOnSurface1 = checkH2HOnSurface(data1.allMatches, player2Name, surface);
   const h2hOnSurface2 = checkH2HOnSurface(data2.allMatches, player1Name, surface);
+
+  // Stats surface pour Score O
+  const surfaceStats1 = deriveSurfaceStats(baseData1.stats, baseData1.stats1y, surface);
+  const surfaceStats2 = deriveSurfaceStats(baseData2.stats, baseData2.stats1y, surface);
+
 
   const scores1 = buildScores(
     data1, data2,
