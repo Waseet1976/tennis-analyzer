@@ -771,10 +771,61 @@ function afficherResultats(data) {
   document.getElementById('verdict-ecart').textContent = 'Écart : +' + Number(data.verdict.ecart).toFixed(1) + ' pts';
   document.getElementById('verdict-confiance').textContent = data.verdict.confiance;
 
+  function ouvrirAnalyseHistorique(id) {
+  const history = loadAnalysisHistory();
+  const item = history.find(x => x.id === id);
+
+
+  if (!item || !item.fullData) {
+    alert('Analyse introuvable.');
+    return;
+  }
+
+
+  afficherResultats(item.fullData);
+}
+
+
+function clearAnalysisHistory() {
+  localStorage.removeItem(ANALYSIS_STORAGE_KEY);
+  renderAnalysisHistory();
+}
+
+
+function afficherResultats(data) {
+  console.log('[DEBUG] data reçu :', JSON.stringify(data, null, 2));
+
+
+  if (!data || !data.verdict) {
+    alert('Structure inattendue : ' + Object.keys(data || {}).join(', '));
+    return;
+  }
+
+
+  const p1 = data.match.joueur1;
+  const p2 = data.match.joueur2;
+
+
+  // En-tête match
+  document.getElementById('match-header').textContent = p1 + '  vs  ' + p2;
+  document.getElementById('match-meta').textContent =
+    (data.match.surface || '').toUpperCase() + (data.match.tournoi ? '  ·  ' + data.match.tournoi : '');
+
+
+  // Verdict
+  const lvl = data.verdict.niveauConfiance ?? 0;
+  const vCard = document.getElementById('verdict-card');
+  vCard.className = 'verdict-card ' + (lvl >= 2 ? 'verdict-high' : lvl === 1 ? 'verdict-medium' : 'verdict-low');
+  document.getElementById('verdict-favori').textContent = '🏆 ' + data.verdict.favori.toUpperCase() + ' favori';
+  document.getElementById('verdict-ecart').textContent = 'Écart : +' + Number(data.verdict.ecart).toFixed(1) + ' pts';
+  document.getElementById('verdict-confiance').textContent = data.verdict.confiance;
+
+
   // H2H
   const h2hCard = document.getElementById('card-h2h');
   const h2hContent = document.getElementById('h2h-content');
-  const h2h = data?.comparison?.details?.h2h;
+  let h2h = data?.comparison?.details?.h2h;
+
 
   if (h2hCard && h2hContent && h2h) {
     h2hContent.innerHTML = `
@@ -796,19 +847,21 @@ function afficherResultats(data) {
     h2hCard.style.display = 'none';
   }
 
+
    // Résumé intelligent
 const summaryCard = document.getElementById('card-summary');
 const summaryBox = document.getElementById('match-summary');
 
+
 const favori = data?.verdict?.favori || p1;
 const confiance = data?.verdict?.confiance || 'Analyse serrée';
 const ecart = Number(data?.verdict?.ecart ?? 0).toFixed(2);
-const h2h = data?.comparison?.details?.h2h;
 
 
 if (summaryCard && summaryBox) {
  let summary = `${favori} part avec un avantage selon le modèle. `;
 summary += `Niveau de confiance : ${confiance.toLowerCase()}, écart estimé : ${ecart}. `;
+
 
 if (h2h) {
   if ((h2h.total ?? 0) === 0) {
@@ -821,12 +874,16 @@ if (h2h) {
   }
 }
 
-summaryBox.textContent = summary;
 
-  summaryCard.style.display = 'block';
+summaryBox.textContent = summary;
+summaryCard.style.display = 'block';
 } else if (summaryCard) {
   summaryCard.style.display = 'none';
 }
+
+
+
+
 
 
 
