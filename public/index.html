@@ -477,16 +477,6 @@ function esc(s) {
   return String(s ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }
 
-function fmtScore(v) {
-  if (v === null || v === undefined) {
-    return '<span style="color:#64748b">—</span>';
-  }
-
-  const n = Number(v);
-  const cls = n > 0 ? 'score-pos' : n < 0 ? 'score-neg' : '';
-  return `<span class="${cls}">${n >= 0 ? '+' : ''}${n.toFixed(1)}</span>`;
-}
-
 
 // ─── Autocomplete ────────────────────────────────────────────────────────────
 
