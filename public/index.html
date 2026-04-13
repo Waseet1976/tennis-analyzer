@@ -1004,6 +1004,16 @@ function clamp(v, min, max) {
   return Math.min(Math.max(v, min), max);
 }
 
+function ajusterFiabilite(winrate, matchs) {
+  if (winrate === null || winrate === undefined) return 5;
+
+  const facteur = matchs / (matchs + 20);
+  const score = (winrate * facteur) + (50 * (1 - facteur));
+
+  return score / 10;
+}
+
+
 function calculateStatsNote(playerStats, surface = 'clay') {
   const stats = playerStats?.stats || {};
   const stats1y = playerStats?.stats1y || {};
@@ -1034,7 +1044,11 @@ const globalBase = (winRateTotal1y ?? 50) / 10;
 }
 
 
- const surfaceBase = (winRateSurface1y ?? 50) / 10;
+ const surfaceBase = ajusterFiabilite(
+  winRateSurface1y ?? 50,
+  matchesSurface ?? 0
+);
+
 
   let experienceBonus = 0;
   if (matchesSurface !== null) {
