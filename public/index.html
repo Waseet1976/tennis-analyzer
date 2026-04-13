@@ -338,6 +338,13 @@
     <div id="h2h-content" style="line-height:1.8;font-size:0.95rem;"></div>
   </div>
 
+ <!-- RÉSUMÉ -->
+  <div class="card" id="card-summary" style="display:none">
+    <h2>🧠 Résumé du match</h2>
+    <div id="match-summary" style="line-height:1.8;font-size:0.95rem;"></div>
+  </div>
+
+
   <!-- SCORE A JOUEUR 1 -->
   <div class="card">
     <h2>📊 Score A v3.0 — <span id="titre-j1"></span></h2>
@@ -471,11 +478,15 @@ function esc(s) {
 }
 
 function fmtScore(v) {
-  if (v === null || v === undefined) return '<span class="score-nd">N/D</span>';
+  if (v === null || v === undefined) {
+    return '<span style="color:#64748b">—</span>';
+  }
+
   const n = Number(v);
   const cls = n > 0 ? 'score-pos' : n < 0 ? 'score-neg' : '';
   return `<span class="${cls}">${n >= 0 ? '+' : ''}${n.toFixed(1)}</span>`;
 }
+
 
 // ─── Autocomplete ────────────────────────────────────────────────────────────
 
@@ -519,15 +530,13 @@ function setupAutocomplete(inputId, listId, apiUrl) {
         const res = await fetch(apiUrl + encodeURIComponent(q));
         const data = await res.json();
 
-        console.log('AUTOCOMPLETE API URL =', apiUrl + encodeURIComponent(q));
-        console.log('AUTOCOMPLETE API DATA =', data);
+     
 
         if (!Array.isArray(data) || data.length === 0) {
   list.innerHTML = `<div class="autocomplete-item">Aucun résultat</div>`;
 
   list.style.display = 'block';
-  console.log('LIST ELEMENT =', list);
-  console.log('LIST HTML =', list.innerHTML);
+  
   return;
 }
 
@@ -537,9 +546,7 @@ list.innerHTML = data.map(name =>
 
 list.style.display = 'block';
 
-console.log('LIST ELEMENT =', list);
-console.log('LIST HTML =', list.innerHTML);
-console.log('LIST DISPLAY =', list.style.display);
+
       } catch (e) {
         console.error('Autocomplete API error:', e);
         list.style.display = 'none';
@@ -760,35 +767,51 @@ function afficherResultats(data) {
   const lvl = data.verdict.niveauConfiance ?? 0;
   const vCard = document.getElementById('verdict-card');
   vCard.className = 'verdict-card ' + (lvl >= 2 ? 'verdict-high' : lvl === 1 ? 'verdict-medium' : 'verdict-low');
-  document.getElementById('verdict-favori').textContent    = '🏆 ' + data.verdict.favori.toUpperCase() + ' favori';
-  document.getElementById('verdict-ecart').textContent     = 'Écart : +' + Number(data.verdict.ecart).toFixed(1) + ' pts';
+  document.getElementById('verdict-favori').textContent = '🏆 ' + data.verdict.favori.toUpperCase() + ' favori';
+  document.getElementById('verdict-ecart').textContent = 'Écart : +' + Number(data.verdict.ecart).toFixed(1) + ' pts';
   document.getElementById('verdict-confiance').textContent = data.verdict.confiance;
 
   // H2H
-  console.log('H2H DEBUG =', data?.comparison?.details?.h2h);
-
   const h2hCard = document.getElementById('card-h2h');
   const h2hContent = document.getElementById('h2h-content');
   const h2h = data?.comparison?.details?.h2h;
 
   if (h2hCard && h2hContent && h2h) {
     h2hContent.innerHTML = `
-      <div style="font-size:1.4rem;font-weight:700;margin-bottom:8px;">
+      <div style="font-size:1.6rem;font-weight:800;margin-bottom:6px;">
         ${h2h.winsA ?? 0} - ${h2h.winsB ?? 0}
       </div>
-      <div style="color:#94a3b8;margin-bottom:8px;">
+      <div style="color:#94a3b8;margin-bottom:10px;">
         ${esc(p1)} vs ${esc(p2)}
       </div>
-      <div><strong>Total des confrontations :</strong> ${h2h.total ?? 0}</div>
-      <div><strong>Déjà sur cette surface :</strong> ${h2h.onSurface ? 'Oui' : 'Non'}</div>
+      <div style="margin-bottom:6px;">
+        Total : <strong>${h2h.total ?? 0}</strong>
+      </div>
+      <div style="color:${h2h.onSurface ? '#22c55e' : '#f97316'};">
+        ${h2h.onSurface ? '✔ Déjà joué sur cette surface' : '✖ Jamais joué sur cette surface'}
+      </div>
     `;
     h2hCard.style.display = 'block';
   } else if (h2hCard) {
     h2hCard.style.display = 'none';
   }
 
+   // Résumé intelligent
+const summaryCard = document.getElementById('card-summary');
+const summaryBox = document.getElementById('match-summary');
+
+if (summaryCard && summaryBox) {
+  summaryBox.textContent = 'TEST RÉSUMÉ MATCH';
+  summaryCard.style.display = 'block';
+} else if (summaryCard) {
+  summaryCard.style.display = 'none';
+}
+
+
+
 
   // Titres Score A
+
   document.getElementById('titre-j1').textContent = p1;
   document.getElementById('titre-j2').textContent = p2;
 
@@ -1147,12 +1170,10 @@ function nouvelleAnalyse() {
 }
 renderAnalysisHistory();
 const analyzeBtn = document.getElementById('btn-analyze');
-console.log('BTN ANALYZE =', analyzeBtn);
 
 if (analyzeBtn) {
   analyzeBtn.addEventListener('click', async () => {
-    console.log('CLICK ANALYZE DETECTED');
-
+   
     const btn = document.getElementById('btn-analyze');
 
     const body = {
@@ -1162,7 +1183,6 @@ if (analyzeBtn) {
       tournoi: document.getElementById('tournoi').value.trim()
     };
 
-    console.log('[analyze] body envoyé :', body);
 
     if (!body.joueur1 || !body.joueur2) {
       alert('Remplis les deux noms de joueurs');
@@ -1179,11 +1199,9 @@ if (analyzeBtn) {
         body: JSON.stringify(body)
       });
 
-      console.log('ANALYZE STATUS =', res.status);
 
       const data = await res.json();
-      console.log('[analyze] réponse reçue :', data);
-
+     
       if (data.error || data.erreur) {
         alert('Erreur : ' + (data.error || data.erreur));
         return;
