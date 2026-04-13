@@ -213,10 +213,11 @@ function buildScores(pd, od, scoreAResult, surfaceStats, h2hPct, h2hSurface, pts
     J: calculateScoreJ(scoreAResult.score, pd.avgOpponentRank).score,
     K: calculateScoreK(age).score,
     L: calculateScoreL(pd.wind, pd.temp, pd.humidity, pd.style, age, surface).score,
-    M: calculateScoreM(scoreAResult.score).score,
-    N: calculateScoreN(pd.consecutiveOutsiderWins).score,
-O:  O: rawO * top50Penalty,
- notes: [],
+  M: calculateScoreM(scoreAResult.score).score,
+N: calculateScoreN(pd.consecutiveOutsiderWins).score,
+O: rawO * top50Penalty,
+notes: [],
+
   };
 }
 function normalizeMainScores(total1, total2) {
