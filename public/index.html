@@ -1008,40 +1008,33 @@ function calculateStatsNote(playerStats, surface = 'clay') {
   const stats = playerStats?.stats || {};
   const stats1y = playerStats?.stats1y || {};
 
-  const winRateTotal = toNumber(stats.win_rate_total);
-  const winRateTotal1y = toNumber(stats1y.win_rate_total_1y);
-  const gamesDiff = toNumber(stats.games_diff_avg);
+ const winRateTotal1y = toNumber(stats1y.win_rate_total_1y);
+const gamesDiff = toNumber(stats1y.games_diff_avg_1y ?? stats.games_diff_avg);
 
-  const globalBase = (
-    ((winRateTotal ?? 50) * 0.5) +
-    ((winRateTotal1y ?? 50) * 0.5)
-  ) / 10;
+const globalBase = (winRateTotal1y ?? 50) / 10;
+
 
   const globalBonus = gamesDiff !== null ? clamp(gamesDiff * 0.15, -1, 1) : 0;
   const global = clamp(globalBase + globalBonus, 0, 10);
 
   let winRateSurface = null;
   let winRateSurface1y = null;
-  let matchesSurface = null;
-
   if (surface === 'clay') {
-    winRateSurface = toNumber(stats.win_rate_clay);
-    winRateSurface1y = toNumber(stats1y.win_rate_clay_1y);
-    matchesSurface = toNumber(stats.matches_clay);
-  } else if (surface === 'hard' || surface === 'indoor_hard') {
-    winRateSurface = toNumber(stats.win_rate_hard);
-    winRateSurface1y = toNumber(stats1y.win_rate_hard_1y);
-    matchesSurface = toNumber(stats.matchs_hard || stats.matches_hard);
-  } else {
-    winRateSurface = toNumber(stats.win_rate_total);
-    winRateSurface1y = toNumber(stats1y.win_rate_total_1y);
-    matchesSurface = toNumber(stats.matches_total);
-  }
+  winRateSurface = toNumber(stats.win_rate_clay);
+  winRateSurface1y = toNumber(stats1y.win_rate_clay_1y);
+  matchesSurface = toNumber(stats1y.matches_clay_1y ?? stats.matches_clay);
+} else if (surface === 'hard' || surface === 'indoor_hard') {
+  winRateSurface = toNumber(stats.win_rate_hard);
+  winRateSurface1y = toNumber(stats1y.win_rate_hard_1y);
+  matchesSurface = toNumber(stats1y.matches_hard_1y ?? stats1y.matchs_hard_1y ?? stats.matchs_hard ?? stats.matches_hard);
+} else {
+  winRateSurface = toNumber(stats.win_rate_total);
+  winRateSurface1y = toNumber(stats1y.win_rate_total_1y);
+  matchesSurface = toNumber(stats1y.matches_total_1y ?? stats.matches_total);
+}
 
-  const surfaceBase = (
-    ((winRateSurface ?? 50) * 0.5) +
-    ((winRateSurface1y ?? 50) * 0.5)
-  ) / 10;
+
+ const surfaceBase = (winRateSurface1y ?? 50) / 10;
 
   let experienceBonus = 0;
   if (matchesSurface !== null) {
@@ -1053,10 +1046,11 @@ function calculateStatsNote(playerStats, surface = 'clay') {
 
   const surfaceNote = clamp(surfaceBase + experienceBonus, 0, 10);
 
-  const service = toNumber(stats.service_points_won_avg);
-  const retour = toNumber(stats.return_points_won_avg);
-  const breaks = toNumber(stats.breaks_converted_avg);
-  const saved = toNumber(stats.break_saved_avg);
+ const service = toNumber(stats1y.service_points_won_avg_1y ?? stats.service_points_won_avg);
+const retour = toNumber(stats1y.return_points_won_avg_1y ?? stats.return_points_won_avg);
+const breaks = toNumber(stats1y.breaks_converted_avg_1y ?? stats.breaks_converted_avg);
+const saved = toNumber(stats1y.breaks_saved_avg_1y ?? stats.break_saved_avg);
+
 
   const serviceScore = service !== null ? clamp((service - 50) / 2, 0, 10) : 5;
   const retourScore = retour !== null ? clamp((retour - 30) / 1.5, 0, 10) : 5;
