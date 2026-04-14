@@ -327,6 +327,18 @@ function normalizeMainScores(total1, total2, k = 3) {
   return { score1, score2 };
 }
 
+/**
+ * Transforme les scores bruts comparison (0–1) en probabilités réalistes via logistique.
+ * k=3 : diff de 0.3 → ~73% | diff de 0.5 → ~82% | diff de 0.8 → ~92%
+ * Les scores bruts restent dans comparison.scoreA/B pour les détails.
+ */
+function toProbability(scoreA, scoreB) {
+  const k     = 3;
+  const diff  = scoreA - scoreB;
+  const probA = 1 / (1 + Math.exp(-k * diff));
+  return probA;
+}
+
 function buildHybridConfidence(gap, aligned) {
   if (gap >= 0.10 && aligned) return { label: 'Élevée', level: 3 };
   if (gap >= 0.05 && aligned) return { label: 'Modérée', level: 2 };
@@ -579,65 +591,49 @@ const scoreA2 = calculateScoreAFromDataModel(data2.allMatches ?? [], surface);
     },
   };
 
-  // Nouveau modèle de comparaison (STATS + STATS_1Y + STATS_TOP50 + forme récente + H2H)
+  // ─── Modèle stats détaillées (seul modèle décisionnel) ──────────────────────
+  // L'ancien système A→O reste calculé dans rapport.scores pour l'affichage,
+  // mais n'influence plus le verdict, les probabilités ni la confiance finale.
   rapport.comparison = comparePlayers(baseData1, baseData2, surface, player1Name, player2Name);
 
-  // TOTAL : somme des scores A-O, typiquement dans [-30, +30]
-  // k=0.25 pour éviter la saturation sur de grands écarts
-  const mainNorm = normalizeMainScores(
-    finalScores1.TOTAL ?? 0,
-    finalScores2.TOTAL ?? 0,
-    0.25
-  );
+  const cmp = rapport.comparison;
 
-  // comparison.scoreA/B : valeurs en [0, 1] — k=3 pour amplifier les écarts réels
-  const dataNorm = normalizeMainScores(
-    rapport.comparison.scoreA ?? 0.5,
-    rapport.comparison.scoreB ?? 0.5,
-    3
-  );
+  // Verdict basé exclusivement sur comparison
+  rapport.verdict.favori         = cmp.winner;
+  rapport.verdict.ecart          = parseFloat(Math.abs(cmp.scoreA - cmp.scoreB).toFixed(4));
+  rapport.verdict.confiance      = cmp.confidence.label;
+  rapport.verdict.niveauConfiance = cmp.confidence.level;
 
-  const dataScore1 = dataNorm.score1;
-  const dataScore2 = dataNorm.score2;
+  // Transformation logistique : scores bruts → probabilités réalistes
+  const prob1 = toProbability(cmp.scoreA, cmp.scoreB);
+  const prob2 = 1 - prob1;
 
-  const hybridScore1 = (mainNorm.score1 * 0.30) + (dataScore1 * 0.70);
-  const hybridScore2 = (mainNorm.score2 * 0.30) + (dataScore2 * 0.70);
-
-
-  const hybridWinner = hybridScore1 >= hybridScore2 ? player1Name : player2Name;
-  const modelsAligned = rapport.verdict.favori === rapport.comparison.winner;
-  const hybridGap = Math.abs(hybridScore1 - hybridScore2);
-  const hybridConfidence = buildHybridConfidence(hybridGap, modelsAligned);
-
+  // Compatibilité front : hybrid conservé mais construit depuis comparison uniquement
   rapport.hybrid = {
     mainModel: {
+      // Conservé pour l'affichage des scores A→O dans le front
       winner: rapport.verdict.favori,
       total1: finalScores1.TOTAL ?? 0,
       total2: finalScores2.TOTAL ?? 0,
-      score1: parseFloat(mainNorm.score1.toFixed(4)),
-      score2: parseFloat(mainNorm.score2.toFixed(4))
+      score1: null,
+      score2: null,
     },
     dataModel: {
-      winner: rapport.comparison.winner,
-      score1: parseFloat(dataScore1.toFixed(4)),
-      score2: parseFloat(dataScore2.toFixed(4))
+      winner: cmp.winner,
+      score1: parseFloat(cmp.scoreA.toFixed(4)),
+      score2: parseFloat(cmp.scoreB.toFixed(4)),
     },
     merged: {
-      winner: hybridWinner,
-      score1: parseFloat(hybridScore1.toFixed(4)),
-      score2: parseFloat(hybridScore2.toFixed(4)),
-      gap: parseFloat(hybridGap.toFixed(4)),
-      confidence: hybridConfidence
+      winner: cmp.winner,
+      score1: parseFloat(prob1.toFixed(4)),   // probabilité logistique
+      score2: parseFloat(prob2.toFixed(4)),
+      gap:    parseFloat(Math.abs(prob1 - prob2).toFixed(4)),
+      confidence: cmp.confidence,
     },
-    agreement: {
-      aligned: modelsAligned
-    }
+    agreement: { aligned: true },
   };
-rapport.verdict.favori = rapport.hybrid.merged.winner;
-  rapport.verdict.ecart = rapport.hybrid.merged.gap;
-  rapport.verdict.confiance = rapport.hybrid.merged.confidence.label;
-  rapport.verdict.niveauConfiance = rapport.hybrid.merged.confidence.level;
-  console.log('✅ HYBRID ACTIVE', rapport.hybrid);
+
+  console.log(`✅ COMPARISON ACTIVE | winner=${cmp.winner} | prob1=${prob1.toFixed(3)} | prob2=${prob2.toFixed(3)} | conf=${cmp.confidence.label}`);
   return rapport;
 }
 

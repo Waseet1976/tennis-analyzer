@@ -45,12 +45,16 @@ async function analyzeAll(matches) {
     try {
       const result = await analyzeMatch(joueur1, joueur2, surface, tournoi);
 
-      const favori         = result?.verdict?.favori        ?? '?';
-      const confiance      = result?.verdict?.confiance     ?? '?';
-      const niveauConfiance = result?.verdict?.niveauConfiance ?? 0;
-      const hybridScore1   = result?.hybrid?.merged?.score1 ?? null;
-      const hybridScore2   = result?.hybrid?.merged?.score2 ?? null;
-      const gap            = result?.hybrid?.merged?.gap    ?? null;
+      // Verdict issus du modèle stats détaillées
+      // Probabilités logistiques issues de hybrid.merged (transformation appliquée dans matchAnalysis)
+      const cmp             = result?.comparison;
+      const merged          = result?.hybrid?.merged;
+      const favori          = cmp?.winner                 ?? result?.verdict?.favori    ?? '?';
+      const confiance       = cmp?.confidence?.label      ?? result?.verdict?.confiance ?? '?';
+      const niveauConfiance = cmp?.confidence?.level      ?? result?.verdict?.niveauConfiance ?? 0;
+      const hybridScore1    = merged?.score1              ?? null;
+      const hybridScore2    = merged?.score2              ?? null;
+      const gap             = merged?.gap                 ?? null;
 
       console.log(`  ✓ Favori : ${favori} — Confiance : ${confiance}`);
 

@@ -5,12 +5,12 @@
     "surface": "clay",
     "tournoi": "ATP Barcelona",
     "summary": {
-      "favori": "Ofner S.",
-      "confiance": "Conflit / Match piégeux",
-      "niveauConfiance": 0,
-      "hybridScore1": 0.5,
-      "hybridScore2": 0.5,
-      "gap": 0
+      "favori": "De Minaur A.",
+      "confiance": "Modérée",
+      "niveauConfiance": 2,
+      "hybridScore1": 0.5306,
+      "hybridScore2": 0.4694,
+      "gap": 0.0613
     },
     "result": {
       "match": {
@@ -88,10 +88,10 @@
         }
       },
       "verdict": {
-        "favori": "Ofner S.",
-        "ecart": 0,
-        "confiance": "Conflit / Match piégeux",
-        "niveauConfiance": 0
+        "favori": "De Minaur A.",
+        "ecart": 0.0409,
+        "confiance": "Modérée",
+        "niveauConfiance": 2
       },
       "reglesActivees": {
         "joueur1": [],
@@ -348,29 +348,29 @@
       },
       "hybrid": {
         "mainModel": {
-          "winner": "Ofner S.",
+          "winner": "De Minaur A.",
           "total1": 8.030000000000001,
           "total2": 9.181818181818182,
-          "score1": 0.4285,
-          "score2": 0.5715
+          "score1": null,
+          "score2": null
         },
         "dataModel": {
           "winner": "De Minaur A.",
-          "score1": 0.5306,
-          "score2": 0.4694
+          "score1": 0.5369,
+          "score2": 0.496
         },
         "merged": {
-          "winner": "Ofner S.",
-          "score1": 0.5,
-          "score2": 0.5,
-          "gap": 0,
+          "winner": "De Minaur A.",
+          "score1": 0.5306,
+          "score2": 0.4694,
+          "gap": 0.0613,
           "confidence": {
-            "label": "Conflit / Match piégeux",
-            "level": 0
+            "label": "Modérée",
+            "level": 2
           }
         },
         "agreement": {
-          "aligned": false
+          "aligned": true
         }
       }
     }
@@ -384,9 +384,9 @@
       "favori": "Musetti L.",
       "confiance": "Élevée",
       "niveauConfiance": 3,
-      "hybridScore1": 0.3252,
-      "hybridScore2": 0.6748,
-      "gap": 0.3496
+      "hybridScore1": 0.383,
+      "hybridScore2": 0.617,
+      "gap": 0.2339
     },
     "result": {
       "match": {
@@ -465,7 +465,7 @@
       },
       "verdict": {
         "favori": "Musetti L.",
-        "ecart": 0.3496,
+        "ecart": 0.1589,
         "confiance": "Élevée",
         "niveauConfiance": 3
       },
@@ -727,19 +727,19 @@
           "winner": "Musetti L.",
           "total1": 7.263636363636364,
           "total2": 13.057777777777778,
-          "score1": 0.1902,
-          "score2": 0.8098
+          "score1": null,
+          "score2": null
         },
         "dataModel": {
           "winner": "Musetti L.",
-          "score1": 0.383,
-          "score2": 0.617
+          "score1": 0.3789,
+          "score2": 0.5378
         },
         "merged": {
           "winner": "Musetti L.",
-          "score1": 0.3252,
-          "score2": 0.6748,
-          "gap": 0.3496,
+          "score1": 0.383,
+          "score2": 0.617,
+          "gap": 0.2339,
           "confidence": {
             "label": "Élevée",
             "level": 3
@@ -760,9 +760,9 @@
       "favori": "Alcaraz C.",
       "confiance": "Élevée",
       "niveauConfiance": 3,
-      "hybridScore1": 0.8002,
-      "hybridScore2": 0.1998,
-      "gap": 0.6005
+      "hybridScore1": 0.7224,
+      "hybridScore2": 0.2776,
+      "gap": 0.4448
     },
     "result": {
       "match": {
@@ -841,7 +841,7 @@
       },
       "verdict": {
         "favori": "Alcaraz C.",
-        "ecart": 0.6005,
+        "ecart": 0.3188,
         "confiance": "Élevée",
         "niveauConfiance": 3
       },
@@ -1105,19 +1105,19 @@
           "winner": "Alcaraz C.",
           "total1": 14.507142857142856,
           "total2": -1.4614285714285717,
-          "score1": 0.9819,
-          "score2": 0.0181
+          "score1": null,
+          "score2": null
         },
         "dataModel": {
           "winner": "Alcaraz C.",
-          "score1": 0.7224,
-          "score2": 0.2776
+          "score1": 0.6888,
+          "score2": 0.37
         },
         "merged": {
           "winner": "Alcaraz C.",
-          "score1": 0.8002,
-          "score2": 0.1998,
-          "gap": 0.6005,
+          "score1": 0.7224,
+          "score2": 0.2776,
+          "gap": 0.4448,
           "confidence": {
             "label": "Élevée",
             "level": 3
@@ -1136,11 +1136,11 @@
     "tournoi": "ATP Barcelona",
     "summary": {
       "favori": "Navone M.",
-      "confiance": "Élevée",
-      "niveauConfiance": 3,
-      "hybridScore1": 0.6188,
-      "hybridScore2": 0.3812,
-      "gap": 0.2376
+      "confiance": "Très serré",
+      "niveauConfiance": 0,
+      "hybridScore1": 0.5048,
+      "hybridScore2": 0.4952,
+      "gap": 0.0096
     },
     "result": {
       "match": {
@@ -1219,9 +1219,9 @@
       },
       "verdict": {
         "favori": "Navone M.",
-        "ecart": 0.2376,
-        "confiance": "Élevée",
-        "niveauConfiance": 3
+        "ecart": 0.0064,
+        "confiance": "Très serré",
+        "niveauConfiance": 0
       },
       "reglesActivees": {
         "joueur1": [],
@@ -1483,22 +1483,22 @@
           "winner": "Navone M.",
           "total1": 12.225581395348836,
           "total2": 4.068823529411764,
-          "score1": 0.8849,
-          "score2": 0.1151
+          "score1": null,
+          "score2": null
         },
         "dataModel": {
           "winner": "Navone M.",
-          "score1": 0.5048,
-          "score2": 0.4952
+          "score1": 0.5423,
+          "score2": 0.5359
         },
         "merged": {
           "winner": "Navone M.",
-          "score1": 0.6188,
-          "score2": 0.3812,
-          "gap": 0.2376,
+          "score1": 0.5048,
+          "score2": 0.4952,
+          "gap": 0.0096,
           "confidence": {
-            "label": "Élevée",
-            "level": 3
+            "label": "Très serré",
+            "level": 0
           }
         },
         "agreement": {
@@ -1514,11 +1514,11 @@
     "tournoi": "ATP Barcelona",
     "summary": {
       "favori": "Martinez P.",
-      "confiance": "Élevée",
-      "niveauConfiance": 3,
-      "hybridScore1": 0.6338,
-      "hybridScore2": 0.3662,
-      "gap": 0.2676
+      "confiance": "Légère",
+      "niveauConfiance": 1,
+      "hybridScore1": 0.5193,
+      "hybridScore2": 0.4807,
+      "gap": 0.0387
     },
     "result": {
       "match": {
@@ -1597,9 +1597,9 @@
       },
       "verdict": {
         "favori": "Martinez P.",
-        "ecart": 0.2676,
-        "confiance": "Élevée",
-        "niveauConfiance": 3
+        "ecart": 0.0258,
+        "confiance": "Légère",
+        "niveauConfiance": 1
       },
       "reglesActivees": {
         "joueur1": [
@@ -1864,22 +1864,22 @@
           "winner": "Martinez P.",
           "total1": 7.02,
           "total2": -1.8099999999999998,
-          "score1": 0.9009,
-          "score2": 0.0991
+          "score1": null,
+          "score2": null
         },
         "dataModel": {
           "winner": "Martinez P.",
-          "score1": 0.5193,
-          "score2": 0.4807
+          "score1": 0.4169,
+          "score2": 0.3911
         },
         "merged": {
           "winner": "Martinez P.",
-          "score1": 0.6338,
-          "score2": 0.3662,
-          "gap": 0.2676,
+          "score1": 0.5193,
+          "score2": 0.4807,
+          "gap": 0.0387,
           "confidence": {
-            "label": "Élevée",
-            "level": 3
+            "label": "Légère",
+            "level": 1
           }
         },
         "agreement": {
@@ -1894,12 +1894,12 @@
     "surface": "clay",
     "tournoi": "ATP Barcelona",
     "summary": {
-      "favori": "Ugo Carabelli C.",
-      "confiance": "Conflit modéré",
-      "niveauConfiance": 1,
-      "hybridScore1": 0.619,
-      "hybridScore2": 0.381,
-      "gap": 0.238
+      "favori": "Khachanov K.",
+      "confiance": "Très serré",
+      "niveauConfiance": 0,
+      "hybridScore1": 0.4922,
+      "hybridScore2": 0.5078,
+      "gap": 0.0156
     },
     "result": {
       "match": {
@@ -1977,10 +1977,10 @@
         }
       },
       "verdict": {
-        "favori": "Ugo Carabelli C.",
-        "ecart": 0.238,
-        "confiance": "Conflit modéré",
-        "niveauConfiance": 1
+        "favori": "Khachanov K.",
+        "ecart": 0.0104,
+        "confiance": "Très serré",
+        "niveauConfiance": 0
       },
       "reglesActivees": {
         "joueur1": [
@@ -2241,29 +2241,29 @@
       },
       "hybrid": {
         "mainModel": {
-          "winner": "Ugo Carabelli C.",
+          "winner": "Khachanov K.",
           "total1": 10.775294117647059,
           "total2": 1.2757894736842104,
-          "score1": 0.9149,
-          "score2": 0.0851
+          "score1": null,
+          "score2": null
         },
         "dataModel": {
           "winner": "Khachanov K.",
-          "score1": 0.4922,
-          "score2": 0.5078
+          "score1": 0.4627,
+          "score2": 0.4731
         },
         "merged": {
-          "winner": "Ugo Carabelli C.",
-          "score1": 0.619,
-          "score2": 0.381,
-          "gap": 0.238,
+          "winner": "Khachanov K.",
+          "score1": 0.4922,
+          "score2": 0.5078,
+          "gap": 0.0156,
           "confidence": {
-            "label": "Conflit modéré",
-            "level": 1
+            "label": "Très serré",
+            "level": 0
           }
         },
         "agreement": {
-          "aligned": false
+          "aligned": true
         }
       }
     }
@@ -2274,12 +2274,12 @@
     "surface": "clay",
     "tournoi": "ATP Barcelona",
     "summary": {
-      "favori": "Baez S.",
-      "confiance": "Conflit modéré",
-      "niveauConfiance": 1,
-      "hybridScore1": 0.4635,
-      "hybridScore2": 0.5365,
-      "gap": 0.0731
+      "favori": "Machac T.",
+      "confiance": "Élevée",
+      "niveauConfiance": 3,
+      "hybridScore1": 0.5869,
+      "hybridScore2": 0.4131,
+      "gap": 0.1739
     },
     "result": {
       "match": {
@@ -2357,10 +2357,10 @@
         }
       },
       "verdict": {
-        "favori": "Baez S.",
-        "ecart": 0.0731,
-        "confiance": "Conflit modéré",
-        "niveauConfiance": 1
+        "favori": "Machac T.",
+        "ecart": 0.1171,
+        "confiance": "Élevée",
+        "niveauConfiance": 3
       },
       "reglesActivees": {
         "joueur1": [
@@ -2622,29 +2622,29 @@
       },
       "hybrid": {
         "mainModel": {
-          "winner": "Baez S.",
+          "winner": "Machac T.",
           "total1": 4.1,
           "total2": 10.291875000000001,
-          "score1": 0.1754,
-          "score2": 0.8246
+          "score1": null,
+          "score2": null
         },
         "dataModel": {
           "winner": "Machac T.",
-          "score1": 0.5869,
-          "score2": 0.4131
+          "score1": 0.5183,
+          "score2": 0.4012
         },
         "merged": {
-          "winner": "Baez S.",
-          "score1": 0.4635,
-          "score2": 0.5365,
-          "gap": 0.0731,
+          "winner": "Machac T.",
+          "score1": 0.5869,
+          "score2": 0.4131,
+          "gap": 0.1739,
           "confidence": {
-            "label": "Conflit modéré",
-            "level": 1
+            "label": "Élevée",
+            "level": 3
           }
         },
         "agreement": {
-          "aligned": false
+          "aligned": true
         }
       }
     }
@@ -2663,11 +2663,11 @@
     "tournoi": "ATP Barcelona",
     "summary": {
       "favori": "Fils A.",
-      "confiance": "Élevée",
-      "niveauConfiance": 3,
-      "hybridScore1": 0.6254,
-      "hybridScore2": 0.3746,
-      "gap": 0.2508
+      "confiance": "Modérée",
+      "niveauConfiance": 2,
+      "hybridScore1": 0.5341,
+      "hybridScore2": 0.4659,
+      "gap": 0.0681
     },
     "result": {
       "match": {
@@ -2746,9 +2746,9 @@
       },
       "verdict": {
         "favori": "Fils A.",
-        "ecart": 0.2508,
-        "confiance": "Élevée",
-        "niveauConfiance": 3
+        "ecart": 0.0455,
+        "confiance": "Modérée",
+        "niveauConfiance": 2
       },
       "reglesActivees": {
         "joueur1": [],
@@ -3008,22 +3008,22 @@
           "winner": "Fils A.",
           "total1": 13.84938775510204,
           "total2": 7.26,
-          "score1": 0.8385,
-          "score2": 0.1615
+          "score1": null,
+          "score2": null
         },
         "dataModel": {
           "winner": "Fils A.",
-          "score1": 0.5341,
-          "score2": 0.4659
+          "score1": 0.5218,
+          "score2": 0.4763
         },
         "merged": {
           "winner": "Fils A.",
-          "score1": 0.6254,
-          "score2": 0.3746,
-          "gap": 0.2508,
+          "score1": 0.5341,
+          "score2": 0.4659,
+          "gap": 0.0681,
           "confidence": {
-            "label": "Élevée",
-            "level": 3
+            "label": "Modérée",
+            "level": 2
           }
         },
         "agreement": {
@@ -3041,9 +3041,9 @@
       "favori": "Tabilo A.",
       "confiance": "Élevée",
       "niveauConfiance": 3,
-      "hybridScore1": 0.7178,
-      "hybridScore2": 0.2822,
-      "gap": 0.4356
+      "hybridScore1": 0.5992,
+      "hybridScore2": 0.4008,
+      "gap": 0.1985
     },
     "result": {
       "match": {
@@ -3122,7 +3122,7 @@
       },
       "verdict": {
         "favori": "Tabilo A.",
-        "ecart": 0.4356,
+        "ecart": 0.1341,
         "confiance": "Élevée",
         "niveauConfiance": 3
       },
@@ -3387,19 +3387,19 @@
           "winner": "Tabilo A.",
           "total1": 20.197142857142858,
           "total2": -0.518275862068965,
-          "score1": 0.9944,
-          "score2": 0.0056
+          "score1": null,
+          "score2": null
         },
         "dataModel": {
           "winner": "Tabilo A.",
-          "score1": 0.5992,
-          "score2": 0.4008
+          "score1": 0.5758,
+          "score2": 0.4417
         },
         "merged": {
           "winner": "Tabilo A.",
-          "score1": 0.7178,
-          "score2": 0.2822,
-          "gap": 0.4356,
+          "score1": 0.5992,
+          "score2": 0.4008,
+          "gap": 0.1985,
           "confidence": {
             "label": "Élevée",
             "level": 3
@@ -3420,9 +3420,9 @@
       "favori": "Zverev A.",
       "confiance": "Élevée",
       "niveauConfiance": 3,
-      "hybridScore1": 0.7546,
-      "hybridScore2": 0.2454,
-      "gap": 0.5092
+      "hybridScore1": 0.6557,
+      "hybridScore2": 0.3443,
+      "gap": 0.3115
     },
     "result": {
       "match": {
@@ -3501,7 +3501,7 @@
       },
       "verdict": {
         "favori": "Zverev A.",
-        "ecart": 0.5092,
+        "ecart": 0.2148,
         "confiance": "Élevée",
         "niveauConfiance": 3
       },
@@ -3765,19 +3765,19 @@
           "winner": "Zverev A.",
           "total1": 16.734939759036145,
           "total2": -0.08705882352941172,
-          "score1": 0.9853,
-          "score2": 0.0147
+          "score1": null,
+          "score2": null
         },
         "dataModel": {
           "winner": "Zverev A.",
-          "score1": 0.6557,
-          "score2": 0.3443
+          "score1": 0.6273,
+          "score2": 0.4125
         },
         "merged": {
           "winner": "Zverev A.",
-          "score1": 0.7546,
-          "score2": 0.2454,
-          "gap": 0.5092,
+          "score1": 0.6557,
+          "score2": 0.3443,
+          "gap": 0.3115,
           "confidence": {
             "label": "Élevée",
             "level": 3
@@ -3796,11 +3796,11 @@
     "tournoi": "ATP Munich",
     "summary": {
       "favori": "Molcan A.",
-      "confiance": "Élevée",
-      "niveauConfiance": 3,
-      "hybridScore1": 0.6481,
-      "hybridScore2": 0.3519,
-      "gap": 0.2963
+      "confiance": "Légère",
+      "niveauConfiance": 1,
+      "hybridScore1": 0.5143,
+      "hybridScore2": 0.4857,
+      "gap": 0.0286
     },
     "result": {
       "match": {
@@ -3879,9 +3879,9 @@
       },
       "verdict": {
         "favori": "Molcan A.",
-        "ecart": 0.2963,
-        "confiance": "Élevée",
-        "niveauConfiance": 3
+        "ecart": 0.0191,
+        "confiance": "Légère",
+        "niveauConfiance": 1
       },
       "reglesActivees": {
         "joueur1": [],
@@ -4143,22 +4143,22 @@
           "winner": "Molcan A.",
           "total1": 14.842857142857142,
           "total2": 2.0949999999999998,
-          "score1": 0.9603,
-          "score2": 0.0397
+          "score1": null,
+          "score2": null
         },
         "dataModel": {
           "winner": "Molcan A.",
-          "score1": 0.5143,
-          "score2": 0.4857
+          "score1": 0.4413,
+          "score2": 0.4222
         },
         "merged": {
           "winner": "Molcan A.",
-          "score1": 0.6481,
-          "score2": 0.3519,
-          "gap": 0.2963,
+          "score1": 0.5143,
+          "score2": 0.4857,
+          "gap": 0.0286,
           "confidence": {
-            "label": "Élevée",
-            "level": 3
+            "label": "Légère",
+            "level": 1
           }
         },
         "agreement": {
@@ -4176,9 +4176,9 @@
       "favori": "Tsitsipas S.",
       "confiance": "Élevée",
       "niveauConfiance": 3,
-      "hybridScore1": 0.4244,
-      "hybridScore2": 0.5756,
-      "gap": 0.1511
+      "hybridScore1": 0.4097,
+      "hybridScore2": 0.5903,
+      "gap": 0.1805
     },
     "result": {
       "match": {
@@ -4257,7 +4257,7 @@
       },
       "verdict": {
         "favori": "Tsitsipas S.",
-        "ecart": 0.1511,
+        "ecart": 0.1217,
         "confiance": "Élevée",
         "niveauConfiance": 3
       },
@@ -4524,19 +4524,19 @@
           "winner": "Tsitsipas S.",
           "total1": 5.735813953488373,
           "total2": 6.396551724137931,
-          "score1": 0.4588,
-          "score2": 0.5412
+          "score1": null,
+          "score2": null
         },
         "dataModel": {
           "winner": "Tsitsipas S.",
-          "score1": 0.4097,
-          "score2": 0.5903
+          "score1": 0.4442,
+          "score2": 0.5659
         },
         "merged": {
           "winner": "Tsitsipas S.",
-          "score1": 0.4244,
-          "score2": 0.5756,
-          "gap": 0.1511,
+          "score1": 0.4097,
+          "score2": 0.5903,
+          "gap": 0.1805,
           "confidence": {
             "label": "Élevée",
             "level": 3
@@ -4555,11 +4555,11 @@
     "tournoi": "ATP Munich",
     "summary": {
       "favori": "Griekspoor T.",
-      "confiance": "Élevée",
-      "niveauConfiance": 3,
-      "hybridScore1": 0.6389,
-      "hybridScore2": 0.3611,
-      "gap": 0.2778
+      "confiance": "Modérée",
+      "niveauConfiance": 2,
+      "hybridScore1": 0.5374,
+      "hybridScore2": 0.4626,
+      "gap": 0.0747
     },
     "result": {
       "match": {
@@ -4638,9 +4638,9 @@
       },
       "verdict": {
         "favori": "Griekspoor T.",
-        "ecart": 0.2778,
-        "confiance": "Élevée",
-        "niveauConfiance": 3
+        "ecart": 0.0499,
+        "confiance": "Modérée",
+        "niveauConfiance": 2
       },
       "reglesActivees": {
         "joueur1": [],
@@ -4903,22 +4903,22 @@
           "winner": "Griekspoor T.",
           "total1": 5.845813953488372,
           "total2": -1.9714285714285713,
-          "score1": 0.8759,
-          "score2": 0.1241
+          "score1": null,
+          "score2": null
         },
         "dataModel": {
           "winner": "Griekspoor T.",
-          "score1": 0.5374,
-          "score2": 0.4626
+          "score1": 0.4678,
+          "score2": 0.4179
         },
         "merged": {
           "winner": "Griekspoor T.",
-          "score1": 0.6389,
-          "score2": 0.3611,
-          "gap": 0.2778,
+          "score1": 0.5374,
+          "score2": 0.4626,
+          "gap": 0.0747,
           "confidence": {
-            "label": "Élevée",
-            "level": 3
+            "label": "Modérée",
+            "level": 2
           }
         },
         "agreement": {
@@ -4934,11 +4934,11 @@
     "tournoi": "ATP Munich",
     "summary": {
       "favori": "Cobolli F.",
-      "confiance": "Conflit / Match piégeux",
-      "niveauConfiance": 0,
-      "hybridScore1": 0.5112,
-      "hybridScore2": 0.4888,
-      "gap": 0.0225
+      "confiance": "Modérée",
+      "niveauConfiance": 2,
+      "hybridScore1": 0.5395,
+      "hybridScore2": 0.4605,
+      "gap": 0.079
     },
     "result": {
       "match": {
@@ -5017,9 +5017,9 @@
       },
       "verdict": {
         "favori": "Cobolli F.",
-        "ecart": 0.0225,
-        "confiance": "Conflit / Match piégeux",
-        "niveauConfiance": 0
+        "ecart": 0.0528,
+        "confiance": "Modérée",
+        "niveauConfiance": 2
       },
       "reglesActivees": {
         "joueur1": [
@@ -5278,29 +5278,29 @@
       },
       "hybrid": {
         "mainModel": {
-          "winner": "Dedura D.",
+          "winner": "Cobolli F.",
           "total1": 2.4749999999999996,
           "total2": 3.3547826086956523,
-          "score1": 0.4452,
-          "score2": 0.5548
+          "score1": null,
+          "score2": null
         },
         "dataModel": {
           "winner": "Cobolli F.",
-          "score1": 0.5395,
-          "score2": 0.4605
+          "score1": 0.5031,
+          "score2": 0.4503
         },
         "merged": {
           "winner": "Cobolli F.",
-          "score1": 0.5112,
-          "score2": 0.4888,
-          "gap": 0.0225,
+          "score1": 0.5395,
+          "score2": 0.4605,
+          "gap": 0.079,
           "confidence": {
-            "label": "Conflit / Match piégeux",
-            "level": 0
+            "label": "Modérée",
+            "level": 2
           }
         },
         "agreement": {
-          "aligned": false
+          "aligned": true
         }
       }
     }
@@ -5312,11 +5312,11 @@
     "tournoi": "ATP Munich",
     "summary": {
       "favori": "Cilic M.",
-      "confiance": "Élevée",
-      "niveauConfiance": 3,
-      "hybridScore1": 0.615,
-      "hybridScore2": 0.385,
-      "gap": 0.23
+      "confiance": "Modérée",
+      "niveauConfiance": 2,
+      "hybridScore1": 0.5447,
+      "hybridScore2": 0.4553,
+      "gap": 0.0895
     },
     "result": {
       "match": {
@@ -5395,9 +5395,9 @@
       },
       "verdict": {
         "favori": "Cilic M.",
-        "ecart": 0.23,
-        "confiance": "Élevée",
-        "niveauConfiance": 3
+        "ecart": 0.0598,
+        "confiance": "Modérée",
+        "niveauConfiance": 2
       },
       "reglesActivees": {
         "joueur1": [
@@ -5662,22 +5662,22 @@
           "winner": "Cilic M.",
           "total1": 4.45,
           "total2": -0.5884615384615384,
-          "score1": 0.779,
-          "score2": 0.221
+          "score1": null,
+          "score2": null
         },
         "dataModel": {
           "winner": "Cilic M.",
-          "score1": 0.5447,
-          "score2": 0.4553
+          "score1": 0.4889,
+          "score2": 0.4291
         },
         "merged": {
           "winner": "Cilic M.",
-          "score1": 0.615,
-          "score2": 0.385,
-          "gap": 0.23,
+          "score1": 0.5447,
+          "score2": 0.4553,
+          "gap": 0.0895,
           "confidence": {
-            "label": "Élevée",
-            "level": 3
+            "label": "Modérée",
+            "level": 2
           }
         },
         "agreement": {
@@ -5692,12 +5692,12 @@
     "surface": "clay",
     "tournoi": "ATP Munich",
     "summary": {
-      "favori": "Darderi L.",
-      "confiance": "Conflit modéré",
-      "niveauConfiance": 1,
-      "hybridScore1": 0.3889,
-      "hybridScore2": 0.6111,
-      "gap": 0.2221
+      "favori": "Zhang Z.",
+      "confiance": "Très serré",
+      "niveauConfiance": 0,
+      "hybridScore1": 0.5061,
+      "hybridScore2": 0.4939,
+      "gap": 0.0121
     },
     "result": {
       "match": {
@@ -5775,10 +5775,10 @@
         }
       },
       "verdict": {
-        "favori": "Darderi L.",
-        "ecart": 0.2221,
-        "confiance": "Conflit modéré",
-        "niveauConfiance": 1
+        "favori": "Zhang Z.",
+        "ecart": 0.0081,
+        "confiance": "Très serré",
+        "niveauConfiance": 0
       },
       "reglesActivees": {
         "joueur1": [
@@ -6038,29 +6038,29 @@
       },
       "hybrid": {
         "mainModel": {
-          "winner": "Darderi L.",
+          "winner": "Zhang Z.",
           "total1": 3.6942857142857144,
           "total2": 11.831886792452831,
-          "score1": 0.1156,
-          "score2": 0.8844
+          "score1": null,
+          "score2": null
         },
         "dataModel": {
           "winner": "Zhang Z.",
-          "score1": 0.5061,
-          "score2": 0.4939
+          "score1": 0.4748,
+          "score2": 0.4667
         },
         "merged": {
-          "winner": "Darderi L.",
-          "score1": 0.3889,
-          "score2": 0.6111,
-          "gap": 0.2221,
+          "winner": "Zhang Z.",
+          "score1": 0.5061,
+          "score2": 0.4939,
+          "gap": 0.0121,
           "confidence": {
-            "label": "Conflit modéré",
-            "level": 1
+            "label": "Très serré",
+            "level": 0
           }
         },
         "agreement": {
-          "aligned": false
+          "aligned": true
         }
       }
     }
@@ -6074,9 +6074,9 @@
       "favori": "Kopriva V.",
       "confiance": "Élevée",
       "niveauConfiance": 3,
-      "hybridScore1": 0.3454,
-      "hybridScore2": 0.6546,
-      "gap": 0.3091
+      "hybridScore1": 0.4108,
+      "hybridScore2": 0.5892,
+      "gap": 0.1784
     },
     "result": {
       "match": {
@@ -6155,7 +6155,7 @@
       },
       "verdict": {
         "favori": "Kopriva V.",
-        "ecart": 0.3091,
+        "ecart": 0.1202,
         "confiance": "Élevée",
         "niveauConfiance": 3
       },
@@ -6421,19 +6421,19 @@
           "winner": "Kopriva V.",
           "total1": -1.6914285714285717,
           "total2": 4.033333333333333,
-          "score1": 0.1929,
-          "score2": 0.8071
+          "score1": null,
+          "score2": null
         },
         "dataModel": {
           "winner": "Kopriva V.",
-          "score1": 0.4108,
-          "score2": 0.5892
+          "score1": 0.3594,
+          "score2": 0.4796
         },
         "merged": {
           "winner": "Kopriva V.",
-          "score1": 0.3454,
-          "score2": 0.6546,
-          "gap": 0.3091,
+          "score1": 0.4108,
+          "score2": 0.5892,
+          "gap": 0.1784,
           "confidence": {
             "label": "Élevée",
             "level": 3
@@ -6452,11 +6452,11 @@
     "tournoi": "ATP Munich",
     "summary": {
       "favori": "Topo M.",
-      "confiance": "Élevée",
-      "niveauConfiance": 3,
-      "hybridScore1": 0.3754,
-      "hybridScore2": 0.6246,
-      "gap": 0.2491
+      "confiance": "Très serré",
+      "niveauConfiance": 0,
+      "hybridScore1": 0.4919,
+      "hybridScore2": 0.5081,
+      "gap": 0.0162
     },
     "result": {
       "match": {
@@ -6535,9 +6535,9 @@
       },
       "verdict": {
         "favori": "Topo M.",
-        "ecart": 0.2491,
-        "confiance": "Élevée",
-        "niveauConfiance": 3
+        "ecart": 0.0108,
+        "confiance": "Très serré",
+        "niveauConfiance": 0
       },
       "reglesActivees": {
         "joueur1": [
@@ -6799,22 +6799,22 @@
           "winner": "Topo M.",
           "total1": 0.6522222222222223,
           "total2": 9.278571428571428,
-          "score1": 0.1037,
-          "score2": 0.8963
+          "score1": null,
+          "score2": null
         },
         "dataModel": {
           "winner": "Topo M.",
-          "score1": 0.4919,
-          "score2": 0.5081
+          "score1": 0.4783,
+          "score2": 0.4891
         },
         "merged": {
           "winner": "Topo M.",
-          "score1": 0.3754,
-          "score2": 0.6246,
-          "gap": 0.2491,
+          "score1": 0.4919,
+          "score2": 0.5081,
+          "gap": 0.0162,
           "confidence": {
-            "label": "Élevée",
-            "level": 3
+            "label": "Très serré",
+            "level": 0
           }
         },
         "agreement": {
