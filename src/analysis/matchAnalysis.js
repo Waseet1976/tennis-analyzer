@@ -206,11 +206,15 @@ function getTop50ReliabilityPenalty(statsTop50) {
  * @returns {number} score 0–100 (50 = neutre)
  */
 function getTop50SurfaceScore(statsTop50, surface) {
-  if (!statsTop50) return 50;
+  if (!statsTop50) {
+    console.log('[TOP50 DEBUG] statsTop50 absent → score=50 (neutre)');
+    return 50;
+  }
 
   let n          = 0;
   let winRateRaw = null;
 
+  // ─── Sélection colonnes selon surface ────────────────────────────────────
   if (surface === 'clay') {
     n          = Number(statsTop50.matches_clay_vs_top50 || 0);
     winRateRaw = statsTop50.win_rate_clay_vs_top50;
@@ -218,19 +222,77 @@ function getTop50SurfaceScore(statsTop50, surface) {
     n          = Number(statsTop50.matches_hard_vs_top50 || 0);
     winRateRaw = statsTop50.win_rate_hard_vs_top50;
   } else {
+    // grass ou surface inconnue → stats globales vs top 50
     n          = Number(statsTop50.matches_vs_top50 || 0);
     winRateRaw = statsTop50.win_rate_vs_top50;
   }
 
-  if (winRateRaw === null || winRateRaw === undefined || winRateRaw === '') return 50;
+  // ─── Fallback vers stats globales si la surface manque ───────────────────
+  if ((winRateRaw === null || winRateRaw === undefined || winRateRaw === '') &&
+      (surface === 'clay' || surface === 'hard' || surface === 'indoor_hard')) {
+    console.log(`[TOP50 DEBUG] stats "${surface}" absentes → fallback vers stats globales`);
+    n          = Number(statsTop50.matches_vs_top50 || 0);
+    winRateRaw = statsTop50.win_rate_vs_top50;
+  }
 
-  const s = String(winRateRaw).replace('%', '').replace(',', '.').trim();
-  let winRate = parseFloat(s);
-  if (isNaN(winRate)) return 50;
-  if (winRate <= 1) winRate *= 100; // 0–1 → 0–100
+  console.log(`[TOP50 DEBUG] surface="${surface}" | matches(n)=${n} | winRateRaw=${JSON.stringify(winRateRaw)}`);
 
-  const facteur = n / (n + 20);
-  return (winRate * facteur) + (50 * (1 - facteur));
+  if (winRateRaw === null || winRateRaw === undefined || winRateRaw === '') {
+    console.log('[TOP50 DEBUG] winRateRaw absent → score=50 (neutre)');
+    return 50;
+  }
+
+  // ─── Parsing robuste du taux de victoire ──────────────────────────────────
+  // Formats possibles (locale française, Google Sheets) :
+  //   "0,2857142857"  → fraction décimale 0–1  → × 100
+  //   "28,57%"        → pourcentage avec %     → déjà 0–100 (ne pas × 100)
+  //   "28.57%"        → pourcentage anglais    → déjà 0–100
+  //   "28,57"         → % sans symbole, > 1   → garder tel quel
+  //   "1"             → fraction = 100 %       → × 100
+  //
+  // Règle clé : détecter la présence du "%" AVANT de le supprimer.
+  // Si "%" présent → valeur déjà en 0-100, pas de multiplication.
+  // Si "%" absent et valeur ≤ 1 → fraction → × 100.
+  // Si "%" absent et valeur > 1  → déjà un pourcentage.
+
+  const raw    = String(winRateRaw).trim();
+  const hasPct = raw.includes('%');                        // lu AVANT suppression
+
+  const cleaned = raw.replace('%', '').replace(',', '.').trim();
+  let winRate   = parseFloat(cleaned);
+
+  console.log(`[TOP50 DEBUG] raw="${raw}" | hasPct=${hasPct} | cleaned="${cleaned}" | parsed=${winRate}`);
+
+  if (isNaN(winRate)) {
+    console.log('[TOP50 DEBUG] winRate NaN → score=50 (neutre)');
+    return 50;
+  }
+
+  if (hasPct) {
+    // "%" était présent → valeur déjà exprimée en 0-100
+    console.log(`[TOP50 DEBUG] hasPct=true → winRate=${winRate} déjà en %`);
+  } else if (winRate <= 1) {
+    // Fraction décimale (ex: 0.2857 = 28.57 %)
+    console.log(`[TOP50 DEBUG] hasPct=false, ${winRate} ≤ 1 → × 100 = ${winRate * 100}`);
+    winRate *= 100;
+  } else {
+    // Pas de %, valeur > 1 → déjà un pourcentage (ex: "28,57" → 28.57 %)
+    console.log(`[TOP50 DEBUG] hasPct=false, ${winRate} > 1 → déjà en %`);
+  }
+
+  // Clamp de sécurité pour éviter des valeurs hors plage
+  winRate = Math.max(0, Math.min(100, winRate));
+
+  // ─── Rétrécissement (shrinkage) vers 50 neutre ───────────────────────────
+  // Plus n est grand, plus scoreBrut reflète fidèlement le vrai winRate.
+  // Formule : facteur = n/(n+20) ; scoreBrut = winRate×f + 50×(1−f)
+  const facteur   = n / (n + 20);
+  const scoreBrut = (winRate * facteur) + (50 * (1 - facteur));
+  const noteSur10 = scoreBrut / 10;
+
+  console.log(`[TOP50 DEBUG] winRate final=${winRate} | facteur=${facteur.toFixed(3)} | scoreBrut=${scoreBrut.toFixed(2)} | note/10=${noteSur10.toFixed(2)}`);
+
+  return scoreBrut;  // plage 0–100 ; divisé par 10 dans buildScores
 }
 
 
@@ -260,6 +322,7 @@ function buildScores(pd, od, scoreAResult, surfaceStats, h2hPct, h2hSurface, pts
   const top50SurfaceScore = getTop50SurfaceScore(pd.statsTop50, surface);
   const top50Note         = top50SurfaceScore / 10;          // 0–100 → 0–10
   const top50Adjustment   = (top50Note - 5) * 0.3;           // bonus/malus ≤ ±1.5
+  console.log(`[TOP50 DEBUG] RÉSUMÉ buildScores | penalty=${top50Penalty} | scoreBrut=${top50SurfaceScore.toFixed(2)} | note/10=${top50Note.toFixed(2)} | adjustment=${top50Adjustment.toFixed(3)} | rawO=${rawO} | O final=${((rawO * top50Penalty) + top50Adjustment).toFixed(2)}`);
 
   return {
     A: scoreAResult.score,

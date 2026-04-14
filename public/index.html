@@ -1019,6 +1019,7 @@ function calculNoteTop50(statsTop50, surface = 'clay') {
   let winRate = null;
   let matches = 0;
 
+  // Lecture des bonnes clés selon la surface
   if (surface === 'clay') {
     winRate = toNumber(statsTop50.win_rate_clay_vs_top50);
     matches = toNumber(statsTop50.matches_clay_vs_top50) ?? 0;
@@ -1030,7 +1031,17 @@ function calculNoteTop50(statsTop50, surface = 'clay') {
     matches = toNumber(statsTop50.matches_vs_top50) ?? 0;
   }
 
-  return ajusterFiabilite(winRate ?? 50, matches);
+  // Donnée absente → note neutre
+  if (winRate === null) return 5;
+
+  // toNumber normalise le séparateur et retire le "%".
+  // Google Sheets stocke parfois le win rate en fraction décimale (0–1)
+  // et parfois déjà en pourcentage (0–100).
+  // Règle : si la valeur est ≤ 1, c'est une fraction → convertir en %.
+  //   ex : 0,6923 → 69,23     |     1 → 100     |     0,5 → 50
+  if (winRate <= 1) winRate *= 100;
+
+  return ajusterFiabilite(winRate, matches);
 }
 
 
