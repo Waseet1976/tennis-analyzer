@@ -31,14 +31,14 @@ function generateReport(p1, p2, s1, s2, detailsA1, detailsA2, surface, tournamen
 
 
     scores: {
-      joueur1: { A:s1.A||null, B:s1.B||null, C:s1.C||null, D:s1.D||null,
-                 E:s1.E||null, F:s1.F||null, G:s1.G||null, H:s1.H||null,
-                 I:s1.I||null, J:s1.J||null, K:s1.K||null, L:s1.L||null,
-                 M:s1.M||null, N:s1.N||null, O:s1.O||null, TOTAL:total1 },
-      joueur2: { A:s2.A||null, B:s2.B||null, C:s2.C||null, D:s2.D||null,
-                 E:s2.E||null, F:s2.F||null, G:s2.G||null, H:s2.H||null,
-                 I:s2.I||null, J:s2.J||null, K:s2.K||null, L:s2.L||null,
-                 M:s2.M||null, N:s2.N||null, O:s2.O||null, TOTAL:total2 }
+      joueur1: { A:s1.A??null, B:s1.B??null, C:s1.C??null, D:s1.D??null,
+                 E:s1.E??null, F:s1.F??null, G:s1.G??null, H:s1.H??null,
+                 I:s1.I??null, J:s1.J??null, K:s1.K??null, L:s1.L??null,
+                 M:s1.M??null, N:s1.N??null, O:s1.O??null, TOTAL:total1 },
+      joueur2: { A:s2.A??null, B:s2.B??null, C:s2.C??null, D:s2.D??null,
+                 E:s2.E??null, F:s2.F??null, G:s2.G??null, H:s2.H??null,
+                 I:s2.I??null, J:s2.J??null, K:s2.K??null, L:s2.L??null,
+                 M:s2.M??null, N:s2.N??null, O:s2.O??null, TOTAL:total2 }
     },
     verdict: { favori:winner, ecart:gap, confiance, niveauConfiance },
     reglesActivees: {

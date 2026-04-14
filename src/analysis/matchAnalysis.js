@@ -165,45 +165,72 @@ async function buildPlayerData(playerName, surface, baseData) {
  * @param {string} surface       - surface cible
  */
 
+// ─── Fiabilité top 50 ────────────────────────────────────────────────────────
+
+/**
+ * Facteur de pénalité de fiabilité (discret) basé sur le nombre total de matchs
+ * joués contre le top 50. Moins de matchs = stats moins fiables = Score O réduit.
+ *
+ *   <5  matchs → 0.4   (très peu fiable)
+ *   5+  matchs → 0.6
+ *   10+ matchs → 0.8
+ *   20+ matchs → 0.9
+ *   50+ matchs → 1.0   (pleinement fiable)
+ *
+ * @param {Object|null} statsTop50
+ * @returns {number} facteur entre 0.4 et 1.0
+ */
 function getTop50ReliabilityPenalty(statsTop50) {
-  const matchs = Number(statsTop50?.matches_vs_top50 || 0);
-
-  if (matchs >= 50) return 1.0;
-  if (matchs >= 20) return 0.9;
-  if (matchs >= 10) return 0.8;
-  if (matchs >= 5) return 0.6;
-
+  const n = Number(statsTop50?.matches_vs_top50 || 0);
+  if (n >= 50) return 1.0;
+  if (n >= 20) return 0.9;
+  if (n >= 10) return 0.8;
+  if (n >=  5) return 0.6;
   return 0.4;
 }
-function getTop50SurfaceScore(statsTop50, surface = 'clay') {
-  if (!statsTop50) return 0;
 
-  let matches = 0;
-  let winRate = null;
+/**
+ * Score top 50 corrigé par fiabilité, ramené sur 0–100.
+ * Formule de rétrécissement vers 50 (neutre) :
+ *   facteur = n / (n + 20)
+ *   score   = (winRate × facteur) + (50 × (1 - facteur))
+ *
+ * Exemple :  2 / 4  (50 % brut)  → facteur ≈ 0.17 → score ≈ 54
+ *            6 / 21 (28.6% brut) → facteur ≈ 0.51 → score ≈ 39
+ * → L'écart est rendu plus honnête : le joueur avec 6/21 pénalisé davantage.
+ *
+ * Utilise les stats surface si disponibles (clay / hard), sinon stats globales.
+ *
+ * @param {Object|null} statsTop50
+ * @param {string}      surface - clay | hard | indoor_hard | grass
+ * @returns {number} score 0–100 (50 = neutre)
+ */
+function getTop50SurfaceScore(statsTop50, surface) {
+  if (!statsTop50) return 50;
+
+  let n          = 0;
+  let winRateRaw = null;
 
   if (surface === 'clay') {
-    matches = Number(statsTop50.matches_clay_vs_top50 || 0);
-    winRate = parseFloat(String(statsTop50.win_rate_clay_vs_top50 || '').replace(',', '.'));
+    n          = Number(statsTop50.matches_clay_vs_top50 || 0);
+    winRateRaw = statsTop50.win_rate_clay_vs_top50;
   } else if (surface === 'hard' || surface === 'indoor_hard') {
-    matches = Number(statsTop50.matches_hard_vs_top50 || 0);
-    winRate = parseFloat(String(statsTop50.win_rate_hard_vs_top50 || '').replace(',', '.'));
+    n          = Number(statsTop50.matches_hard_vs_top50 || 0);
+    winRateRaw = statsTop50.win_rate_hard_vs_top50;
   } else {
-    matches = Number(statsTop50.matches_vs_top50 || 0);
-    winRate = parseFloat(String(statsTop50.win_rate_vs_top50 || '').replace(',', '.'));
+    n          = Number(statsTop50.matches_vs_top50 || 0);
+    winRateRaw = statsTop50.win_rate_vs_top50;
   }
 
-  if (isNaN(winRate)) return 0;
+  if (winRateRaw === null || winRateRaw === undefined || winRateRaw === '') return 50;
 
-  // convertir si format 0–1 → %
-  if (winRate > 0 && winRate <= 1) {
-    winRate = winRate * 100;
-  }
+  const s = String(winRateRaw).replace('%', '').replace(',', '.').trim();
+  let winRate = parseFloat(s);
+  if (isNaN(winRate)) return 50;
+  if (winRate <= 1) winRate *= 100; // 0–1 → 0–100
 
-  // correction fiabilité
-  const facteur = matches / (matches + 20);
-  const score = (winRate * facteur) + (50 * (1 - facteur));
-
-  return score; // sur 100
+  const facteur = n / (n + 20);
+  return (winRate * facteur) + (50 * (1 - facteur));
 }
 
 
@@ -216,7 +243,8 @@ function buildScores(pd, od, scoreAResult, surfaceStats, h2hPct, h2hSurface, pts
   const age      = pd.age  ?? 25; // neutre si inconnu
 
   // Score A sur les 5 derniers matchs ATP (pour Score G)
-  const scoreA5Result = calculateScoreA(pd.last5ATP, surface);
+  // Utilise la même formule que scoreAResult pour rester dans la même plage [-2, +2]
+  const scoreA5Result = calculateScoreAFromDataModel(pd.last5ATP ?? [], surface);
   const scoreA5val    = scoreA5Result.score ?? scoreAResult.score; // fallback sur A10
 
   const safeSurfaceStats = surfaceStats ?? { pct: 50, titres: 0, finales: 0 };
@@ -227,15 +255,11 @@ function buildScores(pd, od, scoreAResult, surfaceStats, h2hPct, h2hSurface, pts
     pd.seasonRecord
   ).score;
 
-  const top50Penalty = getTop50ReliabilityPenalty(pd.statsTop50);
-const top50SurfaceScore = getTop50SurfaceScore(pd.statsTop50, surface);
-
-// convertir sur 0–10
-const top50Note = top50SurfaceScore / 10;
-
-// bonus/malus léger autour de 5
-const top50Adjustment = (top50Note - 5) * 0.3;
-
+  // Fiabilité top 50 → impact sur Score O uniquement
+  const top50Penalty      = getTop50ReliabilityPenalty(pd.statsTop50);
+  const top50SurfaceScore = getTop50SurfaceScore(pd.statsTop50, surface);
+  const top50Note         = top50SurfaceScore / 10;          // 0–100 → 0–10
+  const top50Adjustment   = (top50Note - 5) * 0.3;           // bonus/malus ≤ ±1.5
 
   return {
     A: scoreAResult.score,
@@ -250,11 +274,10 @@ const top50Adjustment = (top50Note - 5) * 0.3;
     J: calculateScoreJ(scoreAResult.score, pd.avgOpponentRank).score,
     K: calculateScoreK(age).score,
     L: calculateScoreL(pd.wind, pd.temp, pd.humidity, pd.style, age, surface).score,
-  M: calculateScoreM(scoreAResult.score).score,
-N: calculateScoreN(pd.consecutiveOutsiderWins).score,
-O: (rawO * top50Penalty) + top50Adjustment,
-notes: [],
-
+    M: calculateScoreM(scoreAResult.score).score,
+    N: calculateScoreN(pd.consecutiveOutsiderWins).score,
+    O: (rawO * top50Penalty) + top50Adjustment,
+    notes: [],
   };
 }
 function normalizeMainScores(total1, total2) {
@@ -322,92 +345,69 @@ function getMatchWeight(match, targetSurface) {
 
 
 function calculateScoreAFromDataModel(allMatches, targetSurface = 'clay') {
-
   if (!allMatches || allMatches.length === 0) {
     return {
       score: 0,
-      details: [
-        {
-          source: 'comparison_recent_form',
-          last5Wins: 0,
-          last5Total: 0,
-          last10Wins: 0,
-          last10Total: 0,
-          avgDiff: 0,
-          recentFormBlock: 0.5
-        }
-      ]
+      details: [{
+        source:          'comparison_recent_form',
+        last5Wins:       0, last5Total:  0,
+        last10Wins:      0, last10Total: 0,
+        avgDiff:         0,
+        recentFormBlock: 0.5,
+      }],
     };
   }
 
-  const recentMatches = allMatches.slice(0, 10);
-const last5 = recentMatches.slice(0, 5);
-const last10 = recentMatches;
+  const last10 = allMatches.slice(0, 10);
+  const last5  = last10.slice(0, 5);
 
-console.log('DEBUG SCORE A MATCHES =', last10.map(m => ({
-  adversaire: m.adversaire,
-  niveau: m.niveau,
-  tournament: m.tournament,
-  rangAdversaire: m.rangAdversaire,
-  surface: m.surface,
-  resultat: m.resultat,
-  date: m.date
-})));
+  /**
+   * Win rate pondéré pour un groupe de matchs.
+   * Poids final = niveau tournoi × classement adverse × surface
+   *   GS=1.40 | M1000=1.25 | ATP500=1.15 | ATP250=1.00 | Challenger=0.65
+   *   Top10=1.40 | Top20=1.30 | Top50=1.15 | Top100=1.00 | au-delà=0.85
+   *   Même surface=1.20 | Différente=0.90
+   */
+  const weightedRate = (matches) => {
+    let wins = 0, total = 0;
+    for (const m of matches) {
+      const w = getMatchWeight(m, targetSurface); // getTournamentWeight × getOpponentRankWeight × getSurfaceWeight
+      total += w;
+      if (m.resultat === 'V') wins += w;
+    }
+    return total > 0 ? wins / total : 0.5;
+  };
 
+  const last5Rate  = weightedRate(last5);
+  const last10Rate = weightedRate(last10);
 
-const weightedWins5 = last5.reduce((sum, m) => {
-  const w = getMatchWeight(m, targetSurface);
-  return sum + (m.resultat === 'V' ? w : 0);
-}, 0);
+  // Comptages bruts pour les détails (non pondérés)
+  const last5Wins  = last5.filter(m => m.resultat === 'V').length;
+  const last10Wins = last10.filter(m => m.resultat === 'V').length;
 
-const weightedTotal5 = last5.reduce((sum, m) => {
-  return sum + getMatchWeight(m, targetSurface);
-}, 0);
-
-const weightedWins10 = last10.reduce((sum, m) => {
-  const w = getMatchWeight(m, targetSurface);
-  return sum + (m.resultat === 'V' ? w : 0);
-}, 0);
-
-const weightedTotal10 = last10.reduce((sum, m) => {
-  return sum + getMatchWeight(m, targetSurface);
-}, 0);
-
-const last5Wins = last5.filter(m => m.resultat === 'V').length;
-const last10Wins = last10.filter(m => m.resultat === 'V').length;
-
-const last5Rate = weightedTotal5 > 0 ? weightedWins5 / weightedTotal5 : 0.5;
-const last10Rate = weightedTotal10 > 0 ? weightedWins10 / weightedTotal10 : 0.5;
-
-
+  // Différentiel moyen de jeux sur les 10 derniers matchs
   const withDiff = last10.filter(m => m.gameDiff !== null && m.gameDiff !== undefined);
-  const avgDiff = withDiff.length > 0
+  const avgDiff  = withDiff.length > 0
     ? withDiff.reduce((sum, m) => sum + m.gameDiff, 0) / withDiff.length
     : 0;
-
   const normDiff = clampValue((avgDiff + 5) / 10, 0, 1);
 
   const recentFormBlock =
-    (last5Rate * 0.50) +
+    (last5Rate  * 0.50) +
     (last10Rate * 0.30) +
-    (normDiff * 0.20);
+    (normDiff   * 0.20);
 
-  const rawScore = (recentFormBlock - 0.5) * 8;
-  const score = clampValue(rawScore, -2, 2);
+  const score = clampValue((recentFormBlock - 0.5) * 8, -2, 2);
 
   return {
     score: parseFloat(score.toFixed(2)),
-    details: [
-      {
-        source: 'comparison_recent_form',
-        last5Wins,
-        last5Total: last5.length,
-        last10Wins,
-        last10Total: last10.length,
-        avgDiff: parseFloat(avgDiff.toFixed(2)),
-        recentFormBlock: parseFloat(recentFormBlock.toFixed(4))
-      }
-    ]
+    details: [{
+      source:          'comparison_recent_form',
+      last5Wins,       last5Total:  last5.length,
+      last10Wins,      last10Total: last10.length,
+      avgDiff:         parseFloat(avgDiff.toFixed(2)),
+      recentFormBlock: parseFloat(recentFormBlock.toFixed(4)),
+    }],
   };
 }
 // ─── Fonction principale ──────────────────────────────────────────────────────
@@ -434,6 +434,18 @@ async function analyzeMatch(player1Name, player2Name, surface, tournament) {
     fetchCompletePlayerData(player2Name, surface),
   ]);
 
+  // ─── DEBUG DONNÉES ────────────────────────────────────────────────────────
+  for (const [name, d] of [[player1Name, baseData1], [player2Name, baseData2]]) {
+    console.log(
+      `[DATA] ${name.padEnd(20)}` +
+      ` | matchs=${String(d?.allMatches?.length ?? 0).padStart(4)}` +
+      ` | stats=${d?.stats     ? '✓' : '✗'}` +
+      ` | stats1y=${d?.stats1y  ? '✓' : '✗'}` +
+      ` | top50=${d?.statsTop50 ? '✓' : '✗'}`
+    );
+  }
+  // ─────────────────────────────────────────────────────────────────────────
+
 const player1HasMinimumData =
   (baseData1?.allMatches?.length ?? 0) > 0 ||
   !!baseData1?.stats ||
@@ -451,27 +463,6 @@ if (!player1HasMinimumData || !player2HasMinimumData) {
     }`
   );
 }
-
-
-console.log('DEBUG PLAYER 1', {
-  name: player1Name,
-  allMatches: baseData1?.allMatches?.length,
-  last10ATP: baseData1?.last10ATP?.length,
-  stats: !!baseData1?.stats,
-  stats1y: !!baseData1?.stats1y,
-  statsTop50: !!baseData1?.statsTop50,
-  source: baseData1?.source
-});
-
-console.log('DEBUG PLAYER 2', {
-  name: player2Name,
-  allMatches: baseData2?.allMatches?.length,
-  last10ATP: baseData2?.last10ATP?.length,
-  stats: !!baseData2?.stats,
-  stats1y: !!baseData2?.stats1y,
-  statsTop50: !!baseData2?.statsTop50,
-  source: baseData2?.source
-});
 
 
   console.log(` ${player1Name} : ${baseData1.source.sheets} matchs Sheets + ${baseData1.source.web} matchs web`);

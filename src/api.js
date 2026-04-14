@@ -159,6 +159,7 @@ router.get('/players', async (req, res) => {
     res.json(filtered.slice(0, 25));
   } catch (err) {
     console.error('[API] /players error full:', err);
+    res.status(500).json({ error: err.message });
   }
 });
 

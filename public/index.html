@@ -1122,6 +1122,16 @@ function remplirTableStats(ps1, ps2) {
 
   const currentSurface = document.getElementById('surface')?.value || 'clay';
 
+  // Noms réels — priorité : stats.player > stats1y.player > fallback générique
+  const nameP1 = ps1?.stats?.player || ps1?.stats1y?.player || 'Joueur 1';
+  const nameP2 = ps2?.stats?.player || ps2?.stats1y?.player || 'Joueur 2';
+
+  // Remplir les en-têtes de colonne avec les vrais noms
+  const th1 = document.getElementById('stats-col-j1');
+  const th2 = document.getElementById('stats-col-j2');
+  if (th1) th1.textContent = nameP1;
+  if (th2) th2.textContent = nameP2;
+
 const note1 = calculateStatsNote(ps1, currentSurface);
 const note2 = calculateStatsNote(ps2, currentSurface);
 
@@ -1131,14 +1141,14 @@ const top50Note2 = calculNoteTop50(ps2?.statsTop50, currentSurface);
 let avantageStats = '=';
 
 if (note1.final > note2.final) {
-  avantageStats = 'Joueur 1';
+  avantageStats = esc(nameP1);
 } else if (note2.final > note1.final) {
-  avantageStats = 'Joueur 2';
+  avantageStats = esc(nameP2);
 }
   rows.push(`
     <tr>
       <td colspan="3" style="background:#14532d;color:#dcfce7;font-weight:700;padding:12px;border-bottom:1px solid #334155">
-        🧠 Note stats finale , ${note1.final}/10 pour ${esc(ps1?.stats?.player || 'Joueur 1')} , ${note2.final}/10 pour ${esc(ps2?.stats?.player || 'Joueur 2')}
+        🧠 Note stats finale — ${esc(nameP1)} : ${note1.final}/10 — ${esc(nameP2)} : ${note2.final}/10
       </td>
     </tr>
   `);

@@ -172,9 +172,9 @@ function calculateScoreL(wind, temp, humidity, playerStyle, playerAge, targetSur
  * @param {number} scoreA - Score A du joueur
  */
 function calculateScoreM(scoreA) {
-  if (scoreA < 0)  return { score: -2, note: 'Règle 2 activée' };
-  if (scoreA > 10) return { score:  2 };
-  if (scoreA > 5)  return { score:  1 };
+  if (scoreA < 0)    return { score: -2, note: 'Règle 2 activée' };
+  if (scoreA > 1.5)  return { score:  2 };   // score A dans [-2, +2] (calculateScoreAFromDataModel)
+  if (scoreA > 0.5)  return { score:  1 };
   return { score: 0 };
 }
 
