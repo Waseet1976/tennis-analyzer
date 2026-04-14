@@ -1092,30 +1092,33 @@ function ajusterFiabilite(winrate, matchs) {
 function calculNoteTop50(statsTop50, surface = 'clay') {
   if (!statsTop50) return 5;
 
-  let winRate = null;
+  let wins    = null;
   let matches = 0;
 
-  // Lecture des bonnes clés selon la surface
+  // Calcul depuis les colonnes de comptage (immunisé contre win_rate = "1" de Sheets)
   if (surface === 'clay') {
-    winRate = toNumber(statsTop50.win_rate_clay_vs_top50);
+    wins    = toNumber(statsTop50.wins_clay_vs_top50);
     matches = toNumber(statsTop50.matches_clay_vs_top50) ?? 0;
   } else if (surface === 'hard' || surface === 'indoor_hard') {
-    winRate = toNumber(statsTop50.win_rate_hard_vs_top50);
+    wins    = toNumber(statsTop50.wins_hard_vs_top50);
     matches = toNumber(statsTop50.matches_hard_vs_top50) ?? 0;
   } else {
-    winRate = toNumber(statsTop50.win_rate_vs_top50);
+    wins    = toNumber(statsTop50.wins_vs_top50);
     matches = toNumber(statsTop50.matches_vs_top50) ?? 0;
   }
 
-  // Donnée absente → note neutre
-  if (winRate === null) return 5;
+  if (wins === null || matches === 0) return 5;
 
-  // toNumber normalise le séparateur et retire le "%".
-  // Google Sheets stocke parfois le win rate en fraction décimale (0–1)
-  // et parfois déjà en pourcentage (0–100).
-  // Règle : si la valeur est ≤ 1, c'est une fraction → convertir en %.
-  //   ex : 0,6923 → 69,23     |     1 → 100     |     0,5 → 50
-  if (winRate <= 1) winRate *= 100;
+  const winRate = (wins / matches) * 100; // 0–100
+
+  console.log('[calculNoteTop50]', {
+    surface,
+    wins_raw: surface === 'clay' ? statsTop50.wins_clay_vs_top50 : surface === 'hard' ? statsTop50.wins_hard_vs_top50 : statsTop50.wins_vs_top50,
+    matches_raw: surface === 'clay' ? statsTop50.matches_clay_vs_top50 : surface === 'hard' ? statsTop50.matches_hard_vs_top50 : statsTop50.matches_vs_top50,
+    win_rate_brute_ignoree: surface === 'clay' ? statsTop50.win_rate_clay_vs_top50 : surface === 'hard' ? statsTop50.win_rate_hard_vs_top50 : statsTop50.win_rate_vs_top50,
+    winRate_calcule: winRate.toFixed(1) + '%',
+    matches,
+  });
 
   return ajusterFiabilite(winRate, matches);
 }
@@ -1272,6 +1275,8 @@ rows.push(`
   // Fusionner les clés de stats + stats1y + statsTop50
   const sources1 = [ps1?.stats, ps1?.stats1y, ps1?.statsTop50];
   const sources2 = [ps2?.stats, ps2?.stats1y, ps2?.statsTop50];
+
+  console.log('[FRONT STATS_TOP50]', { p1: ps1?.statsTop50, p2: ps2?.statsTop50 });
   const allKeys  = new Set();
 
   [sources1, sources2].forEach(srcs =>
@@ -1310,8 +1315,6 @@ rows.push(`
    {
   title: '🏆 Niveau vs Top 50',
   keys: [
-    'matches_vs_top50',
-    'win_rate_vs_top50',
     'matches_clay_vs_top50',
     'wins_clay_vs_top50',
     'win_rate_clay_vs_top50',
@@ -1338,8 +1341,28 @@ rows.push(`
 
       visibleKeys.forEach(key => {
         const label = STATS_LABELS[key] || key;
-        const v1 = sources1.map(s => s?.[key]).find(v => v !== null && v !== undefined);
-        const v2 = sources2.map(s => s?.[key]).find(v => v !== null && v !== undefined);
+
+        // win_rate_*_vs_top50 : recalculé depuis wins/matches (la colonne win_rate de Sheets est corrompue)
+        const top50RateMap = {
+          'win_rate_vs_top50':      ['wins_vs_top50',      'matches_vs_top50'],
+          'win_rate_clay_vs_top50': ['wins_clay_vs_top50', 'matches_clay_vs_top50'],
+          'win_rate_hard_vs_top50': ['wins_hard_vs_top50', 'matches_hard_vs_top50'],
+        };
+
+        let v1, v2;
+        if (top50RateMap[key]) {
+          const [wKey, mKey] = top50RateMap[key];
+          const computeRate = (srcs) => {
+            const w = parseFloat(String(srcs.map(s => s?.[wKey]).find(v => v !== null && v !== undefined) ?? '').replace(',', '.'));
+            const m = parseFloat(String(srcs.map(s => s?.[mKey]).find(v => v !== null && v !== undefined) ?? '').replace(',', '.'));
+            return (m > 0) ? ((w / m) * 100).toFixed(1) + '%' : null;
+          };
+          v1 = computeRate(sources1);
+          v2 = computeRate(sources2);
+        } else {
+          v1 = sources1.map(s => s?.[key]).find(v => v !== null && v !== undefined);
+          v2 = sources2.map(s => s?.[key]).find(v => v !== null && v !== undefined);
+        }
 
         rows.push(`<tr>
           <td style="color:#94a3b8;font-size:0.82rem">${esc(label)}</td>

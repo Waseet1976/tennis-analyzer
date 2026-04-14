@@ -135,9 +135,8 @@ function calcOneYearBlock(stats1y, surface) {
 // ─── Bloc 3 : Top 50 (STATS_TOP50) ────────────────────────────────────────────
 
 /**
- * Calcule le bloc top 50.
- * Choisit win_rate_clay_vs_top50 ou win_rate_hard_vs_top50 selon la surface.
- * Réduit automatiquement le poids si moins de 5 matchs vs top 50.
+ * Calcule le bloc top 50 depuis l'historique brut (12 derniers mois, adversaires ≤ 50).
+ * Ne lit plus win_rate_*_vs_top50 (colonne corrompue dans Google Sheets).
  *
  * @returns {{ score, available, reduced, matchCount }}
  */
