@@ -1419,24 +1419,14 @@ async function loadDailySummary() {
   if (!grid) return;
 
   try {
-  const res = await fetch('/api/daily-summary');
+    const res = await fetch('/matches-today-summary.json');
 
+    if (!res.ok) {
+      grid.innerHTML = `<p class="daily-error">Analyses du jour introuvables (${res.status}). Lancez analyze-daily.js puis copiez le fichier dans public/.</p>`;
+      return;
+    }
 
-  if (!res.ok) {
-    const errText = await res.text();
-    grid.innerHTML = `<p class="daily-error">${esc(errText || 'Impossible de charger les analyses')}</p>`;
-    return;
-  }
-
-
-  const data = await res.json();
-
-
-  if (data.error) {
-    grid.innerHTML = `<p class="daily-error">${esc(data.error ?? 'Erreur inconnue')}</p>`;
-    return;
-  }
-
+    const data = await res.json();
 
     if (!Array.isArray(data) || data.length === 0) {
       grid.innerHTML = '<p style="color:#64748b">Aucune analyse disponible.</p>';
@@ -1452,9 +1442,7 @@ async function loadDailySummary() {
         <div class="daily-card">
           <div class="daily-matchup">${esc(m.joueur1)} <span style="color:#475569">vs</span> ${esc(m.joueur2)}</div>
           <div class="daily-favori">Favori : ${esc(m.favori)}</div>
-          <div>
-            <span class="daily-confiance ${cls}">${esc(m.confiance)}</span>
-          </div>
+          <div><span class="daily-confiance ${cls}">${esc(m.confiance)}</span></div>
           <div class="daily-scores">
             ${esc(m.joueur1)} ${pct1} · ${esc(m.joueur2)} ${pct2} · écart ${gap}
           </div>
@@ -1463,7 +1451,7 @@ async function loadDailySummary() {
     }).join('');
 
   } catch (err) {
-    grid.innerHTML = `<p class="daily-error">Impossible de charger les analyses : ${esc(err.message)}</p>`;
+    grid.innerHTML = `<p class="daily-error">Erreur de chargement : ${esc(err.message)}</p>`;
   }
 }
 
