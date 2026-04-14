@@ -482,20 +482,20 @@ console.log('[TOP50 1Y]', {
   const h2hA = calcH2HAdjustment(dataA.allMatches ?? [], nameBNorm, surface);
   const h2hB = calcH2HAdjustment(dataB.allMatches ?? [], nameANorm, surface);
 
-  // ─── Poids dynamiques ────────────────────────────────────────────────────────
-  // Top50 fiable (les deux joueurs ont ≥5 matchs vs Top50) → poids élevé.
-  // Invariant : LT(0.35) + 1Y(w_1y) + Top50(w_top50) + Form(0.10) = 1.00
-  const top50Reliable = t50A.available && !t50A.reduced && t50B.available && !t50B.reduced;
-  const w_top50 = top50Reliable ? 0.25 : 0.10;
-  const w_1y    = 0.55 - w_top50;   // 0.30 si fiable, 0.45 sinon
+  // ─── Poids fixes ─────────────────────────────────────────────────────────────
+  // LT(0.20) + 1Y(0.45) + Top50(0.25) + Form(0.10) = 1.00
+  const W_LT   = 0.20;
+  const W_1Y   = 0.45;
+  const W_T50  = 0.25;
+  const W_FORM = 0.10;
 
-  console.log(`[Compare] Poids → LT=0.35 | 1Y=${w_1y.toFixed(2)} | Top50=${w_top50.toFixed(2)} | Form=0.10 | top50Reliable=${top50Reliable}`);
+  console.log(`[Compare] Poids fixes → LT=${W_LT} | 1Y=${W_1Y} | Top50=${W_T50} | Form=${W_FORM}`);
 
   const calcBaseScore = (lt, oy, top50, form) =>
-    (lt.score * 0.35) +
-    (oy.score * w_1y) +
-    (top50.score * w_top50) +
-    (form.score * 0.10);
+    (lt.score   * W_LT)   +
+    (oy.score   * W_1Y)   +
+    (top50.score * W_T50)  +
+    (form.score * W_FORM);
 
   const baseA = calcBaseScore(ltA, oyA, t50A, formA);
   const baseB = calcBaseScore(ltB, oyB, t50B, formB);
@@ -559,11 +559,10 @@ console.log('[TOP50 1Y]', {
       joueur1: detailsA,
       joueur2: detailsB,
       weights: {
-        long_term:   0.35,
-        one_year:    w_1y,
-        top50:       w_top50,
-        recent_form: 0.10,
-        top50Reliable,
+        long_term:   W_LT,
+        one_year:    W_1Y,
+        top50:       W_T50,
+        recent_form: W_FORM,
       },
       h2h: {
         total: h2hA.total,
