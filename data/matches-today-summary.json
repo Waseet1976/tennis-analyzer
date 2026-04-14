@@ -24,18 +24,6 @@
     "gap": 0.4892
   },
   {
-    "joueur1": "Tabilo A.",
-    "joueur2": "Fonseca J.",
-    "surface": "clay",
-    "tournoi": "ATP Munich",
-    "favori": "Tabilo A.",
-    "confiance": "Élevée",
-    "niveauConfiance": 3,
-    "score1": 0.7207,
-    "score2": 0.2793,
-    "gap": 0.4414
-  },
-  {
     "joueur1": "Landaluce M.",
     "joueur2": "Musetti L.",
     "surface": "clay",
@@ -94,18 +82,6 @@
     "score1": 0.6378,
     "score2": 0.3622,
     "gap": 0.2756
-  },
-  {
-    "joueur1": "Fils A.",
-    "joueur2": "Atmane T.",
-    "surface": "clay",
-    "tournoi": "ATP Barcelona",
-    "favori": "Fils A.",
-    "confiance": "Élevée",
-    "niveauConfiance": 3,
-    "score1": 0.624,
-    "score2": 0.376,
-    "gap": 0.248
   },
   {
     "joueur1": "Zhang Z.",
@@ -180,18 +156,6 @@
     "gap": 0.2214
   },
   {
-    "joueur1": "Machac T.",
-    "joueur2": "Baez S.",
-    "surface": "clay",
-    "tournoi": "ATP Barcelona",
-    "favori": "Baez S.",
-    "confiance": "Conflit modéré",
-    "niveauConfiance": 1,
-    "score1": 0.4611,
-    "score2": 0.5389,
-    "gap": 0.0778
-  },
-  {
     "joueur1": "Cobolli F.",
     "joueur2": "Dedura D.",
     "surface": "clay",
@@ -214,5 +178,17 @@
     "score1": 0.501,
     "score2": 0.499,
     "gap": 0.002
+  },
+  {
+    "joueur1": "Machac T.",
+    "joueur2": "Baez S.",
+    "surface": "clay",
+    "tournoi": "ATP Barcelona",
+    "favori": "Machac T.",
+    "confiance": "Conflit / Match piégeux",
+    "niveauConfiance": 0,
+    "score1": 0.5009,
+    "score2": 0.4991,
+    "gap": 0.0018
   }
 ]

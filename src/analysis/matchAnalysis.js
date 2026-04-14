@@ -205,92 +205,69 @@ function getTop50ReliabilityPenalty(statsTop50) {
  * @param {string}      surface - clay | hard | indoor_hard | grass
  * @returns {number} score 0–100 (50 = neutre)
  */
+/**
+ * Helper interne : parse un entier depuis une valeur brute Google Sheets.
+ * Retourne 0 si absent ou non numérique.
+ */
+function _parseInt50(raw) {
+  if (raw === null || raw === undefined || raw === '') return 0;
+  const n = parseInt(String(raw).replace(',', '.').trim(), 10);
+  return isNaN(n) ? 0 : n;
+}
+
 function getTop50SurfaceScore(statsTop50, surface) {
   if (!statsTop50) {
     console.log('[TOP50 DEBUG] statsTop50 absent → score=50 (neutre)');
     return 50;
   }
 
-  let n          = 0;
-  let winRateRaw = null;
+  let matches = 0;
+  let wins    = 0;
 
-  // ─── Sélection colonnes selon surface ────────────────────────────────────
+  // ─── Lecture wins + matches selon la surface ──────────────────────────────
+  // On calcule winRate = wins/matches directement depuis les colonnes de comptage.
+  // Cela évite le bug where win_rate_vs_top50 = "1" (formule cassée dans la feuille).
   if (surface === 'clay') {
-    n          = Number(statsTop50.matches_clay_vs_top50 || 0);
-    winRateRaw = statsTop50.win_rate_clay_vs_top50;
+    matches = _parseInt50(statsTop50.matches_clay_vs_top50);
+    wins    = _parseInt50(statsTop50.wins_clay_vs_top50);
   } else if (surface === 'hard' || surface === 'indoor_hard') {
-    n          = Number(statsTop50.matches_hard_vs_top50 || 0);
-    winRateRaw = statsTop50.win_rate_hard_vs_top50;
+    matches = _parseInt50(statsTop50.matches_hard_vs_top50);
+    wins    = _parseInt50(statsTop50.wins_hard_vs_top50);
   } else {
-    // grass ou surface inconnue → stats globales vs top 50
-    n          = Number(statsTop50.matches_vs_top50 || 0);
-    winRateRaw = statsTop50.win_rate_vs_top50;
+    matches = _parseInt50(statsTop50.matches_vs_top50);
+    wins    = _parseInt50(statsTop50.wins_vs_top50);
   }
 
-  // ─── Fallback vers stats globales si la surface manque ───────────────────
-  if ((winRateRaw === null || winRateRaw === undefined || winRateRaw === '') &&
+  console.log(`[TOP50 DEBUG] surface="${surface}" | matches=${matches} | wins=${wins}`);
+
+  // ─── Fallback vers stats globales si surface absente ─────────────────────
+  if (matches === 0 &&
       (surface === 'clay' || surface === 'hard' || surface === 'indoor_hard')) {
-    console.log(`[TOP50 DEBUG] stats "${surface}" absentes → fallback vers stats globales`);
-    n          = Number(statsTop50.matches_vs_top50 || 0);
-    winRateRaw = statsTop50.win_rate_vs_top50;
+    matches = _parseInt50(statsTop50.matches_vs_top50);
+    wins    = _parseInt50(statsTop50.wins_vs_top50);
+    console.log(`[TOP50 DEBUG] stats surface absentes → fallback global | matches=${matches} | wins=${wins}`);
   }
 
-  console.log(`[TOP50 DEBUG] surface="${surface}" | matches(n)=${n} | winRateRaw=${JSON.stringify(winRateRaw)}`);
-
-  if (winRateRaw === null || winRateRaw === undefined || winRateRaw === '') {
-    console.log('[TOP50 DEBUG] winRateRaw absent → score=50 (neutre)');
+  // Pas de matchs → neutre
+  if (matches === 0) {
+    console.log('[TOP50 DEBUG] matches=0 → score=50 (neutre)');
     return 50;
   }
 
-  // ─── Parsing robuste du taux de victoire ──────────────────────────────────
-  // Formats possibles (locale française, Google Sheets) :
-  //   "0,2857142857"  → fraction décimale 0–1  → × 100
-  //   "28,57%"        → pourcentage avec %     → déjà 0–100 (ne pas × 100)
-  //   "28.57%"        → pourcentage anglais    → déjà 0–100
-  //   "28,57"         → % sans symbole, > 1   → garder tel quel
-  //   "1"             → fraction = 100 %       → × 100
-  //
-  // Règle clé : détecter la présence du "%" AVANT de le supprimer.
-  // Si "%" présent → valeur déjà en 0-100, pas de multiplication.
-  // Si "%" absent et valeur ≤ 1 → fraction → × 100.
-  // Si "%" absent et valeur > 1  → déjà un pourcentage.
-
-  const raw    = String(winRateRaw).trim();
-  const hasPct = raw.includes('%');                        // lu AVANT suppression
-
-  const cleaned = raw.replace('%', '').replace(',', '.').trim();
-  let winRate   = parseFloat(cleaned);
-
-  console.log(`[TOP50 DEBUG] raw="${raw}" | hasPct=${hasPct} | cleaned="${cleaned}" | parsed=${winRate}`);
-
-  if (isNaN(winRate)) {
-    console.log('[TOP50 DEBUG] winRate NaN → score=50 (neutre)');
-    return 50;
-  }
-
-  if (hasPct) {
-    // "%" était présent → valeur déjà exprimée en 0-100
-    console.log(`[TOP50 DEBUG] hasPct=true → winRate=${winRate} déjà en %`);
-  } else if (winRate <= 1) {
-    // Fraction décimale (ex: 0.2857 = 28.57 %)
-    console.log(`[TOP50 DEBUG] hasPct=false, ${winRate} ≤ 1 → × 100 = ${winRate * 100}`);
-    winRate *= 100;
-  } else {
-    // Pas de %, valeur > 1 → déjà un pourcentage (ex: "28,57" → 28.57 %)
-    console.log(`[TOP50 DEBUG] hasPct=false, ${winRate} > 1 → déjà en %`);
-  }
-
-  // Clamp de sécurité pour éviter des valeurs hors plage
-  winRate = Math.max(0, Math.min(100, winRate));
+  // ─── Win rate calculé depuis les comptages bruts ──────────────────────────
+  // Immunisé contre les formules cassées dans la feuille (ex: win_rate = "1").
+  const winRate = (wins / matches) * 100;  // en 0–100
+  console.log(`[TOP50 DEBUG] winRate calculé = ${wins}/${matches} = ${winRate.toFixed(2)}%`);
 
   // ─── Rétrécissement (shrinkage) vers 50 neutre ───────────────────────────
-  // Plus n est grand, plus scoreBrut reflète fidèlement le vrai winRate.
-  // Formule : facteur = n/(n+20) ; scoreBrut = winRate×f + 50×(1−f)
-  const facteur   = n / (n + 20);
+  // facteur = matches/(matches+20) : plus de matchs → score proche du vrai winRate.
+  // Avec matches=1 : facteur≈0.05 → score≈52.5 même si winRate=100%
+  // Avec matches=50 : facteur≈0.71 → score≈78.6 si winRate=100%
+  const facteur   = matches / (matches + 20);
   const scoreBrut = (winRate * facteur) + (50 * (1 - facteur));
   const noteSur10 = scoreBrut / 10;
 
-  console.log(`[TOP50 DEBUG] winRate final=${winRate} | facteur=${facteur.toFixed(3)} | scoreBrut=${scoreBrut.toFixed(2)} | note/10=${noteSur10.toFixed(2)}`);
+  console.log(`[TOP50 DEBUG] facteur=${facteur.toFixed(3)} | scoreBrut=${scoreBrut.toFixed(2)} | note/10=${noteSur10.toFixed(2)}`);
 
   return scoreBrut;  // plage 0–100 ; divisé par 10 dans buildScores
 }

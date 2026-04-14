@@ -83,8 +83,8 @@
           "L": 0,
           "M": 1,
           "N": 0,
-          "O": 3.9318181817636364,
-          "TOTAL": 9.181818181763637
+          "O": 3.9318181818181817,
+          "TOTAL": 9.181818181818182
         }
       },
       "verdict": {
@@ -349,7 +349,7 @@
         "mainModel": {
           "winner": "Ofner S.",
           "total1": 8.030000000000001,
-          "total2": 9.181818181763637,
+          "total2": 9.181818181818182,
           "score1": 0.4285,
           "score2": 0.5715
         },
@@ -458,8 +458,8 @@
           "L": 0,
           "M": 2,
           "N": 0,
-          "O": 5.277777777840741,
-          "TOTAL": 13.057777777840741
+          "O": 5.277777777777778,
+          "TOTAL": 13.057777777777778
         }
       },
       "verdict": {
@@ -724,7 +724,7 @@
         "mainModel": {
           "winner": "Musetti L.",
           "total1": 7.263636363636364,
-          "total2": 13.057777777840741,
+          "total2": 13.057777777777778,
           "score1": 0.1902,
           "score2": 0.8098
         },
@@ -815,8 +815,8 @@
           "L": 0,
           "M": 2,
           "N": 0,
-          "O": 5.857142857204082,
-          "TOTAL": 14.507142857204082
+          "O": 5.857142857142857,
+          "TOTAL": 14.507142857142856
         },
         "joueur2": {
           "A": -0.79,
@@ -1100,7 +1100,7 @@
       "hybrid": {
         "mainModel": {
           "winner": "Alcaraz C.",
-          "total1": 14.507142857204082,
+          "total1": 14.507142857142856,
           "total2": -1.4614285714285717,
           "score1": 0.9819,
           "score2": 0.0181
@@ -1192,8 +1192,8 @@
           "L": 0,
           "M": 2,
           "N": 0,
-          "O": 5.225581395306977,
-          "TOTAL": 12.225581395306978
+          "O": 5.225581395348837,
+          "TOTAL": 12.225581395348836
         },
         "joueur2": {
           "A": -1.24,
@@ -1210,8 +1210,8 @@
           "L": 0,
           "M": -2,
           "N": 0,
-          "O": 4.3088235293411765,
-          "TOTAL": 4.068823529341176
+          "O": 4.3088235294117645,
+          "TOTAL": 4.068823529411764
         }
       },
       "verdict": {
@@ -1477,8 +1477,8 @@
       "hybrid": {
         "mainModel": {
           "winner": "Navone M.",
-          "total1": 12.225581395306978,
-          "total2": 4.068823529341176,
+          "total1": 12.225581395348836,
+          "total2": 4.068823529411764,
           "score1": 0.8849,
           "score2": 0.1151
         },
@@ -1569,8 +1569,8 @@
           "L": 0,
           "M": -2,
           "N": 0,
-          "O": 3.51999999994,
-          "TOTAL": 7.01999999994
+          "O": 3.52,
+          "TOTAL": 7.02
         },
         "joueur2": {
           "A": -0.63,
@@ -1857,7 +1857,7 @@
       "hybrid": {
         "mainModel": {
           "winner": "Martinez P.",
-          "total1": 7.01999999994,
+          "total1": 7.02,
           "total2": -1.8099999999999998,
           "score1": 0.9009,
           "score2": 0.0991
@@ -1949,8 +1949,8 @@
           "L": 0,
           "M": -2,
           "N": 0,
-          "O": 6.935294117629412,
-          "TOTAL": 10.77529411762941
+          "O": 6.935294117647059,
+          "TOTAL": 10.775294117647059
         },
         "joueur2": {
           "A": -1.54,
@@ -1967,8 +1967,8 @@
           "L": 0,
           "M": -2,
           "N": 0,
-          "O": 1.8157894736736842,
-          "TOTAL": 1.2757894736736841
+          "O": 1.8157894736842104,
+          "TOTAL": 1.2757894736842104
         }
       },
       "verdict": {
@@ -2236,8 +2236,8 @@
       "hybrid": {
         "mainModel": {
           "winner": "Ugo Carabelli C.",
-          "total1": 10.77529411762941,
-          "total2": 1.2757894736736841,
+          "total1": 10.775294117647059,
+          "total2": 1.2757894736842104,
           "score1": 0.9149,
           "score2": 0.0851
         },
@@ -2268,12 +2268,12 @@
     "surface": "clay",
     "tournoi": "ATP Barcelona",
     "summary": {
-      "favori": "Baez S.",
-      "confiance": "Conflit modéré",
-      "niveauConfiance": 1,
-      "hybridScore1": 0.4611,
-      "hybridScore2": 0.5389,
-      "gap": 0.0778
+      "favori": "Machac T.",
+      "confiance": "Conflit / Match piégeux",
+      "niveauConfiance": 0,
+      "hybridScore1": 0.5009,
+      "hybridScore2": 0.4991,
+      "gap": 0.0018
     },
     "result": {
       "match": {
@@ -2284,89 +2284,85 @@
       },
       "scoreA": {
         "joueur1": {
-          "total": -1.9,
+          "total": 0,
           "details": [
             {
               "source": "comparison_recent_form",
-              "last5Wins": 1,
-              "last5Total": 5,
-              "last10Wins": 3,
-              "last10Total": 10,
-              "avgDiff": -1,
-              "recentFormBlock": 0.262
+              "last5Wins": 0,
+              "last5Total": 0,
+              "last10Wins": 0,
+              "last10Total": 0,
+              "avgDiff": 0,
+              "recentFormBlock": 0.5
             }
           ]
         },
         "joueur2": {
-          "total": -1.38,
+          "total": 0,
           "details": [
             {
               "source": "comparison_recent_form",
-              "last5Wins": 1,
-              "last5Total": 5,
-              "last10Wins": 5,
-              "last10Total": 10,
-              "avgDiff": 0.1,
-              "recentFormBlock": 0.3275
+              "last5Wins": 0,
+              "last5Total": 0,
+              "last10Wins": 0,
+              "last10Total": 0,
+              "avgDiff": 0,
+              "recentFormBlock": 0.5
             }
           ]
         }
       },
       "scores": {
         "joueur1": {
-          "A": -1.9,
+          "A": 0,
           "B": 1,
           "C": null,
           "D": 2,
           "E": null,
           "F": null,
-          "G": -2,
+          "G": 0,
           "H": 2,
-          "I": 2,
-          "J": 0,
+          "I": 0,
+          "J": 1,
           "K": 1,
           "L": 0,
-          "M": -2,
+          "M": 0,
           "N": 0,
-          "O": 2,
-          "TOTAL": 4.1
+          "O": 1,
+          "TOTAL": 8
         },
         "joueur2": {
-          "A": -1.38,
+          "A": 0,
           "B": 1,
           "C": null,
           "D": 2,
           "E": null,
           "F": null,
-          "G": -2,
+          "G": 0,
           "H": 2,
-          "I": -2,
-          "J": 0,
+          "I": 0,
+          "J": 1,
           "K": 1,
           "L": 0,
-          "M": -2,
+          "M": 0,
           "N": 0,
-          "O": 11.67187499998125,
-          "TOTAL": 10.29187499998125
+          "O": 2.671875,
+          "TOTAL": 9.671875
         }
       },
       "verdict": {
-        "favori": "Baez S.",
-        "ecart": 0.0778,
-        "confiance": "Conflit modéré",
-        "niveauConfiance": 1
+        "favori": "Machac T.",
+        "ecart": 0.0018,
+        "confiance": "Conflit / Match piégeux",
+        "niveauConfiance": 0
       },
       "reglesActivees": {
-        "joueur1": [
-          "RÈGLE 2 activée : Score A négatif → J=0, M=-2"
-        ],
-        "joueur2": [
-          "RÈGLE 2 activée : Score A négatif → J=0, M=-2"
-        ]
+        "joueur1": [],
+        "joueur2": []
       },
       "dataSource": {
         "joueur1": {
-          "matches": "sheet",
+          "matches": "absent",
           "tiebreakPct": "absent",
           "decidingSetPct": "absent",
           "firstServePct": "absent",
@@ -2376,7 +2372,7 @@
           "statsTop50": "sheet"
         },
         "joueur2": {
-          "matches": "sheet",
+          "matches": "absent",
           "tiebreakPct": "absent",
           "decidingSetPct": "absent",
           "firstServePct": "absent",
@@ -2519,20 +2515,20 @@
         }
       },
       "comparison": {
-        "scoreA": 0.6073,
-        "scoreB": 0.4948,
+        "scoreA": 0.6003,
+        "scoreB": 0.5396,
         "winner": "Machac T.",
         "confidence": {
-          "label": "Élevée",
-          "level": 3
+          "label": "Modérée",
+          "level": 2
         },
         "details": {
           "joueur1": {
             "long_term_block": 0.5985841697075001,
             "one_year_block": 0.589396748665,
             "top50_block": 0.7,
-            "recent_form_block": 0.27,
-            "h2h_adjustment": 0.03,
+            "recent_form_block": null,
+            "h2h_adjustment": 0,
             "raw": {
               "lt": {
                 "score_global": 0.5989953389,
@@ -2550,21 +2546,15 @@
                 "service": 64.31751825,
                 "returnPts": 39.67153285
               },
-              "form": {
-                "last5_wins": 1,
-                "last5_total": 5,
-                "last10_wins": 3,
-                "last10_total": 10,
-                "avgDiff": -1
-              }
+              "form": {}
             }
           },
           "joueur2": {
             "long_term_block": 0.522584885485,
             "one_year_block": 0.539986993014,
             "top50_block": 0.60454545454,
-            "recent_form_block": 0.352,
-            "h2h_adjustment": -0.03,
+            "recent_form_block": null,
+            "h2h_adjustment": 0,
             "raw": {
               "lt": {
                 "score_global": 0.493756129,
@@ -2582,396 +2572,7 @@
                 "service": 61.11888112,
                 "returnPts": 39.91608392
               },
-              "form": {
-                "last5_wins": 1,
-                "last5_total": 5,
-                "last10_wins": 5,
-                "last10_total": 10,
-                "avgDiff": 0.1
-              }
-            }
-          },
-          "weights": {
-            "long_term": 0.35,
-            "one_year": 0.4,
-            "top50": 0.15,
-            "recent_form": 0.1
-          },
-          "h2h": {
-            "total": 1,
-            "winsA": 1,
-            "winsB": 0,
-            "onSurface": true
-          }
-        },
-        "explanation": "Machac T. est favori avec un avantage net sur clay, avec un score de 0.607 contre 0.495 (écart : 0.112). Ses principaux atouts sont : Stats long terme, Forme sur 1 an, Niveau contre top 50.",
-        "key_advantages": [
-          "Machac T. › Stats long terme",
-          "Machac T. › Forme sur 1 an",
-          "Machac T. › Niveau contre top 50",
-          "Baez S. › Forme récente",
-          "Machac T. › Head-to-Head (1/1)"
-        ]
-      },
-      "hybrid": {
-        "mainModel": {
-          "winner": "Baez S.",
-          "total1": 4.1,
-          "total2": 10.29187499998125,
-          "score1": 0.1754,
-          "score2": 0.8246
-        },
-        "dataModel": {
-          "winner": "Machac T.",
-          "score1": 0.5836,
-          "score2": 0.4164
-        },
-        "merged": {
-          "winner": "Baez S.",
-          "score1": 0.4611,
-          "score2": 0.5389,
-          "gap": 0.0778,
-          "confidence": {
-            "label": "Conflit modéré",
-            "level": 1
-          }
-        },
-        "agreement": {
-          "aligned": false
-        }
-      }
-    }
-  },
-  {
-    "joueur1": "Nakashima B.",
-    "joueur2": "Cerundolo J.",
-    "surface": "clay",
-    "tournoi": "ATP Barcelona",
-    "error": "Données insuffisantes pour l'analyse : Cerundolo J."
-  },
-  {
-    "joueur1": "Fils A.",
-    "joueur2": "Atmane T.",
-    "surface": "clay",
-    "tournoi": "ATP Barcelona",
-    "summary": {
-      "favori": "Fils A.",
-      "confiance": "Élevée",
-      "niveauConfiance": 3,
-      "hybridScore1": 0.624,
-      "hybridScore2": 0.376,
-      "gap": 0.248
-    },
-    "result": {
-      "match": {
-        "joueur1": "Fils A.",
-        "joueur2": "Atmane T.",
-        "surface": "clay",
-        "tournoi": "ATP Barcelona"
-      },
-      "scoreA": {
-        "joueur1": {
-          "total": 1.88,
-          "details": [
-            {
-              "source": "comparison_recent_form",
-              "last5Wins": 4,
-              "last5Total": 5,
-              "last10Wins": 7,
-              "last10Total": 10,
-              "avgDiff": 2.1,
-              "recentFormBlock": 0.7352
-            }
-          ]
-        },
-        "joueur2": {
-          "total": 0.32,
-          "details": [
-            {
-              "source": "comparison_recent_form",
-              "last5Wins": 3,
-              "last5Total": 5,
-              "last10Wins": 5,
-              "last10Total": 10,
-              "avgDiff": 1.3,
-              "recentFormBlock": 0.5403
-            }
-          ]
-        }
-      },
-      "scores": {
-        "joueur1": {
-          "A": 1.88,
-          "B": 1,
-          "C": null,
-          "D": 2,
-          "E": null,
-          "F": null,
-          "G": 2,
-          "H": 2,
-          "I": -1,
-          "J": 1,
-          "K": 1,
-          "L": 0,
-          "M": 2,
-          "N": 0,
-          "O": 1.969387755120408,
-          "TOTAL": 13.849387755120407
-        },
-        "joueur2": {
-          "A": 0.32,
-          "B": 1,
-          "C": null,
-          "D": 2,
-          "E": null,
-          "F": null,
-          "G": 2,
-          "H": 2,
-          "I": -1,
-          "J": 0,
-          "K": 1,
-          "L": 0,
-          "M": 0,
-          "N": 0,
-          "O": -0.06000000000000005,
-          "TOTAL": 7.26
-        }
-      },
-      "verdict": {
-        "favori": "Fils A.",
-        "ecart": 0.248,
-        "confiance": "Élevée",
-        "niveauConfiance": 3
-      },
-      "reglesActivees": {
-        "joueur1": [],
-        "joueur2": []
-      },
-      "dataSource": {
-        "joueur1": {
-          "matches": "sheet",
-          "tiebreakPct": "absent",
-          "decidingSetPct": "absent",
-          "firstServePct": "absent",
-          "winnersAvg": "absent",
-          "stats": "sheet",
-          "stats1y": "sheet",
-          "statsTop50": "sheet"
-        },
-        "joueur2": {
-          "matches": "sheet",
-          "tiebreakPct": "absent",
-          "decidingSetPct": "absent",
-          "firstServePct": "absent",
-          "winnersAvg": "absent",
-          "stats": "sheet",
-          "stats1y": "sheet",
-          "statsTop50": "sheet"
-        }
-      },
-      "playerStats": {
-        "joueur1": {
-          "stats": {
-            "player": "Fils A.",
-            "matches_total": "326",
-            "wins_total": "201",
-            "win_rate_total": "61,66%",
-            "matches_clay": "118",
-            "wins_clay": "70",
-            "win_rate_clay": "59,32%",
-            "matchs_hard": "181",
-            "wins_hard": "115",
-            "win_rate_hard": "63,54%",
-            "aces_avg": "5,400611621",
-            "double_faults_avg": "3,125382263",
-            "service_points_won_avg": "64,28746177",
-            "return_points_won_avg": "37,4617737",
-            "breaks_converted_avg": "40,382263",
-            "break_saved_avg": "57,60550459",
-            "games_diff_avg": "1,233128834",
-            "games_won_avg": "12,5797546",
-            "games_lost_avg": "11,34662577",
-            "score_global": "0,5757494006",
-            "score_surface": "0,6025579703",
-            "level_global": "Solide",
-            "level_surface": "Très fort surface",
-            "comment_simple": "Solide , Très fort surface"
-          },
-          "stats1y": {
-            "player": "Fils A.",
-            "matches_total_1y": "279",
-            "wins_total_1y": "172",
-            "win_rate_total_1y": "61,65%",
-            "matches_clay_1y": "118",
-            "wins_clay_1y": "70",
-            "win_rate_clay_1y": "59,32%",
-            "matches_hard_1y": "134",
-            "wins_hard_1y": "86",
-            "win_rate_hard_1y": "64,18%",
-            "aces_avg_1y": "5,15",
-            "double_faults_avg_1y": "3,139285714",
-            "service_points_won_avg_1y": "63,94285714",
-            "return_points_won_avg_1y": "37,75357143",
-            "breaks_converted_avg_1y": "40,62142857",
-            "break_saved_avg_1y": "58,70714286",
-            "games_diff_avg_1y": "1,23655914",
-            "games_won_avg_1y": "12,58422939",
-            "games_lost_avg_1y": "11,34767025",
-            "score_global_1y": "57,64%",
-            "score_surface_1y": "60,25%",
-            "level_global_1y": "Solide",
-            "level_surface_1y": "Très fort surface",
-            "comment_simple_1y": "Solide , Très fort surface"
-          },
-          "statsTop50": {
-            "A1 = player": "Fils A.",
-            "matches_vs_top50": "95",
-            "win_rate_vs_top50": "1",
-            "matches_clay_vs_top50": "29",
-            "wins_clay_vs_top50": "14",
-            "win_rate_clay_vs_top50": "0,4827586207",
-            "matches_hard_vs_top50": "58",
-            "wins_hard_vs_top50": "28",
-            "win_rate_hard_vs_top50": "0,4827586207"
-          }
-        },
-        "joueur2": {
-          "stats": {
-            "player": "Atmane T.",
-            "matches_total": "312",
-            "wins_total": "182",
-            "win_rate_total": "58,33%",
-            "matches_clay": "81",
-            "wins_clay": "45",
-            "win_rate_clay": "55,56%",
-            "matchs_hard": "219",
-            "wins_hard": "133",
-            "win_rate_hard": "60,73%",
-            "aces_avg": "6,891025641",
-            "double_faults_avg": "3,737179487",
-            "service_points_won_avg": "64,75961538",
-            "return_points_won_avg": "36,48397436",
-            "breaks_converted_avg": "42,66346154",
-            "break_saved_avg": "58,32051282",
-            "games_diff_avg": "0,7852564103",
-            "games_won_avg": "12,42307692",
-            "games_lost_avg": "11,63782051",
-            "score_global": "0,5515586538",
-            "score_surface": "0,5666666667",
-            "level_global": "Solide",
-            "level_surface": "Bon surface",
-            "comment_simple": "Solide , Bon surface"
-          },
-          "stats1y": {
-            "player": "Atmane T.",
-            "matches_total_1y": "271",
-            "wins_total_1y": "160",
-            "win_rate_total_1y": "59,04%",
-            "matches_clay_1y": "81",
-            "wins_clay_1y": "45",
-            "win_rate_clay_1y": "55,56%",
-            "matches_hard_1y": "178",
-            "wins_hard_1y": "111",
-            "win_rate_hard_1y": "62,36%",
-            "aces_avg_1y": "6,859778598",
-            "double_faults_avg_1y": "3,819188192",
-            "service_points_won_avg_1y": "64,51291513",
-            "return_points_won_avg_1y": "36,74538745",
-            "breaks_converted_avg_1y": "42,99261993",
-            "break_saved_avg_1y": "57,48708487",
-            "games_diff_avg_1y": "0,8081180812",
-            "games_won_avg_1y": "12,44649446",
-            "games_lost_avg_1y": "11,63837638",
-            "score_global_1y": "55,58%",
-            "score_surface_1y": "56,95%",
-            "level_global_1y": "Solide",
-            "level_surface_1y": "Bon surface",
-            "comment_simple_1y": "Solide , Bon surface"
-          },
-          "statsTop50": {
-            "A1 = player": "Atmane T.",
-            "matches_vs_top50": "30",
-            "win_rate_vs_top50": "1",
-            "matches_clay_vs_top50": "5",
-            "wins_clay_vs_top50": "2",
-            "win_rate_clay_vs_top50": "0,4",
-            "matches_hard_vs_top50": "25",
-            "wins_hard_vs_top50": "8",
-            "win_rate_hard_vs_top50": "0,32"
-          }
-        }
-      },
-      "comparison": {
-        "scoreA": 0.6104,
-        "scoreB": 0.5676,
-        "winner": "Fils A.",
-        "confidence": {
-          "label": "Modérée",
-          "level": 2
-        },
-        "details": {
-          "joueur1": {
-            "long_term_block": 0.5755798910875001,
-            "one_year_block": 0.5757389228125,
-            "top50_block": 0.68965517242,
-            "recent_form_block": 0.752,
-            "h2h_adjustment": 0,
-            "raw": {
-              "lt": {
-                "score_global": 0.5757494006,
-                "score_surface": 0.6025579703,
-                "win_rate": 0.6165999999999999,
-                "games_diff": 1.233128834,
-                "service": 64.28746177,
-                "returnPts": 37.4617737
-              },
-              "oy": {
-                "score_global": 0.5764,
-                "score_surface": 0.6025,
-                "win_rate": 0.6164999999999999,
-                "games_diff": 1.23655914,
-                "service": 63.94285714,
-                "returnPts": 37.75357143
-              },
-              "form": {
-                "last5_wins": 4,
-                "last5_total": 5,
-                "last10_wins": 7,
-                "last10_total": 10,
-                "avgDiff": 2.1
-              }
-            }
-          },
-          "joueur2": {
-            "long_term_block": 0.5504642628095,
-            "one_year_block": 0.553374649443,
-            "top50_block": 0.64,
-            "recent_form_block": 0.576,
-            "h2h_adjustment": 0,
-            "raw": {
-              "lt": {
-                "score_global": 0.5515586538,
-                "score_surface": 0.5666666667,
-                "win_rate": 0.5832999999999999,
-                "games_diff": 0.7852564103,
-                "service": 64.75961538,
-                "returnPts": 36.48397436
-              },
-              "oy": {
-                "score_global": 0.5558,
-                "score_surface": 0.5695,
-                "win_rate": 0.5904,
-                "games_diff": 0.8081180812,
-                "service": 64.51291513,
-                "returnPts": 36.74538745
-              },
-              "form": {
-                "last5_wins": 3,
-                "last5_total": 5,
-                "last10_wins": 5,
-                "last10_total": 10,
-                "avgDiff": 1.3
-              }
+              "form": {}
             }
           },
           "weights": {
@@ -2987,420 +2588,62 @@
             "onSurface": false
           }
         },
-        "explanation": "Fils A. est favori avec un avantage assez clair sur clay, avec un score de 0.610 contre 0.568 (écart : 0.043). Ses principaux atouts sont : Stats long terme, Forme sur 1 an, Niveau contre top 50.",
+        "explanation": "Machac T. est favori avec un avantage assez clair sur clay, avec un score de 0.600 contre 0.540 (écart : 0.061). Ses principaux atouts sont : Stats long terme, Forme sur 1 an, Niveau contre top 50.",
         "key_advantages": [
-          "Fils A. › Stats long terme",
-          "Fils A. › Forme sur 1 an",
-          "Fils A. › Niveau contre top 50",
-          "Fils A. › Forme récente"
+          "Machac T. › Stats long terme",
+          "Machac T. › Forme sur 1 an",
+          "Machac T. › Niveau contre top 50"
         ]
       },
       "hybrid": {
         "mainModel": {
-          "winner": "Fils A.",
-          "total1": 13.849387755120407,
-          "total2": 7.26,
-          "score1": 0.8385,
-          "score2": 0.1615
+          "winner": "Baez S.",
+          "total1": 8,
+          "total2": 9.671875,
+          "score1": 0.397,
+          "score2": 0.603
         },
         "dataModel": {
-          "winner": "Fils A.",
-          "score1": 0.5321,
-          "score2": 0.4679
+          "winner": "Machac T.",
+          "score1": 0.5454,
+          "score2": 0.4546
         },
         "merged": {
-          "winner": "Fils A.",
-          "score1": 0.624,
-          "score2": 0.376,
-          "gap": 0.248,
+          "winner": "Machac T.",
+          "score1": 0.5009,
+          "score2": 0.4991,
+          "gap": 0.0018,
           "confidence": {
-            "label": "Élevée",
-            "level": 3
+            "label": "Conflit / Match piégeux",
+            "level": 0
           }
         },
         "agreement": {
-          "aligned": true
+          "aligned": false
         }
       }
     }
+  },
+  {
+    "joueur1": "Nakashima B.",
+    "joueur2": "Cerundolo J.",
+    "surface": "clay",
+    "tournoi": "ATP Barcelona",
+    "error": "Données insuffisantes pour l'analyse : Nakashima B."
+  },
+  {
+    "joueur1": "Fils A.",
+    "joueur2": "Atmane T.",
+    "surface": "clay",
+    "tournoi": "ATP Barcelona",
+    "error": "Données insuffisantes pour l'analyse : Fils A."
   },
   {
     "joueur1": "Tabilo A.",
     "joueur2": "Fonseca J.",
     "surface": "clay",
     "tournoi": "ATP Munich",
-    "summary": {
-      "favori": "Tabilo A.",
-      "confiance": "Élevée",
-      "niveauConfiance": 3,
-      "hybridScore1": 0.7207,
-      "hybridScore2": 0.2793,
-      "gap": 0.4414
-    },
-    "result": {
-      "match": {
-        "joueur1": "Tabilo A.",
-        "joueur2": "Fonseca J.",
-        "surface": "clay",
-        "tournoi": "ATP Munich"
-      },
-      "scoreA": {
-        "joueur1": {
-          "total": 1.24,
-          "details": [
-            {
-              "source": "comparison_recent_form",
-              "last5Wins": 3,
-              "last5Total": 5,
-              "last10Wins": 7,
-              "last10Total": 10,
-              "avgDiff": 2.6,
-              "recentFormBlock": 0.6551
-            }
-          ]
-        },
-        "joueur2": {
-          "total": -0.57,
-          "details": [
-            {
-              "source": "comparison_recent_form",
-              "last5Wins": 2,
-              "last5Total": 5,
-              "last10Wins": 5,
-              "last10Total": 10,
-              "avgDiff": 0.9,
-              "recentFormBlock": 0.4293
-            }
-          ]
-        }
-      },
-      "scores": {
-        "joueur1": {
-          "A": 1.24,
-          "B": 1,
-          "C": null,
-          "D": 2,
-          "E": null,
-          "F": null,
-          "G": -2,
-          "H": 2,
-          "I": 2,
-          "J": 0,
-          "K": 1,
-          "L": 0,
-          "M": 1,
-          "N": 0,
-          "O": 11.957142857185714,
-          "TOTAL": 20.197142857185714
-        },
-        "joueur2": {
-          "A": -0.57,
-          "B": 1,
-          "C": null,
-          "D": 2,
-          "E": null,
-          "F": null,
-          "G": -2,
-          "H": 2,
-          "I": -2,
-          "J": 0,
-          "K": 1,
-          "L": 0,
-          "M": -2,
-          "N": 0,
-          "O": 0.05172413797241395,
-          "TOTAL": -0.5182758620275859
-        }
-      },
-      "verdict": {
-        "favori": "Tabilo A.",
-        "ecart": 0.4414,
-        "confiance": "Élevée",
-        "niveauConfiance": 3
-      },
-      "reglesActivees": {
-        "joueur1": [],
-        "joueur2": [
-          "RÈGLE 2 activée : Score A négatif → J=0, M=-2"
-        ]
-      },
-      "dataSource": {
-        "joueur1": {
-          "matches": "sheet",
-          "tiebreakPct": "absent",
-          "decidingSetPct": "absent",
-          "firstServePct": "absent",
-          "winnersAvg": "absent",
-          "stats": "sheet",
-          "stats1y": "sheet",
-          "statsTop50": "sheet"
-        },
-        "joueur2": {
-          "matches": "sheet",
-          "tiebreakPct": "absent",
-          "decidingSetPct": "absent",
-          "firstServePct": "absent",
-          "winnersAvg": "absent",
-          "stats": "sheet",
-          "stats1y": "sheet",
-          "statsTop50": "sheet"
-        }
-      },
-      "playerStats": {
-        "joueur1": {
-          "stats": {
-            "player": "Tabilo A.",
-            "matches_total": "352",
-            "wins_total": "216",
-            "win_rate_total": "61,36%",
-            "matches_clay": "202",
-            "wins_clay": "130",
-            "win_rate_clay": "64,36%",
-            "matchs_hard": "124",
-            "wins_hard": "73",
-            "win_rate_hard": "58,87%",
-            "aces_avg": "6,266288952",
-            "double_faults_avg": "2,532577904",
-            "service_points_won_avg": "64,76770538",
-            "return_points_won_avg": "38,75637394",
-            "breaks_converted_avg": "42,21813031",
-            "break_saved_avg": "55,5325779",
-            "games_diff_avg": "1,548295455",
-            "games_won_avg": "12,69602273",
-            "games_lost_avg": "11,14772727",
-            "score_global": "0,5782423126",
-            "score_surface": "0,6315931593",
-            "level_global": "Solide",
-            "level_surface": "Très fort surface",
-            "comment_simple": "Solide , Très fort surface"
-          },
-          "stats1y": {
-            "player": "Tabilo A.",
-            "matches_total_1y": "309",
-            "wins_total_1y": "184",
-            "win_rate_total_1y": "59,55%",
-            "matches_clay_1y": "180",
-            "wins_clay_1y": "114",
-            "win_rate_clay_1y": "63,33%",
-            "matches_hard_1y": "103",
-            "wins_hard_1y": "57",
-            "win_rate_hard_1y": "55,34%",
-            "aces_avg_1y": "6,174193548",
-            "double_faults_avg_1y": "2,596774194",
-            "service_points_won_avg_1y": "64,36129032",
-            "return_points_won_avg_1y": "38,61935484",
-            "breaks_converted_avg_1y": "41,9",
-            "break_saved_avg_1y": "55,98387097",
-            "games_diff_avg_1y": "1,391585761",
-            "games_won_avg_1y": "12,63754045",
-            "games_lost_avg_1y": "11,24595469",
-            "score_global_1y": "56,90%",
-            "score_surface_1y": "61,82%",
-            "level_global_1y": "Solide",
-            "level_surface_1y": "Très fort surface",
-            "comment_simple_1y": "Solide , Très fort surface"
-          },
-          "statsTop50": {
-            "A1 = player": "Tabilo A.",
-            "matches_vs_top50": "57",
-            "win_rate_vs_top50": "1",
-            "matches_clay_vs_top50": "15",
-            "wins_clay_vs_top50": "7",
-            "win_rate_clay_vs_top50": "0,4666666667",
-            "matches_hard_vs_top50": "35",
-            "wins_hard_vs_top50": "11",
-            "win_rate_hard_vs_top50": "0,3142857143"
-          }
-        },
-        "joueur2": {
-          "stats": {
-            "player": "Fonseca J.",
-            "matches_total": "140",
-            "wins_total": "85",
-            "win_rate_total": "60,71%",
-            "matches_clay": "53",
-            "wins_clay": "29",
-            "win_rate_clay": "54,72%",
-            "matchs_hard": "71",
-            "wins_hard": "49",
-            "win_rate_hard": "69,01%",
-            "aces_avg": "5,680851064",
-            "double_faults_avg": "2,09929078",
-            "service_points_won_avg": "65,19858156",
-            "return_points_won_avg": "37,85106383",
-            "breaks_converted_avg": "41,41134752",
-            "break_saved_avg": "52,4822695",
-            "games_diff_avg": "1,235714286",
-            "games_won_avg": "12,9",
-            "games_lost_avg": "11,66428571",
-            "score_global": "0,5722149949",
-            "score_surface": "0,5711590296",
-            "level_global": "Solide",
-            "level_surface": "Bon surface",
-            "comment_simple": "Solide , Bon surface"
-          },
-          "stats1y": {
-            "player": "Fonseca J.",
-            "matches_total_1y": "122",
-            "wins_total_1y": "75",
-            "win_rate_total_1y": "61,48%",
-            "matches_clay_1y": "49",
-            "wins_clay_1y": "27",
-            "win_rate_clay_1y": "55,10%",
-            "matches_hard_1y": "57",
-            "wins_hard_1y": "41",
-            "win_rate_hard_1y": "71,93%",
-            "aces_avg_1y": "5,504065041",
-            "double_faults_avg_1y": "2,048780488",
-            "service_points_won_avg_1y": "65,47154472",
-            "return_points_won_avg_1y": "37,97560976",
-            "breaks_converted_avg_1y": "40,79674797",
-            "break_saved_avg_1y": "50,79674797",
-            "games_diff_avg_1y": "1,401639344",
-            "games_won_avg_1y": "12,93442623",
-            "games_lost_avg_1y": "11,53278689",
-            "score_global_1y": "57,50%",
-            "score_surface_1y": "57,65%",
-            "level_global_1y": "Solide",
-            "level_surface_1y": "Bon surface",
-            "comment_simple_1y": "Solide , Bon surface"
-          },
-          "statsTop50": {
-            "A1 = player": "Fonseca J.",
-            "matches_vs_top50": "34",
-            "win_rate_vs_top50": "1",
-            "matches_clay_vs_top50": "9",
-            "wins_clay_vs_top50": "5",
-            "win_rate_clay_vs_top50": "0,5555555556",
-            "matches_hard_vs_top50": "22",
-            "wins_hard_vs_top50": "14",
-            "win_rate_hard_vs_top50": "0,6363636364"
-          }
-        }
-      },
-      "comparison": {
-        "scoreA": 0.6657,
-        "scoreB": 0.5258,
-        "winner": "Tabilo A.",
-        "confidence": {
-          "label": "Élevée",
-          "level": 3
-        },
-        "details": {
-          "joueur1": {
-            "long_term_block": 0.588780856615,
-            "one_year_block": 0.5784895928649999,
-            "top50_block": 0.6800000000199999,
-            "recent_form_block": 0.662,
-            "h2h_adjustment": 0.06,
-            "raw": {
-              "lt": {
-                "score_global": 0.5782423126,
-                "score_surface": 0.6315931593,
-                "win_rate": 0.6136,
-                "games_diff": 1.548295455,
-                "service": 64.76770538,
-                "returnPts": 38.75637394
-              },
-              "oy": {
-                "score_global": 0.569,
-                "score_surface": 0.6182,
-                "win_rate": 0.5954999999999999,
-                "games_diff": 1.391585761,
-                "service": 64.36129032,
-                "returnPts": 38.61935484
-              },
-              "form": {
-                "last5_wins": 3,
-                "last5_total": 5,
-                "last10_wins": 7,
-                "last10_total": 10,
-                "avgDiff": 2.6
-              }
-            }
-          },
-          "joueur2": {
-            "long_term_block": 0.5689540754175,
-            "one_year_block": 0.57461353326,
-            "top50_block": 0.7333333333600001,
-            "recent_form_block": 0.46799999999999997,
-            "h2h_adjustment": -0.06,
-            "raw": {
-              "lt": {
-                "score_global": 0.5722149949,
-                "score_surface": 0.5711590296,
-                "win_rate": 0.6071,
-                "games_diff": 1.235714286,
-                "service": 65.19858156,
-                "returnPts": 37.85106383
-              },
-              "oy": {
-                "score_global": 0.575,
-                "score_surface": 0.5765,
-                "win_rate": 0.6148,
-                "games_diff": 1.401639344,
-                "service": 65.47154472,
-                "returnPts": 37.97560976
-              },
-              "form": {
-                "last5_wins": 2,
-                "last5_total": 5,
-                "last10_wins": 5,
-                "last10_total": 10,
-                "avgDiff": 0.9
-              }
-            }
-          },
-          "weights": {
-            "long_term": 0.35,
-            "one_year": 0.4,
-            "top50": 0.15,
-            "recent_form": 0.1
-          },
-          "h2h": {
-            "total": 2,
-            "winsA": 2,
-            "winsB": 0,
-            "onSurface": true
-          }
-        },
-        "explanation": "Tabilo A. est favori avec un avantage net sur clay, avec un score de 0.666 contre 0.526 (écart : 0.140). Ses principaux atouts sont : Stats long terme, Forme sur 1 an, Forme récente.",
-        "key_advantages": [
-          "Tabilo A. › Stats long terme",
-          "Tabilo A. › Forme sur 1 an",
-          "Fonseca J. › Niveau contre top 50",
-          "Tabilo A. › Forme récente",
-          "Tabilo A. › Head-to-Head (2/2)"
-        ]
-      },
-      "hybrid": {
-        "mainModel": {
-          "winner": "Tabilo A.",
-          "total1": 20.197142857185714,
-          "total2": -0.5182758620275859,
-          "score1": 0.9944,
-          "score2": 0.0056
-        },
-        "dataModel": {
-          "winner": "Tabilo A.",
-          "score1": 0.6034,
-          "score2": 0.3966
-        },
-        "merged": {
-          "winner": "Tabilo A.",
-          "score1": 0.7207,
-          "score2": 0.2793,
-          "gap": 0.4414,
-          "confidence": {
-            "label": "Élevée",
-            "level": 3
-          }
-        },
-        "agreement": {
-          "aligned": true
-        }
-      }
-    }
+    "error": "Données insuffisantes pour l'analyse : Tabilo A."
   },
   {
     "joueur1": "Zverev A.",
@@ -3468,8 +2711,8 @@
           "L": 0,
           "M": 2,
           "N": 0,
-          "O": 5.234939759093976,
-          "TOTAL": 16.734939759093976
+          "O": 5.234939759036145,
+          "TOTAL": 16.734939759036145
         },
         "joueur2": {
           "A": -1.44,
@@ -3486,8 +2729,8 @@
           "L": 0,
           "M": -2,
           "N": 0,
-          "O": -0.1470588235470587,
-          "TOTAL": -0.08705882354705866
+          "O": -0.14705882352941177,
+          "TOTAL": -0.08705882352941172
         }
       },
       "verdict": {
@@ -3753,8 +2996,8 @@
       "hybrid": {
         "mainModel": {
           "winner": "Zverev A.",
-          "total1": 16.734939759093976,
-          "total2": -0.08705882354705866,
+          "total1": 16.734939759036145,
+          "total2": -0.08705882352941172,
           "score1": 0.9853,
           "score2": 0.0147
         },
@@ -3845,8 +3088,8 @@
           "L": 0,
           "M": 2,
           "N": 0,
-          "O": 4.142857142814286,
-          "TOTAL": 14.842857142814285
+          "O": 4.142857142857142,
+          "TOTAL": 14.842857142857142
         },
         "joueur2": {
           "A": -0.53,
@@ -3863,8 +3106,8 @@
           "L": 0,
           "M": -2,
           "N": 0,
-          "O": 1.624999999975,
-          "TOTAL": 2.0949999999749997
+          "O": 1.625,
+          "TOTAL": 2.0949999999999998
         }
       },
       "verdict": {
@@ -4130,8 +3373,8 @@
       "hybrid": {
         "mainModel": {
           "winner": "Molcan A.",
-          "total1": 14.842857142814285,
-          "total2": 2.0949999999749997,
+          "total1": 14.842857142857142,
+          "total2": 2.0949999999999998,
           "score1": 0.9603,
           "score2": 0.0397
         },
@@ -4222,8 +3465,8 @@
           "L": 0,
           "M": -2,
           "N": 0,
-          "O": 2.7558139535581394,
-          "TOTAL": 5.735813953558139
+          "O": 2.755813953488372,
+          "TOTAL": 5.735813953488373
         },
         "joueur2": {
           "A": -1,
@@ -4240,8 +3483,8 @@
           "L": 0,
           "M": -2,
           "N": 0,
-          "O": 4.396551724034483,
-          "TOTAL": 6.396551724034483
+          "O": 4.396551724137931,
+          "TOTAL": 6.396551724137931
         }
       },
       "verdict": {
@@ -4510,8 +3753,8 @@
       "hybrid": {
         "mainModel": {
           "winner": "Tsitsipas S.",
-          "total1": 5.735813953558139,
-          "total2": 6.396551724034483,
+          "total1": 5.735813953488373,
+          "total2": 6.396551724137931,
           "score1": 0.4588,
           "score2": 0.5412
         },
@@ -4602,8 +3845,8 @@
           "L": 0,
           "M": 0,
           "N": 0,
-          "O": -0.2441860464418604,
-          "TOTAL": 5.84581395355814
+          "O": -0.24418604651162779,
+          "TOTAL": 5.845813953488372
         },
         "joueur2": {
           "A": -0.9,
@@ -4620,8 +3863,8 @@
           "L": 0,
           "M": -2,
           "N": 0,
-          "O": -1.0714285715000003,
-          "TOTAL": -1.9714285715000002
+          "O": -1.0714285714285714,
+          "TOTAL": -1.9714285714285713
         }
       },
       "verdict": {
@@ -4888,8 +4131,8 @@
       "hybrid": {
         "mainModel": {
           "winner": "Griekspoor T.",
-          "total1": 5.84581395355814,
-          "total2": -1.9714285715000002,
+          "total1": 5.845813953488372,
+          "total2": -1.9714285714285713,
           "score1": 0.8759,
           "score2": 0.1241
         },
@@ -4998,8 +4241,8 @@
           "L": 0,
           "M": 0,
           "N": 0,
-          "O": 0.33478260868260873,
-          "TOTAL": 3.354782608682609
+          "O": 0.3347826086956522,
+          "TOTAL": 3.3547826086956523
         }
       },
       "verdict": {
@@ -5266,7 +4509,7 @@
         "mainModel": {
           "winner": "Dedura D.",
           "total1": 2.4749999999999996,
-          "total2": 3.354782608682609,
+          "total2": 3.3547826086956523,
           "score1": 0.4452,
           "score2": 0.5548
         },
@@ -5737,8 +4980,8 @@
           "L": 0,
           "M": -2,
           "N": 0,
-          "O": 4.214285714342857,
-          "TOTAL": 3.694285714342857
+          "O": 4.214285714285714,
+          "TOTAL": 3.6942857142857144
         },
         "joueur2": {
           "A": -0.97,
@@ -5755,8 +4998,8 @@
           "L": 0,
           "M": -2,
           "N": 0,
-          "O": 11.801886792379246,
-          "TOTAL": 11.831886792379247
+          "O": 11.80188679245283,
+          "TOTAL": 11.831886792452831
         }
       },
       "verdict": {
@@ -6023,8 +5266,8 @@
       "hybrid": {
         "mainModel": {
           "winner": "Darderi L.",
-          "total1": 3.694285714342857,
-          "total2": 11.831886792379247,
+          "total1": 3.6942857142857144,
+          "total2": 11.831886792452831,
           "score1": 0.1156,
           "score2": 0.8844
         },
@@ -6133,8 +5376,8 @@
           "L": 0,
           "M": -2,
           "N": 0,
-          "O": 3.0333333333222225,
-          "TOTAL": 4.033333333322222
+          "O": 3.0333333333333337,
+          "TOTAL": 4.033333333333333
         }
       },
       "verdict": {
@@ -6403,7 +5646,7 @@
         "mainModel": {
           "winner": "Kopriva V.",
           "total1": -1.6914285714285717,
-          "total2": 4.033333333322222,
+          "total2": 4.033333333333333,
           "score1": 0.1929,
           "score2": 0.8071
         },
@@ -6494,8 +5737,8 @@
           "L": 0,
           "M": -2,
           "N": 0,
-          "O": 1.5222222222555557,
-          "TOTAL": 0.6522222222555556
+          "O": 1.5222222222222224,
+          "TOTAL": 0.6522222222222223
         },
         "joueur2": {
           "A": 0.95,
@@ -6779,7 +6022,7 @@
       "hybrid": {
         "mainModel": {
           "winner": "Topo M.",
-          "total1": 0.6522222222555556,
+          "total1": 0.6522222222222223,
           "total2": 9.278571428571428,
           "score1": 0.1037,
           "score2": 0.8963
