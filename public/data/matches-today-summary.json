@@ -7,9 +7,9 @@
     "favori": "Alcaraz C.",
     "confiance": "Élevée",
     "niveauConfiance": 3,
-    "score1": 0.7224,
-    "score2": 0.2776,
-    "gap": 0.4448
+    "score1": 0.7361,
+    "score2": 0.2639,
+    "gap": 0.4722
   },
   {
     "joueur1": "Zverev A.",
@@ -19,21 +19,9 @@
     "favori": "Zverev A.",
     "confiance": "Élevée",
     "niveauConfiance": 3,
-    "score1": 0.6557,
-    "score2": 0.3443,
-    "gap": 0.3115
-  },
-  {
-    "joueur1": "Landaluce M.",
-    "joueur2": "Musetti L.",
-    "surface": "clay",
-    "tournoi": "ATP Barcelona",
-    "favori": "Musetti L.",
-    "confiance": "Élevée",
-    "niveauConfiance": 3,
-    "score1": 0.383,
-    "score2": 0.617,
-    "gap": 0.2339
+    "score1": 0.6906,
+    "score2": 0.3094,
+    "gap": 0.3813
   },
   {
     "joueur1": "Tabilo A.",
@@ -43,21 +31,21 @@
     "favori": "Tabilo A.",
     "confiance": "Élevée",
     "niveauConfiance": 3,
-    "score1": 0.5992,
-    "score2": 0.4008,
-    "gap": 0.1985
+    "score1": 0.6325,
+    "score2": 0.3675,
+    "gap": 0.265
   },
   {
-    "joueur1": "Marozsan F.",
-    "joueur2": "Tsitsipas S.",
+    "joueur1": "Fils A.",
+    "joueur2": "Atmane T.",
     "surface": "clay",
-    "tournoi": "ATP Munich",
-    "favori": "Tsitsipas S.",
+    "tournoi": "ATP Barcelona",
+    "favori": "Fils A.",
     "confiance": "Élevée",
     "niveauConfiance": 3,
-    "score1": 0.4097,
-    "score2": 0.5903,
-    "gap": 0.1805
+    "score1": 0.5827,
+    "score2": 0.4173,
+    "gap": 0.1654
   },
   {
     "joueur1": "Engel J.",
@@ -67,33 +55,33 @@
     "favori": "Kopriva V.",
     "confiance": "Élevée",
     "niveauConfiance": 3,
-    "score1": 0.4108,
-    "score2": 0.5892,
-    "gap": 0.1784
+    "score1": 0.4185,
+    "score2": 0.5815,
+    "gap": 0.1629
   },
   {
-    "joueur1": "Machac T.",
-    "joueur2": "Baez S.",
-    "surface": "clay",
-    "tournoi": "ATP Barcelona",
-    "favori": "Machac T.",
-    "confiance": "Élevée",
-    "niveauConfiance": 3,
-    "score1": 0.5869,
-    "score2": 0.4131,
-    "gap": 0.1739
-  },
-  {
-    "joueur1": "Cilic M.",
-    "joueur2": "Altmaier D.",
+    "joueur1": "Zhang Z.",
+    "joueur2": "Darderi L.",
     "surface": "clay",
     "tournoi": "ATP Munich",
-    "favori": "Cilic M.",
-    "confiance": "Modérée",
-    "niveauConfiance": 2,
-    "score1": 0.5447,
-    "score2": 0.4553,
-    "gap": 0.0895
+    "favori": "Darderi L.",
+    "confiance": "Élevée",
+    "niveauConfiance": 3,
+    "score1": 0.42,
+    "score2": 0.58,
+    "gap": 0.16
+  },
+  {
+    "joueur1": "Landaluce M.",
+    "joueur2": "Musetti L.",
+    "surface": "clay",
+    "tournoi": "ATP Barcelona",
+    "favori": "Musetti L.",
+    "confiance": "Élevée",
+    "niveauConfiance": 3,
+    "score1": 0.4224,
+    "score2": 0.5776,
+    "gap": 0.1552
   },
   {
     "joueur1": "Cobolli F.",
@@ -101,11 +89,23 @@
     "surface": "clay",
     "tournoi": "ATP Munich",
     "favori": "Cobolli F.",
+    "confiance": "Élevée",
+    "niveauConfiance": 3,
+    "score1": 0.5771,
+    "score2": 0.4229,
+    "gap": 0.1542
+  },
+  {
+    "joueur1": "Marozsan F.",
+    "joueur2": "Tsitsipas S.",
+    "surface": "clay",
+    "tournoi": "ATP Munich",
+    "favori": "Tsitsipas S.",
     "confiance": "Modérée",
     "niveauConfiance": 2,
-    "score1": 0.5395,
-    "score2": 0.4605,
-    "gap": 0.079
+    "score1": 0.4449,
+    "score2": 0.5551,
+    "gap": 0.1101
   },
   {
     "joueur1": "Griekspoor T.",
@@ -115,21 +115,33 @@
     "favori": "Griekspoor T.",
     "confiance": "Modérée",
     "niveauConfiance": 2,
-    "score1": 0.5374,
-    "score2": 0.4626,
-    "gap": 0.0747
+    "score1": 0.5409,
+    "score2": 0.4591,
+    "gap": 0.0819
   },
   {
-    "joueur1": "Fils A.",
-    "joueur2": "Atmane T.",
+    "joueur1": "Molcan A.",
+    "joueur2": "Bublik A.",
     "surface": "clay",
-    "tournoi": "ATP Barcelona",
-    "favori": "Fils A.",
+    "tournoi": "ATP Munich",
+    "favori": "Molcan A.",
     "confiance": "Modérée",
     "niveauConfiance": 2,
-    "score1": 0.5341,
-    "score2": 0.4659,
-    "gap": 0.0681
+    "score1": 0.5364,
+    "score2": 0.4636,
+    "gap": 0.0728
+  },
+  {
+    "joueur1": "Machac T.",
+    "joueur2": "Baez S.",
+    "surface": "clay",
+    "tournoi": "ATP Barcelona",
+    "favori": "Machac T.",
+    "confiance": "Modérée",
+    "niveauConfiance": 2,
+    "score1": 0.5355,
+    "score2": 0.4645,
+    "gap": 0.071
   },
   {
     "joueur1": "De Minaur A.",
@@ -139,33 +151,33 @@
     "favori": "De Minaur A.",
     "confiance": "Modérée",
     "niveauConfiance": 2,
-    "score1": 0.5306,
-    "score2": 0.4694,
-    "gap": 0.0613
+    "score1": 0.533,
+    "score2": 0.467,
+    "gap": 0.0659
   },
   {
     "joueur1": "Martinez P.",
     "joueur2": "Sonego L.",
     "surface": "clay",
     "tournoi": "ATP Barcelona",
-    "favori": "Martinez P.",
+    "favori": "Sonego L.",
     "confiance": "Légère",
     "niveauConfiance": 1,
-    "score1": 0.5193,
-    "score2": 0.4807,
-    "gap": 0.0387
+    "score1": 0.4836,
+    "score2": 0.5164,
+    "gap": 0.0328
   },
   {
-    "joueur1": "Molcan A.",
-    "joueur2": "Bublik A.",
+    "joueur1": "Navone M.",
+    "joueur2": "Rublev A.",
     "surface": "clay",
-    "tournoi": "ATP Munich",
-    "favori": "Molcan A.",
+    "tournoi": "ATP Barcelona",
+    "favori": "Navone M.",
     "confiance": "Légère",
     "niveauConfiance": 1,
-    "score1": 0.5143,
-    "score2": 0.4857,
-    "gap": 0.0286
+    "score1": 0.5129,
+    "score2": 0.4871,
+    "gap": 0.0258
   },
   {
     "joueur1": "Bergs Z.",
@@ -175,9 +187,9 @@
     "favori": "Topo M.",
     "confiance": "Très serré",
     "niveauConfiance": 0,
-    "score1": 0.4919,
-    "score2": 0.5081,
-    "gap": 0.0162
+    "score1": 0.496,
+    "score2": 0.504,
+    "gap": 0.0081
   },
   {
     "joueur1": "Ugo Carabelli C.",
@@ -187,32 +199,20 @@
     "favori": "Khachanov K.",
     "confiance": "Très serré",
     "niveauConfiance": 0,
-    "score1": 0.4922,
-    "score2": 0.5078,
-    "gap": 0.0156
+    "score1": 0.4963,
+    "score2": 0.5037,
+    "gap": 0.0073
   },
   {
-    "joueur1": "Zhang Z.",
-    "joueur2": "Darderi L.",
+    "joueur1": "Cilic M.",
+    "joueur2": "Altmaier D.",
     "surface": "clay",
     "tournoi": "ATP Munich",
-    "favori": "Zhang Z.",
+    "favori": "Cilic M.",
     "confiance": "Très serré",
     "niveauConfiance": 0,
-    "score1": 0.5061,
-    "score2": 0.4939,
-    "gap": 0.0121
-  },
-  {
-    "joueur1": "Navone M.",
-    "joueur2": "Rublev A.",
-    "surface": "clay",
-    "tournoi": "ATP Barcelona",
-    "favori": "Navone M.",
-    "confiance": "Très serré",
-    "niveauConfiance": 0,
-    "score1": 0.5048,
-    "score2": 0.4952,
-    "gap": 0.0096
+    "score1": 0.5036,
+    "score2": 0.4964,
+    "gap": 0.0072
   }
 ]

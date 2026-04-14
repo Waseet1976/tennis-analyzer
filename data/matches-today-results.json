@@ -8,9 +8,9 @@
       "favori": "De Minaur A.",
       "confiance": "Modérée",
       "niveauConfiance": 2,
-      "hybridScore1": 0.5306,
-      "hybridScore2": 0.4694,
-      "gap": 0.0613
+      "hybridScore1": 0.533,
+      "hybridScore2": 0.467,
+      "gap": 0.0659
     },
     "result": {
       "match": {
@@ -89,7 +89,7 @@
       },
       "verdict": {
         "favori": "De Minaur A.",
-        "ecart": 0.0409,
+        "ecart": 0.044,
         "confiance": "Modérée",
         "niveauConfiance": 2
       },
@@ -252,8 +252,8 @@
         }
       },
       "comparison": {
-        "scoreA": 0.5369,
-        "scoreB": 0.496,
+        "scoreA": 0.5719,
+        "scoreB": 0.5279,
         "winner": "De Minaur A.",
         "confidence": {
           "label": "Modérée",
@@ -263,7 +263,7 @@
           "joueur1": {
             "long_term_block": 0.61100468288,
             "one_year_block": 0.624308547125,
-            "top50_block": 0.3,
+            "top50_block": 0.44,
             "recent_form_block": 0.482,
             "h2h_adjustment": 0.012599999999999998,
             "raw": {
@@ -295,7 +295,7 @@
           "joueur2": {
             "long_term_block": 0.5707997129535001,
             "one_year_block": 0.5803818291175,
-            "top50_block": 0.27499999999999997,
+            "top50_block": 0.4025974025974026,
             "recent_form_block": 0.66,
             "h2h_adjustment": -0.012599999999999998,
             "raw": {
@@ -338,7 +338,7 @@
             "onSurface": false
           }
         },
-        "explanation": "De Minaur A. est favori avec un avantage assez clair sur clay, avec un score de 0.537 contre 0.496 (écart : 0.041). Ses principaux atouts sont : Stats long terme, Forme sur 1 an, Niveau contre top 50. Ofner S. conserve néanmoins des arguments solides, notamment : Forme récente.",
+        "explanation": "De Minaur A. est favori avec un avantage assez clair sur clay, avec un score de 0.572 contre 0.528 (écart : 0.044). Ses principaux atouts sont : Stats long terme, Forme sur 1 an, Niveau contre top 50. Ofner S. conserve néanmoins des arguments solides, notamment : Forme récente.",
         "key_advantages": [
           "De Minaur A. › Stats long terme",
           "De Minaur A. › Forme sur 1 an",
@@ -356,14 +356,14 @@
         },
         "dataModel": {
           "winner": "De Minaur A.",
-          "score1": 0.5369,
-          "score2": 0.496
+          "score1": 0.5719,
+          "score2": 0.5279
         },
         "merged": {
           "winner": "De Minaur A.",
-          "score1": 0.5306,
-          "score2": 0.4694,
-          "gap": 0.0613,
+          "score1": 0.533,
+          "score2": 0.467,
+          "gap": 0.0659,
           "confidence": {
             "label": "Modérée",
             "level": 2
@@ -384,9 +384,9 @@
       "favori": "Musetti L.",
       "confiance": "Élevée",
       "niveauConfiance": 3,
-      "hybridScore1": 0.383,
-      "hybridScore2": 0.617,
-      "gap": 0.2339
+      "hybridScore1": 0.4224,
+      "hybridScore2": 0.5776,
+      "gap": 0.1552
     },
     "result": {
       "match": {
@@ -465,7 +465,7 @@
       },
       "verdict": {
         "favori": "Musetti L.",
-        "ecart": 0.1589,
+        "ecart": 0.1043,
         "confiance": "Élevée",
         "niveauConfiance": 3
       },
@@ -628,8 +628,8 @@
         }
       },
       "comparison": {
-        "scoreA": 0.3789,
-        "scoreB": 0.5378,
+        "scoreA": 0.5039,
+        "scoreB": 0.6082,
         "winner": "Musetti L.",
         "confidence": {
           "label": "Élevée",
@@ -639,7 +639,7 @@
           "joueur1": {
             "long_term_block": 0.4760092553314,
             "one_year_block": 0.44751269231,
-            "top50_block": 0,
+            "top50_block": 0.5,
             "recent_form_block": 0.78,
             "h2h_adjustment": 0,
             "raw": {
@@ -671,7 +671,7 @@
           "joueur2": {
             "long_term_block": 0.57608577758,
             "one_year_block": 0.5904719448225,
-            "top50_block": 0.3737704918032787,
+            "top50_block": 0.6552941176470588,
             "recent_form_block": 0.656,
             "h2h_adjustment": 0,
             "raw": {
@@ -714,7 +714,7 @@
             "onSurface": false
           }
         },
-        "explanation": "Musetti L. est favori avec un avantage net sur clay, avec un score de 0.538 contre 0.379 (écart : 0.159). Ses principaux atouts sont : Stats long terme, Forme sur 1 an, Niveau contre top 50.",
+        "explanation": "Musetti L. est favori avec un avantage net sur clay, avec un score de 0.608 contre 0.504 (écart : 0.104). Ses principaux atouts sont : Stats long terme, Forme sur 1 an, Niveau contre top 50.",
         "key_advantages": [
           "Musetti L. › Stats long terme",
           "Musetti L. › Forme sur 1 an",
@@ -732,14 +732,14 @@
         },
         "dataModel": {
           "winner": "Musetti L.",
-          "score1": 0.3789,
-          "score2": 0.5378
+          "score1": 0.5039,
+          "score2": 0.6082
         },
         "merged": {
           "winner": "Musetti L.",
-          "score1": 0.383,
-          "score2": 0.617,
-          "gap": 0.2339,
+          "score1": 0.4224,
+          "score2": 0.5776,
+          "gap": 0.1552,
           "confidence": {
             "label": "Élevée",
             "level": 3
@@ -760,9 +760,9 @@
       "favori": "Alcaraz C.",
       "confiance": "Élevée",
       "niveauConfiance": 3,
-      "hybridScore1": 0.7224,
-      "hybridScore2": 0.2776,
-      "gap": 0.4448
+      "hybridScore1": 0.7361,
+      "hybridScore2": 0.2639,
+      "gap": 0.4722
     },
     "result": {
       "match": {
@@ -841,7 +841,7 @@
       },
       "verdict": {
         "favori": "Alcaraz C.",
-        "ecart": 0.3188,
+        "ecart": 0.3419,
         "confiance": "Élevée",
         "niveauConfiance": 3
       },
@@ -1006,8 +1006,8 @@
         }
       },
       "comparison": {
-        "scoreA": 0.6888,
-        "scoreB": 0.37,
+        "scoreA": 0.7867,
+        "scoreB": 0.4448,
         "winner": "Alcaraz C.",
         "confidence": {
           "label": "Élevée",
@@ -1017,7 +1017,7 @@
           "joueur1": {
             "long_term_block": 0.7438259845275,
             "one_year_block": 0.76085088521,
-            "top50_block": 0.5153846153846153,
+            "top50_block": 0.8762237762237761,
             "recent_form_block": 0.714,
             "h2h_adjustment": 0,
             "raw": {
@@ -1080,10 +1080,10 @@
           },
           "weights": {
             "long_term": 0.35,
-            "one_year": 0.30000000000000004,
-            "top50": 0.25,
+            "one_year": 0.45000000000000007,
+            "top50": 0.1,
             "recent_form": 0.1,
-            "top50Reliable": true
+            "top50Reliable": false
           },
           "h2h": {
             "total": 0,
@@ -1092,7 +1092,7 @@
             "onSurface": false
           }
         },
-        "explanation": "Alcaraz C. est favori avec un avantage net sur clay, avec un score de 0.689 contre 0.370 (écart : 0.319). Ses principaux atouts sont : Stats long terme, Forme sur 1 an, Niveau contre top 50.",
+        "explanation": "Alcaraz C. est favori avec un avantage net sur clay, avec un score de 0.787 contre 0.445 (écart : 0.342). Ses principaux atouts sont : Stats long terme, Forme sur 1 an, Niveau contre top 50.",
         "key_advantages": [
           "Alcaraz C. › Stats long terme",
           "Alcaraz C. › Forme sur 1 an",
@@ -1110,14 +1110,14 @@
         },
         "dataModel": {
           "winner": "Alcaraz C.",
-          "score1": 0.6888,
-          "score2": 0.37
+          "score1": 0.7867,
+          "score2": 0.4448
         },
         "merged": {
           "winner": "Alcaraz C.",
-          "score1": 0.7224,
-          "score2": 0.2776,
-          "gap": 0.4448,
+          "score1": 0.7361,
+          "score2": 0.2639,
+          "gap": 0.4722,
           "confidence": {
             "label": "Élevée",
             "level": 3
@@ -1136,11 +1136,11 @@
     "tournoi": "ATP Barcelona",
     "summary": {
       "favori": "Navone M.",
-      "confiance": "Très serré",
-      "niveauConfiance": 0,
-      "hybridScore1": 0.5048,
-      "hybridScore2": 0.4952,
-      "gap": 0.0096
+      "confiance": "Légère",
+      "niveauConfiance": 1,
+      "hybridScore1": 0.5129,
+      "hybridScore2": 0.4871,
+      "gap": 0.0258
     },
     "result": {
       "match": {
@@ -1219,9 +1219,9 @@
       },
       "verdict": {
         "favori": "Navone M.",
-        "ecart": 0.0064,
-        "confiance": "Très serré",
-        "niveauConfiance": 0
+        "ecart": 0.0172,
+        "confiance": "Légère",
+        "niveauConfiance": 1
       },
       "reglesActivees": {
         "joueur1": [],
@@ -1384,18 +1384,18 @@
         }
       },
       "comparison": {
-        "scoreA": 0.5423,
-        "scoreB": 0.5359,
+        "scoreA": 0.542,
+        "scoreB": 0.5248,
         "winner": "Navone M.",
         "confidence": {
-          "label": "Très serré",
-          "level": 0
+          "label": "Légère",
+          "level": 1
         },
         "details": {
           "joueur1": {
             "long_term_block": 0.5741254506975,
             "one_year_block": 0.5622704433025,
-            "top50_block": 0.23478260869565218,
+            "top50_block": 0.23333333333333334,
             "recent_form_block": 0.89,
             "h2h_adjustment": 0,
             "raw": {
@@ -1427,7 +1427,7 @@
           "joueur2": {
             "long_term_block": 0.6169502699500001,
             "one_year_block": 0.619795782975,
-            "top50_block": 0.3875,
+            "top50_block": 0.34285714285714286,
             "recent_form_block": 0.372,
             "h2h_adjustment": 0,
             "raw": {
@@ -1470,7 +1470,7 @@
             "onSurface": false
           }
         },
-        "explanation": "Navone M. garde un très léger avantage dans un match extrêmement serré sur clay, avec un score de 0.542 contre 0.536 (écart : 0.006). Ses principaux atouts sont : Forme récente. Rublev A. conserve néanmoins des arguments solides, notamment : Stats long terme, Forme sur 1 an.",
+        "explanation": "Navone M. est légèrement favori sur clay, avec un score de 0.542 contre 0.525 (écart : 0.017). Ses principaux atouts sont : Forme récente. Rublev A. conserve néanmoins des arguments solides, notamment : Stats long terme, Forme sur 1 an.",
         "key_advantages": [
           "Rublev A. › Stats long terme",
           "Rublev A. › Forme sur 1 an",
@@ -1488,17 +1488,17 @@
         },
         "dataModel": {
           "winner": "Navone M.",
-          "score1": 0.5423,
-          "score2": 0.5359
+          "score1": 0.542,
+          "score2": 0.5248
         },
         "merged": {
           "winner": "Navone M.",
-          "score1": 0.5048,
-          "score2": 0.4952,
-          "gap": 0.0096,
+          "score1": 0.5129,
+          "score2": 0.4871,
+          "gap": 0.0258,
           "confidence": {
-            "label": "Très serré",
-            "level": 0
+            "label": "Légère",
+            "level": 1
           }
         },
         "agreement": {
@@ -1513,12 +1513,12 @@
     "surface": "clay",
     "tournoi": "ATP Barcelona",
     "summary": {
-      "favori": "Martinez P.",
+      "favori": "Sonego L.",
       "confiance": "Légère",
       "niveauConfiance": 1,
-      "hybridScore1": 0.5193,
-      "hybridScore2": 0.4807,
-      "gap": 0.0387
+      "hybridScore1": 0.4836,
+      "hybridScore2": 0.5164,
+      "gap": 0.0328
     },
     "result": {
       "match": {
@@ -1596,8 +1596,8 @@
         }
       },
       "verdict": {
-        "favori": "Martinez P.",
-        "ecart": 0.0258,
+        "favori": "Sonego L.",
+        "ecart": 0.0219,
         "confiance": "Légère",
         "niveauConfiance": 1
       },
@@ -1764,9 +1764,9 @@
         }
       },
       "comparison": {
-        "scoreA": 0.4169,
-        "scoreB": 0.3911,
-        "winner": "Martinez P.",
+        "scoreA": 0.3819,
+        "scoreB": 0.4038,
+        "winner": "Sonego L.",
         "confidence": {
           "label": "Légère",
           "level": 1
@@ -1775,7 +1775,7 @@
           "joueur1": {
             "long_term_block": 0.4828023610185,
             "one_year_block": 0.462984717604,
-            "top50_block": 0.13999999999999999,
+            "top50_block": 0,
             "recent_form_block": 0.44,
             "h2h_adjustment": 0.03,
             "raw": {
@@ -1807,7 +1807,7 @@
           "joueur2": {
             "long_term_block": 0.4833088536169,
             "one_year_block": 0.4864883823535,
-            "top50_block": 0.24,
+            "top50_block": 0.2909090909090909,
             "recent_form_block": 0.45999999999999996,
             "h2h_adjustment": -0.03,
             "raw": {
@@ -1850,7 +1850,7 @@
             "onSurface": true
           }
         },
-        "explanation": "Martinez P. est légèrement favori sur clay, avec un score de 0.417 contre 0.391 (écart : 0.026). Ses principaux atouts sont : Head-to-Head (1/1). Sonego L. conserve néanmoins des arguments solides, notamment : Stats long terme, Forme sur 1 an.",
+        "explanation": "Sonego L. est légèrement favori sur clay, avec un score de 0.404 contre 0.382 (écart : 0.022). Ses principaux atouts sont : Stats long terme, Forme sur 1 an, Niveau contre top 50. Martinez P. conserve néanmoins des arguments solides, notamment : Head-to-Head (1/1).",
         "key_advantages": [
           "Sonego L. › Stats long terme",
           "Sonego L. › Forme sur 1 an",
@@ -1861,22 +1861,22 @@
       },
       "hybrid": {
         "mainModel": {
-          "winner": "Martinez P.",
+          "winner": "Sonego L.",
           "total1": 7.02,
           "total2": -1.8099999999999998,
           "score1": null,
           "score2": null
         },
         "dataModel": {
-          "winner": "Martinez P.",
-          "score1": 0.4169,
-          "score2": 0.3911
+          "winner": "Sonego L.",
+          "score1": 0.3819,
+          "score2": 0.4038
         },
         "merged": {
-          "winner": "Martinez P.",
-          "score1": 0.5193,
-          "score2": 0.4807,
-          "gap": 0.0387,
+          "winner": "Sonego L.",
+          "score1": 0.4836,
+          "score2": 0.5164,
+          "gap": 0.0328,
           "confidence": {
             "label": "Légère",
             "level": 1
@@ -1897,9 +1897,9 @@
       "favori": "Khachanov K.",
       "confiance": "Très serré",
       "niveauConfiance": 0,
-      "hybridScore1": 0.4922,
-      "hybridScore2": 0.5078,
-      "gap": 0.0156
+      "hybridScore1": 0.4963,
+      "hybridScore2": 0.5037,
+      "gap": 0.0073
     },
     "result": {
       "match": {
@@ -1978,7 +1978,7 @@
       },
       "verdict": {
         "favori": "Khachanov K.",
-        "ecart": 0.0104,
+        "ecart": 0.0049,
         "confiance": "Très serré",
         "niveauConfiance": 0
       },
@@ -2145,8 +2145,8 @@
         }
       },
       "comparison": {
-        "scoreA": 0.4627,
-        "scoreB": 0.4731,
+        "scoreA": 0.4657,
+        "scoreB": 0.4706,
         "winner": "Khachanov K.",
         "confidence": {
           "label": "Très serré",
@@ -2156,7 +2156,7 @@
           "joueur1": {
             "long_term_block": 0.5761941204075,
             "one_year_block": 0.5587070036795,
-            "top50_block": 0.1714285714285714,
+            "top50_block": 0.18333333333333332,
             "recent_form_block": 0.506,
             "h2h_adjustment": 0,
             "raw": {
@@ -2188,7 +2188,7 @@
           "joueur2": {
             "long_term_block": 0.5835910302024999,
             "one_year_block": 0.5812903252,
-            "top50_block": 0.24324324324324326,
+            "top50_block": 0.23333333333333334,
             "recent_form_block": 0.33599999999999997,
             "h2h_adjustment": 0,
             "raw": {
@@ -2231,7 +2231,7 @@
             "onSurface": false
           }
         },
-        "explanation": "Khachanov K. garde un très léger avantage dans un match extrêmement serré sur clay, avec un score de 0.473 contre 0.463 (écart : 0.010). Ses principaux atouts sont : Stats long terme, Forme sur 1 an, Niveau contre top 50. Ugo Carabelli C. conserve néanmoins des arguments solides, notamment : Forme récente.",
+        "explanation": "Khachanov K. garde un très léger avantage dans un match extrêmement serré sur clay, avec un score de 0.471 contre 0.466 (écart : 0.005). Ses principaux atouts sont : Stats long terme, Forme sur 1 an, Niveau contre top 50. Ugo Carabelli C. conserve néanmoins des arguments solides, notamment : Forme récente.",
         "key_advantages": [
           "Khachanov K. › Stats long terme",
           "Khachanov K. › Forme sur 1 an",
@@ -2249,14 +2249,14 @@
         },
         "dataModel": {
           "winner": "Khachanov K.",
-          "score1": 0.4627,
-          "score2": 0.4731
+          "score1": 0.4657,
+          "score2": 0.4706
         },
         "merged": {
           "winner": "Khachanov K.",
-          "score1": 0.4922,
-          "score2": 0.5078,
-          "gap": 0.0156,
+          "score1": 0.4963,
+          "score2": 0.5037,
+          "gap": 0.0073,
           "confidence": {
             "label": "Très serré",
             "level": 0
@@ -2275,11 +2275,11 @@
     "tournoi": "ATP Barcelona",
     "summary": {
       "favori": "Machac T.",
-      "confiance": "Élevée",
-      "niveauConfiance": 3,
-      "hybridScore1": 0.5869,
-      "hybridScore2": 0.4131,
-      "gap": 0.1739
+      "confiance": "Modérée",
+      "niveauConfiance": 2,
+      "hybridScore1": 0.5355,
+      "hybridScore2": 0.4645,
+      "gap": 0.071
     },
     "result": {
       "match": {
@@ -2358,9 +2358,9 @@
       },
       "verdict": {
         "favori": "Machac T.",
-        "ecart": 0.1171,
-        "confiance": "Élevée",
-        "niveauConfiance": 3
+        "ecart": 0.0474,
+        "confiance": "Modérée",
+        "niveauConfiance": 2
       },
       "reglesActivees": {
         "joueur1": [
@@ -2525,18 +2525,18 @@
         }
       },
       "comparison": {
-        "scoreA": 0.5183,
-        "scoreB": 0.4012,
+        "scoreA": 0.4808,
+        "scoreB": 0.4334,
         "winner": "Machac T.",
         "confidence": {
-          "label": "Élevée",
-          "level": 3
+          "label": "Modérée",
+          "level": 2
         },
         "details": {
           "joueur1": {
             "long_term_block": 0.5985841697075001,
             "one_year_block": 0.589396748665,
-            "top50_block": 0.3,
+            "top50_block": 0.15000000000000002,
             "recent_form_block": 0.27,
             "h2h_adjustment": 0.03,
             "raw": {
@@ -2568,7 +2568,7 @@
           "joueur2": {
             "long_term_block": 0.522584885485,
             "one_year_block": 0.539986993014,
-            "top50_block": 0.20454545454545453,
+            "top50_block": 0.3333333333333333,
             "recent_form_block": 0.352,
             "h2h_adjustment": -0.03,
             "raw": {
@@ -2611,11 +2611,11 @@
             "onSurface": true
           }
         },
-        "explanation": "Machac T. est favori avec un avantage net sur clay, avec un score de 0.518 contre 0.401 (écart : 0.117). Ses principaux atouts sont : Stats long terme, Forme sur 1 an, Niveau contre top 50.",
+        "explanation": "Machac T. est favori avec un avantage assez clair sur clay, avec un score de 0.481 contre 0.433 (écart : 0.047). Ses principaux atouts sont : Stats long terme, Forme sur 1 an, Head-to-Head (1/1). Baez S. conserve néanmoins des arguments solides, notamment : Niveau contre top 50, Forme récente.",
         "key_advantages": [
           "Machac T. › Stats long terme",
           "Machac T. › Forme sur 1 an",
-          "Machac T. › Niveau contre top 50",
+          "Baez S. › Niveau contre top 50",
           "Baez S. › Forme récente",
           "Machac T. › Head-to-Head (1/1)"
         ]
@@ -2630,17 +2630,17 @@
         },
         "dataModel": {
           "winner": "Machac T.",
-          "score1": 0.5183,
-          "score2": 0.4012
+          "score1": 0.4808,
+          "score2": 0.4334
         },
         "merged": {
           "winner": "Machac T.",
-          "score1": 0.5869,
-          "score2": 0.4131,
-          "gap": 0.1739,
+          "score1": 0.5355,
+          "score2": 0.4645,
+          "gap": 0.071,
           "confidence": {
-            "label": "Élevée",
-            "level": 3
+            "label": "Modérée",
+            "level": 2
           }
         },
         "agreement": {
@@ -2663,11 +2663,11 @@
     "tournoi": "ATP Barcelona",
     "summary": {
       "favori": "Fils A.",
-      "confiance": "Modérée",
-      "niveauConfiance": 2,
-      "hybridScore1": 0.5341,
-      "hybridScore2": 0.4659,
-      "gap": 0.0681
+      "confiance": "Élevée",
+      "niveauConfiance": 3,
+      "hybridScore1": 0.5827,
+      "hybridScore2": 0.4173,
+      "gap": 0.1654
     },
     "result": {
       "match": {
@@ -2746,9 +2746,9 @@
       },
       "verdict": {
         "favori": "Fils A.",
-        "ecart": 0.0455,
-        "confiance": "Modérée",
-        "niveauConfiance": 2
+        "ecart": 0.1113,
+        "confiance": "Élevée",
+        "niveauConfiance": 3
       },
       "reglesActivees": {
         "joueur1": [],
@@ -2909,18 +2909,18 @@
         }
       },
       "comparison": {
-        "scoreA": 0.5218,
-        "scoreB": 0.4763,
+        "scoreA": 0.5688,
+        "scoreB": 0.4575,
         "winner": "Fils A.",
         "confidence": {
-          "label": "Modérée",
-          "level": 2
+          "label": "Élevée",
+          "level": 3
         },
         "details": {
           "joueur1": {
             "long_term_block": 0.5755798910875001,
             "one_year_block": 0.5757389228125,
-            "top50_block": 0.2896551724137931,
+            "top50_block": 0.47777777777777775,
             "recent_form_block": 0.752,
             "h2h_adjustment": 0,
             "raw": {
@@ -2952,7 +2952,7 @@
           "joueur2": {
             "long_term_block": 0.5504642628095,
             "one_year_block": 0.553374649443,
-            "top50_block": 0.24,
+            "top50_block": 0.16470588235294117,
             "recent_form_block": 0.576,
             "h2h_adjustment": 0,
             "raw": {
@@ -2995,7 +2995,7 @@
             "onSurface": false
           }
         },
-        "explanation": "Fils A. est favori avec un avantage assez clair sur clay, avec un score de 0.522 contre 0.476 (écart : 0.046). Ses principaux atouts sont : Stats long terme, Forme sur 1 an, Niveau contre top 50.",
+        "explanation": "Fils A. est favori avec un avantage net sur clay, avec un score de 0.569 contre 0.457 (écart : 0.111). Ses principaux atouts sont : Stats long terme, Forme sur 1 an, Niveau contre top 50.",
         "key_advantages": [
           "Fils A. › Stats long terme",
           "Fils A. › Forme sur 1 an",
@@ -3013,17 +3013,17 @@
         },
         "dataModel": {
           "winner": "Fils A.",
-          "score1": 0.5218,
-          "score2": 0.4763
+          "score1": 0.5688,
+          "score2": 0.4575
         },
         "merged": {
           "winner": "Fils A.",
-          "score1": 0.5341,
-          "score2": 0.4659,
-          "gap": 0.0681,
+          "score1": 0.5827,
+          "score2": 0.4173,
+          "gap": 0.1654,
           "confidence": {
-            "label": "Modérée",
-            "level": 2
+            "label": "Élevée",
+            "level": 3
           }
         },
         "agreement": {
@@ -3041,9 +3041,9 @@
       "favori": "Tabilo A.",
       "confiance": "Élevée",
       "niveauConfiance": 3,
-      "hybridScore1": 0.5992,
-      "hybridScore2": 0.4008,
-      "gap": 0.1985
+      "hybridScore1": 0.6325,
+      "hybridScore2": 0.3675,
+      "gap": 0.265
     },
     "result": {
       "match": {
@@ -3122,7 +3122,7 @@
       },
       "verdict": {
         "favori": "Tabilo A.",
-        "ecart": 0.1341,
+        "ecart": 0.181,
         "confiance": "Élevée",
         "niveauConfiance": 3
       },
@@ -3287,8 +3287,8 @@
         }
       },
       "comparison": {
-        "scoreA": 0.5758,
-        "scoreB": 0.4417,
+        "scoreA": 0.6246,
+        "scoreB": 0.4436,
         "winner": "Tabilo A.",
         "confidence": {
           "label": "Élevée",
@@ -3298,7 +3298,7 @@
           "joueur1": {
             "long_term_block": 0.588780856615,
             "one_year_block": 0.5784895928649999,
-            "top50_block": 0.27999999999999997,
+            "top50_block": 0.475,
             "recent_form_block": 0.662,
             "h2h_adjustment": 0.06,
             "raw": {
@@ -3330,7 +3330,7 @@
           "joueur2": {
             "long_term_block": 0.5689540754175,
             "one_year_block": 0.57461353326,
-            "top50_block": 0.3333333333333333,
+            "top50_block": 0.341304347826087,
             "recent_form_block": 0.46799999999999997,
             "h2h_adjustment": -0.06,
             "raw": {
@@ -3373,11 +3373,11 @@
             "onSurface": true
           }
         },
-        "explanation": "Tabilo A. est favori avec un avantage net sur clay, avec un score de 0.576 contre 0.442 (écart : 0.134). Ses principaux atouts sont : Stats long terme, Forme sur 1 an, Forme récente.",
+        "explanation": "Tabilo A. est favori avec un avantage net sur clay, avec un score de 0.625 contre 0.444 (écart : 0.181). Ses principaux atouts sont : Stats long terme, Forme sur 1 an, Niveau contre top 50.",
         "key_advantages": [
           "Tabilo A. › Stats long terme",
           "Tabilo A. › Forme sur 1 an",
-          "Fonseca J. › Niveau contre top 50",
+          "Tabilo A. › Niveau contre top 50",
           "Tabilo A. › Forme récente",
           "Tabilo A. › Head-to-Head (2/2)"
         ]
@@ -3392,14 +3392,14 @@
         },
         "dataModel": {
           "winner": "Tabilo A.",
-          "score1": 0.5758,
-          "score2": 0.4417
+          "score1": 0.6246,
+          "score2": 0.4436
         },
         "merged": {
           "winner": "Tabilo A.",
-          "score1": 0.5992,
-          "score2": 0.4008,
-          "gap": 0.1985,
+          "score1": 0.6325,
+          "score2": 0.3675,
+          "gap": 0.265,
           "confidence": {
             "label": "Élevée",
             "level": 3
@@ -3420,9 +3420,9 @@
       "favori": "Zverev A.",
       "confiance": "Élevée",
       "niveauConfiance": 3,
-      "hybridScore1": 0.6557,
-      "hybridScore2": 0.3443,
-      "gap": 0.3115
+      "hybridScore1": 0.6906,
+      "hybridScore2": 0.3094,
+      "gap": 0.3813
     },
     "result": {
       "match": {
@@ -3501,7 +3501,7 @@
       },
       "verdict": {
         "favori": "Zverev A.",
-        "ecart": 0.2148,
+        "ecart": 0.2677,
         "confiance": "Élevée",
         "niveauConfiance": 3
       },
@@ -3666,8 +3666,8 @@
         }
       },
       "comparison": {
-        "scoreA": 0.6273,
-        "scoreB": 0.4125,
+        "scoreA": 0.6935,
+        "scoreB": 0.4258,
         "winner": "Zverev A.",
         "confidence": {
           "label": "Élevée",
@@ -3677,7 +3677,7 @@
           "joueur1": {
             "long_term_block": 0.6440282833750001,
             "one_year_block": 0.64882698875,
-            "top50_block": 0.3619047619047619,
+            "top50_block": 0.6266666666666667,
             "recent_form_block": 0.798,
             "h2h_adjustment": 0.011999999999999995,
             "raw": {
@@ -3709,7 +3709,7 @@
           "joueur2": {
             "long_term_block": 0.5003369192005,
             "one_year_block": 0.4976125092335,
-            "top50_block": 0.25161290322580643,
+            "top50_block": 0.30476190476190473,
             "recent_form_block": 0.372,
             "h2h_adjustment": -0.012,
             "raw": {
@@ -3752,7 +3752,7 @@
             "onSurface": false
           }
         },
-        "explanation": "Zverev A. est favori avec un avantage net sur clay, avec un score de 0.627 contre 0.413 (écart : 0.215). Ses principaux atouts sont : Stats long terme, Forme sur 1 an, Niveau contre top 50.",
+        "explanation": "Zverev A. est favori avec un avantage net sur clay, avec un score de 0.694 contre 0.426 (écart : 0.268). Ses principaux atouts sont : Stats long terme, Forme sur 1 an, Niveau contre top 50.",
         "key_advantages": [
           "Zverev A. › Stats long terme",
           "Zverev A. › Forme sur 1 an",
@@ -3770,14 +3770,14 @@
         },
         "dataModel": {
           "winner": "Zverev A.",
-          "score1": 0.6273,
-          "score2": 0.4125
+          "score1": 0.6935,
+          "score2": 0.4258
         },
         "merged": {
           "winner": "Zverev A.",
-          "score1": 0.6557,
-          "score2": 0.3443,
-          "gap": 0.3115,
+          "score1": 0.6906,
+          "score2": 0.3094,
+          "gap": 0.3813,
           "confidence": {
             "label": "Élevée",
             "level": 3
@@ -3796,11 +3796,11 @@
     "tournoi": "ATP Munich",
     "summary": {
       "favori": "Molcan A.",
-      "confiance": "Légère",
-      "niveauConfiance": 1,
-      "hybridScore1": 0.5143,
-      "hybridScore2": 0.4857,
-      "gap": 0.0286
+      "confiance": "Modérée",
+      "niveauConfiance": 2,
+      "hybridScore1": 0.5364,
+      "hybridScore2": 0.4636,
+      "gap": 0.0728
     },
     "result": {
       "match": {
@@ -3879,9 +3879,9 @@
       },
       "verdict": {
         "favori": "Molcan A.",
-        "ecart": 0.0191,
-        "confiance": "Légère",
-        "niveauConfiance": 1
+        "ecart": 0.0486,
+        "confiance": "Modérée",
+        "niveauConfiance": 2
       },
       "reglesActivees": {
         "joueur1": [],
@@ -4044,18 +4044,18 @@
         }
       },
       "comparison": {
-        "scoreA": 0.4413,
-        "scoreB": 0.4222,
+        "scoreA": 0.5638,
+        "scoreB": 0.5152,
         "winner": "Molcan A.",
         "confidence": {
-          "label": "Légère",
-          "level": 1
+          "label": "Modérée",
+          "level": 2
         },
         "details": {
           "joueur1": {
             "long_term_block": 0.50146673403175,
             "one_year_block": 0.5116706862835,
-            "top50_block": 0.1636363636363636,
+            "top50_block": 0.8666666666666667,
             "recent_form_block": 0.7140000000000001,
             "h2h_adjustment": 0,
             "raw": {
@@ -4087,7 +4087,7 @@
           "joueur2": {
             "long_term_block": 0.5179902536805,
             "one_year_block": 0.514765578203,
-            "top50_block": 0.1714285714285714,
+            "top50_block": 0.5866666666666667,
             "recent_form_block": 0.436,
             "h2h_adjustment": 0,
             "raw": {
@@ -4118,10 +4118,10 @@
           },
           "weights": {
             "long_term": 0.35,
-            "one_year": 0.30000000000000004,
-            "top50": 0.25,
+            "one_year": 0.45000000000000007,
+            "top50": 0.1,
             "recent_form": 0.1,
-            "top50Reliable": true
+            "top50Reliable": false
           },
           "h2h": {
             "total": 0,
@@ -4130,11 +4130,11 @@
             "onSurface": false
           }
         },
-        "explanation": "Molcan A. est légèrement favori sur clay, avec un score de 0.441 contre 0.422 (écart : 0.019). Ses principaux atouts sont : Forme récente. Bublik A. conserve néanmoins des arguments solides, notamment : Stats long terme, Forme sur 1 an.",
+        "explanation": "Molcan A. est favori avec un avantage assez clair sur clay, avec un score de 0.564 contre 0.515 (écart : 0.049). Ses principaux atouts sont : Niveau contre top 50, Forme récente. Bublik A. conserve néanmoins des arguments solides, notamment : Stats long terme, Forme sur 1 an.",
         "key_advantages": [
           "Bublik A. › Stats long terme",
           "Bublik A. › Forme sur 1 an",
-          "Bublik A. › Niveau contre top 50",
+          "Molcan A. › Niveau contre top 50",
           "Molcan A. › Forme récente"
         ]
       },
@@ -4148,17 +4148,17 @@
         },
         "dataModel": {
           "winner": "Molcan A.",
-          "score1": 0.4413,
-          "score2": 0.4222
+          "score1": 0.5638,
+          "score2": 0.5152
         },
         "merged": {
           "winner": "Molcan A.",
-          "score1": 0.5143,
-          "score2": 0.4857,
-          "gap": 0.0286,
+          "score1": 0.5364,
+          "score2": 0.4636,
+          "gap": 0.0728,
           "confidence": {
-            "label": "Légère",
-            "level": 1
+            "label": "Modérée",
+            "level": 2
           }
         },
         "agreement": {
@@ -4174,11 +4174,11 @@
     "tournoi": "ATP Munich",
     "summary": {
       "favori": "Tsitsipas S.",
-      "confiance": "Élevée",
-      "niveauConfiance": 3,
-      "hybridScore1": 0.4097,
-      "hybridScore2": 0.5903,
-      "gap": 0.1805
+      "confiance": "Modérée",
+      "niveauConfiance": 2,
+      "hybridScore1": 0.4449,
+      "hybridScore2": 0.5551,
+      "gap": 0.1101
     },
     "result": {
       "match": {
@@ -4257,9 +4257,9 @@
       },
       "verdict": {
         "favori": "Tsitsipas S.",
-        "ecart": 0.1217,
-        "confiance": "Élevée",
-        "niveauConfiance": 3
+        "ecart": 0.0737,
+        "confiance": "Modérée",
+        "niveauConfiance": 2
       },
       "reglesActivees": {
         "joueur1": [
@@ -4424,18 +4424,18 @@
         }
       },
       "comparison": {
-        "scoreA": 0.4442,
-        "scoreB": 0.5659,
+        "scoreA": 0.4827,
+        "scoreB": 0.5564,
         "winner": "Tsitsipas S.",
         "confidence": {
-          "label": "Élevée",
-          "level": 3
+          "label": "Modérée",
+          "level": 2
         },
         "details": {
           "joueur1": {
             "long_term_block": 0.573481647315,
             "one_year_block": 0.5710294764924999,
-            "top50_block": 0.20869565217391303,
+            "top50_block": 0.3625,
             "recent_form_block": 0.38000000000000006,
             "h2h_adjustment": -0.018,
             "raw": {
@@ -4467,7 +4467,7 @@
           "joueur2": {
             "long_term_block": 0.6234161262175001,
             "one_year_block": 0.6272963735700001,
-            "top50_block": 0.40298507462686567,
+            "top50_block": 0.36470588235294116,
             "recent_form_block": 0.40800000000000003,
             "h2h_adjustment": 0.018,
             "raw": {
@@ -4510,7 +4510,7 @@
             "onSurface": false
           }
         },
-        "explanation": "Tsitsipas S. est favori avec un avantage net sur clay, avec un score de 0.566 contre 0.444 (écart : 0.122). Ses principaux atouts sont : Stats long terme, Forme sur 1 an, Niveau contre top 50.",
+        "explanation": "Tsitsipas S. est favori avec un avantage assez clair sur clay, avec un score de 0.556 contre 0.483 (écart : 0.074). Ses principaux atouts sont : Stats long terme, Forme sur 1 an, Niveau contre top 50.",
         "key_advantages": [
           "Tsitsipas S. › Stats long terme",
           "Tsitsipas S. › Forme sur 1 an",
@@ -4529,17 +4529,17 @@
         },
         "dataModel": {
           "winner": "Tsitsipas S.",
-          "score1": 0.4442,
-          "score2": 0.5659
+          "score1": 0.4827,
+          "score2": 0.5564
         },
         "merged": {
           "winner": "Tsitsipas S.",
-          "score1": 0.4097,
-          "score2": 0.5903,
-          "gap": 0.1805,
+          "score1": 0.4449,
+          "score2": 0.5551,
+          "gap": 0.1101,
           "confidence": {
-            "label": "Élevée",
-            "level": 3
+            "label": "Modérée",
+            "level": 2
           }
         },
         "agreement": {
@@ -4557,9 +4557,9 @@
       "favori": "Griekspoor T.",
       "confiance": "Modérée",
       "niveauConfiance": 2,
-      "hybridScore1": 0.5374,
-      "hybridScore2": 0.4626,
-      "gap": 0.0747
+      "hybridScore1": 0.5409,
+      "hybridScore2": 0.4591,
+      "gap": 0.0819
     },
     "result": {
       "match": {
@@ -4638,7 +4638,7 @@
       },
       "verdict": {
         "favori": "Griekspoor T.",
-        "ecart": 0.0499,
+        "ecart": 0.0547,
         "confiance": "Modérée",
         "niveauConfiance": 2
       },
@@ -4803,8 +4803,8 @@
         }
       },
       "comparison": {
-        "scoreA": 0.4678,
-        "scoreB": 0.4179,
+        "scoreA": 0.5107,
+        "scoreB": 0.456,
         "winner": "Griekspoor T.",
         "confidence": {
           "label": "Modérée",
@@ -4814,7 +4814,7 @@
           "joueur1": {
             "long_term_block": 0.5124287719295001,
             "one_year_block": 0.519734051418,
-            "top50_block": 0.20869565217391303,
+            "top50_block": 0.38,
             "recent_form_block": 0.504,
             "h2h_adjustment": 0.03,
             "raw": {
@@ -4846,7 +4846,7 @@
           "joueur2": {
             "long_term_block": 0.530219937385,
             "one_year_block": 0.5132340909115,
-            "top50_block": 0.2727272727272727,
+            "top50_block": 0.425,
             "recent_form_block": 0.402,
             "h2h_adjustment": -0.03,
             "raw": {
@@ -4889,7 +4889,7 @@
             "onSurface": true
           }
         },
-        "explanation": "Griekspoor T. est favori avec un avantage assez clair sur clay, avec un score de 0.468 contre 0.418 (écart : 0.050). Ses principaux atouts sont : Forme sur 1 an, Forme récente, Head-to-Head (1/1). Shapovalov D. conserve néanmoins des arguments solides, notamment : Stats long terme, Niveau contre top 50.",
+        "explanation": "Griekspoor T. est favori avec un avantage assez clair sur clay, avec un score de 0.511 contre 0.456 (écart : 0.055). Ses principaux atouts sont : Forme sur 1 an, Forme récente, Head-to-Head (1/1).",
         "key_advantages": [
           "Shapovalov D. › Stats long terme",
           "Griekspoor T. › Forme sur 1 an",
@@ -4908,14 +4908,14 @@
         },
         "dataModel": {
           "winner": "Griekspoor T.",
-          "score1": 0.4678,
-          "score2": 0.4179
+          "score1": 0.5107,
+          "score2": 0.456
         },
         "merged": {
           "winner": "Griekspoor T.",
-          "score1": 0.5374,
-          "score2": 0.4626,
-          "gap": 0.0747,
+          "score1": 0.5409,
+          "score2": 0.4591,
+          "gap": 0.0819,
           "confidence": {
             "label": "Modérée",
             "level": 2
@@ -4934,11 +4934,11 @@
     "tournoi": "ATP Munich",
     "summary": {
       "favori": "Cobolli F.",
-      "confiance": "Modérée",
-      "niveauConfiance": 2,
-      "hybridScore1": 0.5395,
-      "hybridScore2": 0.4605,
-      "gap": 0.079
+      "confiance": "Élevée",
+      "niveauConfiance": 3,
+      "hybridScore1": 0.5771,
+      "hybridScore2": 0.4229,
+      "gap": 0.1542
     },
     "result": {
       "match": {
@@ -5017,9 +5017,9 @@
       },
       "verdict": {
         "favori": "Cobolli F.",
-        "ecart": 0.0528,
-        "confiance": "Modérée",
-        "niveauConfiance": 2
+        "ecart": 0.1036,
+        "confiance": "Élevée",
+        "niveauConfiance": 3
       },
       "reglesActivees": {
         "joueur1": [
@@ -5182,18 +5182,18 @@
         }
       },
       "comparison": {
-        "scoreA": 0.5031,
-        "scoreB": 0.4503,
+        "scoreA": 0.5339,
+        "scoreB": 0.4303,
         "winner": "Cobolli F.",
         "confidence": {
-          "label": "Modérée",
-          "level": 2
+          "label": "Élevée",
+          "level": 3
         },
         "details": {
           "joueur1": {
             "long_term_block": 0.5388595231615,
             "one_year_block": 0.533584999994,
-            "top50_block": 0.27,
+            "top50_block": 0.5777777777777777,
             "recent_form_block": 0.47400000000000003,
             "h2h_adjustment": 0,
             "raw": {
@@ -5225,7 +5225,7 @@
           "joueur2": {
             "long_term_block": 0.47805723163505,
             "one_year_block": 0.47809523896035006,
-            "top50_block": 0.19999999999999998,
+            "top50_block": 0,
             "recent_form_block": 0.478,
             "h2h_adjustment": 0,
             "raw": {
@@ -5268,7 +5268,7 @@
             "onSurface": false
           }
         },
-        "explanation": "Cobolli F. est favori avec un avantage assez clair sur clay, avec un score de 0.503 contre 0.450 (écart : 0.053). Ses principaux atouts sont : Stats long terme, Forme sur 1 an, Niveau contre top 50.",
+        "explanation": "Cobolli F. est favori avec un avantage net sur clay, avec un score de 0.534 contre 0.430 (écart : 0.104). Ses principaux atouts sont : Stats long terme, Forme sur 1 an, Niveau contre top 50.",
         "key_advantages": [
           "Cobolli F. › Stats long terme",
           "Cobolli F. › Forme sur 1 an",
@@ -5286,17 +5286,17 @@
         },
         "dataModel": {
           "winner": "Cobolli F.",
-          "score1": 0.5031,
-          "score2": 0.4503
+          "score1": 0.5339,
+          "score2": 0.4303
         },
         "merged": {
           "winner": "Cobolli F.",
-          "score1": 0.5395,
-          "score2": 0.4605,
-          "gap": 0.079,
+          "score1": 0.5771,
+          "score2": 0.4229,
+          "gap": 0.1542,
           "confidence": {
-            "label": "Modérée",
-            "level": 2
+            "label": "Élevée",
+            "level": 3
           }
         },
         "agreement": {
@@ -5312,11 +5312,11 @@
     "tournoi": "ATP Munich",
     "summary": {
       "favori": "Cilic M.",
-      "confiance": "Modérée",
-      "niveauConfiance": 2,
-      "hybridScore1": 0.5447,
-      "hybridScore2": 0.4553,
-      "gap": 0.0895
+      "confiance": "Très serré",
+      "niveauConfiance": 0,
+      "hybridScore1": 0.5036,
+      "hybridScore2": 0.4964,
+      "gap": 0.0072
     },
     "result": {
       "match": {
@@ -5395,9 +5395,9 @@
       },
       "verdict": {
         "favori": "Cilic M.",
-        "ecart": 0.0598,
-        "confiance": "Modérée",
-        "niveauConfiance": 2
+        "ecart": 0.0048,
+        "confiance": "Très serré",
+        "niveauConfiance": 0
       },
       "reglesActivees": {
         "joueur1": [
@@ -5562,18 +5562,18 @@
         }
       },
       "comparison": {
-        "scoreA": 0.4889,
-        "scoreB": 0.4291,
+        "scoreA": 0.4623,
+        "scoreB": 0.4575,
         "winner": "Cilic M.",
         "confidence": {
-          "label": "Modérée",
-          "level": 2
+          "label": "Très serré",
+          "level": 0
         },
         "details": {
           "joueur1": {
             "long_term_block": 0.556698190825,
             "one_year_block": 0.568321211395,
-            "top50_block": 0.24,
+            "top50_block": 0.13333333333333333,
             "recent_form_block": 0.45599999999999996,
             "h2h_adjustment": 0.018,
             "raw": {
@@ -5605,7 +5605,7 @@
           "joueur2": {
             "long_term_block": 0.5310224707369999,
             "one_year_block": 0.53022626267865,
-            "top50_block": 0.20625,
+            "top50_block": 0.31999999999999995,
             "recent_form_block": 0.506,
             "h2h_adjustment": -0.018,
             "raw": {
@@ -5648,11 +5648,11 @@
             "onSurface": false
           }
         },
-        "explanation": "Cilic M. est favori avec un avantage assez clair sur clay, avec un score de 0.489 contre 0.429 (écart : 0.060). Ses principaux atouts sont : Stats long terme, Forme sur 1 an, Niveau contre top 50.",
+        "explanation": "Cilic M. garde un très léger avantage dans un match extrêmement serré sur clay, avec un score de 0.462 contre 0.458 (écart : 0.005). Ses principaux atouts sont : Stats long terme, Forme sur 1 an, Head-to-Head (1/1). Altmaier D. conserve néanmoins des arguments solides, notamment : Niveau contre top 50, Forme récente.",
         "key_advantages": [
           "Cilic M. › Stats long terme",
           "Cilic M. › Forme sur 1 an",
-          "Cilic M. › Niveau contre top 50",
+          "Altmaier D. › Niveau contre top 50",
           "Altmaier D. › Forme récente",
           "Cilic M. › Head-to-Head (1/1)"
         ]
@@ -5667,17 +5667,17 @@
         },
         "dataModel": {
           "winner": "Cilic M.",
-          "score1": 0.4889,
-          "score2": 0.4291
+          "score1": 0.4623,
+          "score2": 0.4575
         },
         "merged": {
           "winner": "Cilic M.",
-          "score1": 0.5447,
-          "score2": 0.4553,
-          "gap": 0.0895,
+          "score1": 0.5036,
+          "score2": 0.4964,
+          "gap": 0.0072,
           "confidence": {
-            "label": "Modérée",
-            "level": 2
+            "label": "Très serré",
+            "level": 0
           }
         },
         "agreement": {
@@ -5692,12 +5692,12 @@
     "surface": "clay",
     "tournoi": "ATP Munich",
     "summary": {
-      "favori": "Zhang Z.",
-      "confiance": "Très serré",
-      "niveauConfiance": 0,
-      "hybridScore1": 0.5061,
-      "hybridScore2": 0.4939,
-      "gap": 0.0121
+      "favori": "Darderi L.",
+      "confiance": "Élevée",
+      "niveauConfiance": 3,
+      "hybridScore1": 0.42,
+      "hybridScore2": 0.58,
+      "gap": 0.16
     },
     "result": {
       "match": {
@@ -5775,10 +5775,10 @@
         }
       },
       "verdict": {
-        "favori": "Zhang Z.",
-        "ecart": 0.0081,
-        "confiance": "Très serré",
-        "niveauConfiance": 0
+        "favori": "Darderi L.",
+        "ecart": 0.1076,
+        "confiance": "Élevée",
+        "niveauConfiance": 3
       },
       "reglesActivees": {
         "joueur1": [
@@ -5943,18 +5943,18 @@
         }
       },
       "comparison": {
-        "scoreA": 0.4748,
-        "scoreB": 0.4667,
-        "winner": "Zhang Z.",
+        "scoreA": 0.4015,
+        "scoreB": 0.5091,
+        "winner": "Darderi L.",
         "confidence": {
-          "label": "Très serré",
-          "level": 0
+          "label": "Élevée",
+          "level": 3
         },
         "details": {
           "joueur1": {
             "long_term_block": 0.528983832865,
             "one_year_block": 0.52723770115,
-            "top50_block": 0.3818181818181818,
+            "top50_block": 0.08888888888888889,
             "recent_form_block": 0.36,
             "h2h_adjustment": 0,
             "raw": {
@@ -5986,7 +5986,7 @@
           "joueur2": {
             "long_term_block": 0.5747823791275001,
             "one_year_block": 0.568171494875,
-            "top50_block": 0.23636363636363633,
+            "top50_block": 0.406060606060606,
             "recent_form_block": 0.36,
             "h2h_adjustment": 0,
             "raw": {
@@ -6029,34 +6029,34 @@
             "onSurface": false
           }
         },
-        "explanation": "Zhang Z. garde un très léger avantage dans un match extrêmement serré sur clay, avec un score de 0.475 contre 0.467 (écart : 0.008). Ses principaux atouts sont : Niveau contre top 50. Darderi L. conserve néanmoins des arguments solides, notamment : Stats long terme, Forme sur 1 an.",
+        "explanation": "Darderi L. est favori avec un avantage net sur clay, avec un score de 0.509 contre 0.402 (écart : 0.108). Ses principaux atouts sont : Stats long terme, Forme sur 1 an, Niveau contre top 50.",
         "key_advantages": [
           "Darderi L. › Stats long terme",
           "Darderi L. › Forme sur 1 an",
-          "Zhang Z. › Niveau contre top 50"
+          "Darderi L. › Niveau contre top 50"
         ]
       },
       "hybrid": {
         "mainModel": {
-          "winner": "Zhang Z.",
+          "winner": "Darderi L.",
           "total1": 3.6942857142857144,
           "total2": 11.831886792452831,
           "score1": null,
           "score2": null
         },
         "dataModel": {
-          "winner": "Zhang Z.",
-          "score1": 0.4748,
-          "score2": 0.4667
+          "winner": "Darderi L.",
+          "score1": 0.4015,
+          "score2": 0.5091
         },
         "merged": {
-          "winner": "Zhang Z.",
-          "score1": 0.5061,
-          "score2": 0.4939,
-          "gap": 0.0121,
+          "winner": "Darderi L.",
+          "score1": 0.42,
+          "score2": 0.58,
+          "gap": 0.16,
           "confidence": {
-            "label": "Très serré",
-            "level": 0
+            "label": "Élevée",
+            "level": 3
           }
         },
         "agreement": {
@@ -6074,9 +6074,9 @@
       "favori": "Kopriva V.",
       "confiance": "Élevée",
       "niveauConfiance": 3,
-      "hybridScore1": 0.4108,
-      "hybridScore2": 0.5892,
-      "gap": 0.1784
+      "hybridScore1": 0.4185,
+      "hybridScore2": 0.5815,
+      "gap": 0.1629
     },
     "result": {
       "match": {
@@ -6155,7 +6155,7 @@
       },
       "verdict": {
         "favori": "Kopriva V.",
-        "ecart": 0.1202,
+        "ecart": 0.1096,
         "confiance": "Élevée",
         "niveauConfiance": 3
       },
@@ -6322,8 +6322,8 @@
         }
       },
       "comparison": {
-        "scoreA": 0.3594,
-        "scoreB": 0.4796,
+        "scoreA": 0.3728,
+        "scoreB": 0.4824,
         "winner": "Kopriva V.",
         "confidence": {
           "label": "Élevée",
@@ -6333,7 +6333,7 @@
           "joueur1": {
             "long_term_block": 0.40397130861999997,
             "one_year_block": 0.40187043494749997,
-            "top50_block": 0,
+            "top50_block": 0.13333333333333333,
             "recent_form_block": 0.372,
             "h2h_adjustment": 0,
             "raw": {
@@ -6365,7 +6365,7 @@
           "joueur2": {
             "long_term_block": 0.545937426554,
             "one_year_block": 0.543478571421,
-            "top50_block": 0.1714285714285714,
+            "top50_block": 0.2,
             "recent_form_block": 0.268,
             "h2h_adjustment": 0,
             "raw": {
@@ -6408,7 +6408,7 @@
             "onSurface": false
           }
         },
-        "explanation": "Kopriva V. est favori avec un avantage net sur clay, avec un score de 0.480 contre 0.359 (écart : 0.120). Ses principaux atouts sont : Stats long terme, Forme sur 1 an, Niveau contre top 50.",
+        "explanation": "Kopriva V. est favori avec un avantage net sur clay, avec un score de 0.482 contre 0.373 (écart : 0.110). Ses principaux atouts sont : Stats long terme, Forme sur 1 an, Niveau contre top 50.",
         "key_advantages": [
           "Kopriva V. › Stats long terme",
           "Kopriva V. › Forme sur 1 an",
@@ -6426,14 +6426,14 @@
         },
         "dataModel": {
           "winner": "Kopriva V.",
-          "score1": 0.3594,
-          "score2": 0.4796
+          "score1": 0.3728,
+          "score2": 0.4824
         },
         "merged": {
           "winner": "Kopriva V.",
-          "score1": 0.4108,
-          "score2": 0.5892,
-          "gap": 0.1784,
+          "score1": 0.4185,
+          "score2": 0.5815,
+          "gap": 0.1629,
           "confidence": {
             "label": "Élevée",
             "level": 3
@@ -6454,9 +6454,9 @@
       "favori": "Topo M.",
       "confiance": "Très serré",
       "niveauConfiance": 0,
-      "hybridScore1": 0.4919,
-      "hybridScore2": 0.5081,
-      "gap": 0.0162
+      "hybridScore1": 0.496,
+      "hybridScore2": 0.504,
+      "gap": 0.0081
     },
     "result": {
       "match": {
@@ -6535,7 +6535,7 @@
       },
       "verdict": {
         "favori": "Topo M.",
-        "ecart": 0.0108,
+        "ecart": 0.0054,
         "confiance": "Très serré",
         "niveauConfiance": 0
       },
@@ -6700,7 +6700,7 @@
         }
       },
       "comparison": {
-        "scoreA": 0.4783,
+        "scoreA": 0.4837,
         "scoreB": 0.4891,
         "winner": "Topo M.",
         "confidence": {
@@ -6711,7 +6711,7 @@
           "joueur1": {
             "long_term_block": 0.5545265833805,
             "one_year_block": 0.5525624590185001,
-            "top50_block": 0.0857142857142857,
+            "top50_block": 0.1391304347826087,
             "recent_form_block": 0.27,
             "h2h_adjustment": 0,
             "raw": {
@@ -6743,7 +6743,7 @@
           "joueur2": {
             "long_term_block": 0.49201249851421003,
             "one_year_block": 0.5107719354785,
-            "top50_block": 0,
+            "top50_block": null,
             "recent_form_block": 0.62,
             "h2h_adjustment": 0,
             "raw": {
@@ -6786,11 +6786,10 @@
             "onSurface": false
           }
         },
-        "explanation": "Topo M. garde un très léger avantage dans un match extrêmement serré sur clay, avec un score de 0.489 contre 0.478 (écart : 0.011). Ses principaux atouts sont : Forme récente. Bergs Z. conserve néanmoins des arguments solides, notamment : Stats long terme, Forme sur 1 an.",
+        "explanation": "Topo M. garde un très léger avantage dans un match extrêmement serré sur clay, avec un score de 0.489 contre 0.484 (écart : 0.005). Ses principaux atouts sont : Forme récente. Bergs Z. conserve néanmoins des arguments solides, notamment : Stats long terme, Forme sur 1 an.",
         "key_advantages": [
           "Bergs Z. › Stats long terme",
           "Bergs Z. › Forme sur 1 an",
-          "Bergs Z. › Niveau contre top 50",
           "Topo M. › Forme récente"
         ]
       },
@@ -6804,14 +6803,14 @@
         },
         "dataModel": {
           "winner": "Topo M.",
-          "score1": 0.4783,
+          "score1": 0.4837,
           "score2": 0.4891
         },
         "merged": {
           "winner": "Topo M.",
-          "score1": 0.4919,
-          "score2": 0.5081,
-          "gap": 0.0162,
+          "score1": 0.496,
+          "score2": 0.504,
+          "gap": 0.0081,
           "confidence": {
             "label": "Très serré",
             "level": 0

@@ -163,51 +163,41 @@ function calcRateFromCounts(winsRaw, matchesRaw) {
   return clamp(w / m, 0, 1);
 }
 
-function calcTop50Block(statsTop50, surface) {
-  if (!statsTop50) return { score: 0, available: false, reduced: false, matchCount: 0 };
-
-  // Taux global : calculé depuis wins/matches (immunisé contre les formules cassées)
-  const matchCount = parseInt50(statsTop50.matches_vs_top50);
-
- console.log('[TOP50 GLOBAL RAW]', {
-  matches_vs_top50: statsTop50.matches_vs_top50,
-  wins_vs_top50: statsTop50.wins_vs_top50,
-  win_rate_vs_top50: statsTop50.win_rate_vs_top50
-});
- 
-
-  const globalRate = calcRateFromCounts(statsTop50.wins_vs_top50, statsTop50.matches_vs_top50);
-
-  // Taux surface : idem
-  let surfaceRate = null;
-  if (surface === 'clay') {
-    surfaceRate = calcRateFromCounts(
-      statsTop50.wins_clay_vs_top50,
-      statsTop50.matches_clay_vs_top50
-    );
-  } else if (surface === 'hard' || surface === 'indoor_hard') {
-    surfaceRate = calcRateFromCounts(
-      statsTop50.wins_hard_vs_top50,
-      statsTop50.matches_hard_vs_top50
-    );
+function calcTop50Block(allMatches, surface) {
+  if (!allMatches || allMatches.length === 0) {
+    return { score: 0, available: false, reduced: false, matchCount: 0 };
   }
 
-  // Fallback surface → global si surface absente
-  surfaceRate = surfaceRate ?? globalRate;
+  const cutoff = new Date();
+  cutoff.setFullYear(cutoff.getFullYear() - 1);
 
-  if (globalRate === null && surfaceRate === null) {
-    return { score: 0, available: false, reduced: false, matchCount };
-  }
+  // Filtre : 12 derniers mois + adversaire classé Top 50
+  const vs50 = allMatches.filter(m =>
+    m.rangAdversaire !== null &&
+    m.rangAdversaire !== undefined &&
+    Number(m.rangAdversaire) <= 50 &&
+    m.date && new Date(m.date) >= cutoff
+  );
 
-  const gr = globalRate  ?? 0.5;
-  const sr = surfaceRate ?? gr;
+  const matchCount = vs50.length;
+  if (matchCount === 0) return { score: 0, available: false, reduced: false, matchCount: 0 };
 
-  const score   = clamp((gr * 0.40) + (sr * 0.60), 0, 1);
+  // Win rate global vs top 50 (12 mois)
+  const globalWins = vs50.filter(m => m.resultat === 'V').length;
+  const globalRate = clamp(globalWins / matchCount, 0, 1);
+
+  // Win rate surface vs top 50 (12 mois)
+  const vs50Surface = vs50.filter(m => m.surface === surface);
+  const surfaceRate = vs50Surface.length > 0
+    ? clamp(vs50Surface.filter(m => m.resultat === 'V').length / vs50Surface.length, 0, 1)
+    : globalRate;
+
+  const score   = clamp((globalRate * 0.40) + (surfaceRate * 0.60), 0, 1);
   const reduced = matchCount < 5;
 
-  console.log(`[Top50Block] surface=${surface} | global=${gr.toFixed(3)} | surface=${sr.toFixed(3)} | score=${score.toFixed(3)} | n=${matchCount}`);
+  console.log(`[Top50Block-1Y] surface=${surface} | n=${matchCount} | global=${globalRate.toFixed(3)} | surface=${surfaceRate.toFixed(3)} | score=${score.toFixed(3)}`);
 
-  return { score, available: true, reduced, matchCount, raw: { globalRate: gr, surfaceRate: sr } };
+  return { score, available: true, reduced, matchCount, raw: { globalRate, surfaceRate } };
 }
 
 // ─── Bloc 4 : Forme récente (2025-atp-season) ─────────────────────────────────
@@ -471,10 +461,21 @@ function comparePlayers(dataA, dataB, surface, nameA, nameB) {
   const ltB   = calcLongTermBlock(dataB.stats, surface);
   const oyA   = calcOneYearBlock(dataA.stats1y, surface);
   const oyB   = calcOneYearBlock(dataB.stats1y, surface);
-  const t50A  = calcTop50Block(dataA.statsTop50, surface);
-  const t50B  = calcTop50Block(dataB.statsTop50, surface);
+  const t50A  = calcTop50Block(dataA.allMatches ?? [], surface);
+  const t50B  = calcTop50Block(dataB.allMatches ?? [], surface);
   const formA = calcRecentFormBlock(dataA.allMatches ?? []);
   const formB = calcRecentFormBlock(dataB.allMatches ?? []);
+
+console.log('[TOP50 1Y]', {
+  surface,
+  matchCountA: t50A.matchCount,
+  matchCountB: t50B.matchCount,
+  scoreA: t50A.score,
+  scoreB: t50B.score,
+  reducedA: t50A.reduced,
+  reducedB: t50B.reduced
+});
+
 
   const nameBNorm = norm(nameB);
   const nameANorm = norm(nameA);
