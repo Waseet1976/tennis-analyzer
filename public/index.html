@@ -1419,13 +1419,24 @@ async function loadDailySummary() {
   if (!grid) return;
 
   try {
-    const res  = await fetch('/api/daily-summary');
-    const data = await res.json();
+  const res = await fetch('/api/daily-summary');
 
-    if (!res.ok || data.error) {
-      grid.innerHTML = `<p class="daily-error">${esc(data.error ?? 'Erreur inconnue')}</p>`;
-      return;
-    }
+
+  if (!res.ok) {
+    const errText = await res.text();
+    grid.innerHTML = `<p class="daily-error">${esc(errText || 'Impossible de charger les analyses')}</p>`;
+    return;
+  }
+
+
+  const data = await res.json();
+
+
+  if (data.error) {
+    grid.innerHTML = `<p class="daily-error">${esc(data.error ?? 'Erreur inconnue')}</p>`;
+    return;
+  }
+
 
     if (!Array.isArray(data) || data.length === 0) {
       grid.innerHTML = '<p style="color:#64748b">Aucune analyse disponible.</p>';
