@@ -1431,7 +1431,7 @@ async function loadDailySummary() {
   if (!grid) return;
 
   try {
-    const res = await fetch('/matches-today-summary.json');
+    const res = await fetch('/data/matches-today-summary.json');
 
     if (!res.ok) {
       grid.innerHTML = `<p class="daily-error">Analyses du jour introuvables (${res.status}). Lancez analyze-daily.js puis copiez le fichier dans public/.</p>`;

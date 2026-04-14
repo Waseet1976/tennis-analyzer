@@ -141,21 +141,58 @@ function calcOneYearBlock(stats1y, surface) {
  *
  * @returns {{ score, available, reduced, matchCount }}
  */
+/**
+ * Parse un entier brut depuis une cellule Sheets (comptage de matchs/victoires).
+ * Retourne 0 si absent ou non numérique.
+ */
+function parseInt50(raw) {
+  if (raw === null || raw === undefined || raw === '') return 0;
+  const n = parseInt(String(raw).replace(',', '.').trim(), 10);
+  return isNaN(n) ? 0 : n;
+}
+
+/**
+ * Calcule un win rate en 0–1 depuis les colonnes de comptage brutes.
+ * Évite le bug où win_rate_vs_top50 = "1" (formule cassée dans la feuille).
+ * Retourne null si matches = 0.
+ */
+function calcRateFromCounts(winsRaw, matchesRaw) {
+  const m = parseInt50(matchesRaw);
+  const w = parseInt50(winsRaw);
+  if (m === 0) return null;
+  return clamp(w / m, 0, 1);
+}
+
 function calcTop50Block(statsTop50, surface) {
   if (!statsTop50) return { score: 0, available: false, reduced: false, matchCount: 0 };
 
-  const globalRate = safeFloat(statsTop50.win_rate_vs_top50);
-  const matchCount = parseInt(statsTop50.matches_vs_top50 ?? '0', 10) || 0;
+  // Taux global : calculé depuis wins/matches (immunisé contre les formules cassées)
+  const matchCount = parseInt50(statsTop50.matches_vs_top50);
 
-  let surfaceRate;
+ console.log('[TOP50 GLOBAL RAW]', {
+  matches_vs_top50: statsTop50.matches_vs_top50,
+  wins_vs_top50: statsTop50.wins_vs_top50,
+  win_rate_vs_top50: statsTop50.win_rate_vs_top50
+});
+ 
+
+  const globalRate = calcRateFromCounts(statsTop50.wins_vs_top50, statsTop50.matches_vs_top50);
+
+  // Taux surface : idem
+  let surfaceRate = null;
   if (surface === 'clay') {
-    surfaceRate = safeFloat(statsTop50.win_rate_clay_vs_top50);
+    surfaceRate = calcRateFromCounts(
+      statsTop50.wins_clay_vs_top50,
+      statsTop50.matches_clay_vs_top50
+    );
   } else if (surface === 'hard' || surface === 'indoor_hard') {
-    surfaceRate = safeFloat(statsTop50.win_rate_hard_vs_top50);
-  } else {
-    surfaceRate = null;
+    surfaceRate = calcRateFromCounts(
+      statsTop50.wins_hard_vs_top50,
+      statsTop50.matches_hard_vs_top50
+    );
   }
-  // Fallback : si pas de taux surface, utiliser global
+
+  // Fallback surface → global si surface absente
   surfaceRate = surfaceRate ?? globalRate;
 
   if (globalRate === null && surfaceRate === null) {
@@ -165,10 +202,12 @@ function calcTop50Block(statsTop50, surface) {
   const gr = globalRate  ?? 0.5;
   const sr = surfaceRate ?? gr;
 
-  const score = clamp((gr * 0.40) + (sr * 0.60), 0, 1);
+  const score   = clamp((gr * 0.40) + (sr * 0.60), 0, 1);
   const reduced = matchCount < 5;
 
-  return { score, available: true, reduced, matchCount, raw: { globalRate, surfaceRate } };
+  console.log(`[Top50Block] surface=${surface} | global=${gr.toFixed(3)} | surface=${sr.toFixed(3)} | score=${score.toFixed(3)} | n=${matchCount}`);
+
+  return { score, available: true, reduced, matchCount, raw: { globalRate: gr, surfaceRate: sr } };
 }
 
 // ─── Bloc 4 : Forme récente (2025-atp-season) ─────────────────────────────────
@@ -376,6 +415,55 @@ function buildExplanation(nameA, nameB, scoreA, scoreB, detailsA, detailsB, h2hA
     key_advantages: advantages
   };
 }
+// ─── Bonus de domination élite ────────────────────────────────────────────────
+
+/**
+ * Calcule un bonus d'élite pour le joueur qui domine clairement sur plusieurs blocs.
+ * Chaque condition vérifiée ajoute STEP au bonus du joueur dominant.
+ * Le bonus est plafonné à MAX_BONUS pour éviter les effets de bord.
+ *
+ * Conditions (seuils calibrés pour les matchs vraiment déséquilibrés) :
+ *   LT   : score ≥ 0.80 vs adversaire ≤ 0.55
+ *   1Y   : score ≥ 0.80 vs adversaire ≤ 0.55
+ *   Top50: score ≥ 0.70 vs adversaire ≤ 0.45
+ *   Forme: score ≥ 0.60 vs adversaire ≤ 0.40
+ *
+ * 3 conditions réunies → +0.075 (max effectif) ; plafond à +0.08.
+ */
+function calcDominationBonus(ltA, ltB, oyA, oyB, t50A, t50B, formA, formB) {
+  const MAX_BONUS = 0.08;
+  const STEP      = 0.025;
+
+  let bonusA = 0;
+  let bonusB = 0;
+
+  // Long terme
+  if (ltA.available && ltB.available) {
+    if (ltA.score >= 0.80 && ltB.score <= 0.55) bonusA += STEP;
+    if (ltB.score >= 0.80 && ltA.score <= 0.55) bonusB += STEP;
+  }
+  // 1 an
+  if (oyA.available && oyB.available) {
+    if (oyA.score >= 0.80 && oyB.score <= 0.55) bonusA += STEP;
+    if (oyB.score >= 0.80 && oyA.score <= 0.55) bonusB += STEP;
+  }
+  // Top 50
+  if (t50A.available && t50B.available) {
+    if (t50A.score >= 0.70 && t50B.score <= 0.45) bonusA += STEP;
+    if (t50B.score >= 0.70 && t50A.score <= 0.45) bonusB += STEP;
+  }
+  // Forme récente
+  if (formA.available && formB.available) {
+    if (formA.score >= 0.60 && formB.score <= 0.40) bonusA += STEP;
+    if (formB.score >= 0.60 && formA.score <= 0.40) bonusB += STEP;
+  }
+
+  return {
+    bonusA: clamp(bonusA, 0, MAX_BONUS),
+    bonusB: clamp(bonusB, 0, MAX_BONUS),
+  };
+}
+
 function comparePlayers(dataA, dataB, surface, nameA, nameB) {
   console.log(`[Compare] ${nameA} vs ${nameB} — surface: ${surface}`);
 
@@ -393,8 +481,14 @@ function comparePlayers(dataA, dataB, surface, nameA, nameB) {
   const h2hA = calcH2HAdjustment(dataA.allMatches ?? [], nameBNorm, surface);
   const h2hB = calcH2HAdjustment(dataB.allMatches ?? [], nameANorm, surface);
 
-  const w_top50 = (t50A.available && !t50A.reduced && t50B.available && !t50B.reduced) ? 0.15 : 0.05;
-  const w_1y    = 0.40 + (0.15 - w_top50);
+  // ─── Poids dynamiques ────────────────────────────────────────────────────────
+  // Top50 fiable (les deux joueurs ont ≥5 matchs vs Top50) → poids élevé.
+  // Invariant : LT(0.35) + 1Y(w_1y) + Top50(w_top50) + Form(0.10) = 1.00
+  const top50Reliable = t50A.available && !t50A.reduced && t50B.available && !t50B.reduced;
+  const w_top50 = top50Reliable ? 0.25 : 0.10;
+  const w_1y    = 0.55 - w_top50;   // 0.30 si fiable, 0.45 sinon
+
+  console.log(`[Compare] Poids → LT=0.35 | 1Y=${w_1y.toFixed(2)} | Top50=${w_top50.toFixed(2)} | Form=0.10 | top50Reliable=${top50Reliable}`);
 
   const calcBaseScore = (lt, oy, top50, form) =>
     (lt.score * 0.35) +
@@ -405,8 +499,18 @@ function comparePlayers(dataA, dataB, surface, nameA, nameB) {
   const baseA = calcBaseScore(ltA, oyA, t50A, formA);
   const baseB = calcBaseScore(ltB, oyB, t50B, formB);
 
-  const finalA = clamp(baseA + h2hA.adjustment, 0, 1);
-  const finalB = clamp(baseB + h2hB.adjustment, 0, 1);
+  // Score avant bonus (H2H inclus)
+  const preA = clamp(baseA + h2hA.adjustment, 0, 1);
+  const preB = clamp(baseB + h2hB.adjustment, 0, 1);
+
+  // ─── Bonus de domination élite ────────────────────────────────────────────
+  const domBonus = calcDominationBonus(ltA, ltB, oyA, oyB, t50A, t50B, formA, formB);
+
+  console.log(`[Compare] Domination → bonusA=${domBonus.bonusA.toFixed(3)} | bonusB=${domBonus.bonusB.toFixed(3)}`);
+  console.log(`[Compare] Scores avant bonus → ${nameA}=${preA.toFixed(3)} | ${nameB}=${preB.toFixed(3)}`);
+
+  const finalA = clamp(preA + domBonus.bonusA, 0, 1);
+  const finalB = clamp(preB + domBonus.bonusB, 0, 1);
 
   const confidence = calcConfidence(
     finalA, finalB,
@@ -438,11 +542,11 @@ function comparePlayers(dataA, dataB, surface, nameA, nameB) {
 
   console.log(
     `[Compare] ${nameA}: LT=${ltA.score.toFixed(3)} 1Y=${oyA.score.toFixed(3)}` +
-    ` T50=${t50A.score.toFixed(3)} Form=${formA.score.toFixed(3)} Final=${finalA.toFixed(3)}`
+    ` T50=${t50A.score.toFixed(3)} Form=${formA.score.toFixed(3)} bonus=${domBonus.bonusA.toFixed(3)} Final=${finalA.toFixed(3)}`
   );
   console.log(
     `[Compare] ${nameB}: LT=${ltB.score.toFixed(3)} 1Y=${oyB.score.toFixed(3)}` +
-    ` T50=${t50B.score.toFixed(3)} Form=${formB.score.toFixed(3)} Final=${finalB.toFixed(3)}`
+    ` T50=${t50B.score.toFixed(3)} Form=${formB.score.toFixed(3)} bonus=${domBonus.bonusB.toFixed(3)} Final=${finalB.toFixed(3)}`
   );
 
   return {
@@ -454,10 +558,11 @@ function comparePlayers(dataA, dataB, surface, nameA, nameB) {
       joueur1: detailsA,
       joueur2: detailsB,
       weights: {
-        long_term: 0.35,
-        one_year: w_1y,
-        top50: w_top50,
-        recent_form: 0.10
+        long_term:   0.35,
+        one_year:    w_1y,
+        top50:       w_top50,
+        recent_form: 0.10,
+        top50Reliable,
       },
       h2h: {
         total: h2hA.total,

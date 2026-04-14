@@ -4,9 +4,10 @@ const fs           = require('fs');
 const path         = require('path');
 const { analyzeMatch } = require('./src/analysis/matchAnalysis');
 
-const INPUT_FILE    = path.join(__dirname, 'data', 'matches-today.json');
-const OUTPUT_FILE   = path.join(__dirname, 'data', 'matches-today-results.json');
-const SUMMARY_FILE  = path.join(__dirname, 'data', 'matches-today-summary.json');
+const INPUT_FILE          = path.join(__dirname, 'data',        'matches-today.json');
+const OUTPUT_FILE         = path.join(__dirname, 'data',        'matches-today-results.json');
+const SUMMARY_FILE        = path.join(__dirname, 'data',        'matches-today-summary.json');
+const PUBLIC_SUMMARY_FILE = path.join(__dirname, 'public', 'data', 'matches-today-summary.json');
 
 // ─── Lecture du fichier d'entrée ─────────────────────────────────────────────
 
@@ -81,24 +82,34 @@ function saveSummary(results) {
   const summary = results
     .filter(r => !r.error)
     .map(r => ({
-      joueur1:       r.joueur1,
-      joueur2:       r.joueur2,
-      surface:       r.surface,
-      tournoi:       r.tournoi,
-      favori:        r.summary.favori,
-      confiance:     r.summary.confiance,
+      joueur1:         r.joueur1,
+      joueur2:         r.joueur2,
+      surface:         r.surface,
+      tournoi:         r.tournoi,
+      favori:          r.summary.favori,
+      confiance:       r.summary.confiance,
       niveauConfiance: r.summary.niveauConfiance,
-      score1:        r.summary.hybridScore1,
-      score2:        r.summary.hybridScore2,
-      gap:           r.summary.gap,
+      score1:          r.summary.hybridScore1,
+      score2:          r.summary.hybridScore2,
+      gap:             r.summary.gap,
     }))
     .sort((a, b) =>
       b.niveauConfiance - a.niveauConfiance || b.gap - a.gap
     );
 
+  const json = JSON.stringify(summary, null, 2);
+
+  // 1. data/matches-today-summary.json
   ensureDir(SUMMARY_FILE);
-  fs.writeFileSync(SUMMARY_FILE, JSON.stringify(summary, null, 2), 'utf-8');
-  console.log(`Résumé trié sauvegardé dans    : ${SUMMARY_FILE}`);
+  fs.writeFileSync(SUMMARY_FILE, json, 'utf-8');
+  console.log(`Summary sauvegardé dans        : ${SUMMARY_FILE}`);
+
+  // 2. public/data/matches-today-summary.json (lu par le site statique)
+  ensureDir(PUBLIC_SUMMARY_FILE);
+  fs.writeFileSync(PUBLIC_SUMMARY_FILE, json, 'utf-8');
+  console.log(`Summary copié dans             : ${PUBLIC_SUMMARY_FILE}`);
+
+  return summary;
 }
 
 // ─── Point d'entrée ───────────────────────────────────────────────────────────
