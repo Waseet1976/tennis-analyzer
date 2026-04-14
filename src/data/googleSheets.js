@@ -499,7 +499,23 @@ async function getPlayerStatsTop50(playerName) {
   const rows = await getSheetData(cfg.sheets.statsTop50);
   if (rows === null) return null;
   const found = findPlayerRow(rows, playerName);
-  if (!found) console.log(`[Sheets] STATS_TOP50 : aucune ligne pour "${playerName}"`);
+  if (!found) {
+    console.log(`[Sheets] STATS_TOP50 : aucune ligne pour "${playerName}"`);
+    return null;
+  }
+  // ── DEBUG TOP50 RAW ──────────────────────────────────────────────────────────
+  console.log(`[TOP50 RAW] "${playerName}" →`, JSON.stringify({
+    matches_vs_top50:       found.matches_vs_top50,
+    wins_vs_top50:          found.wins_vs_top50,
+    win_rate_vs_top50:      found.win_rate_vs_top50,
+    matches_clay_vs_top50:  found.matches_clay_vs_top50,
+    wins_clay_vs_top50:     found.wins_clay_vs_top50,
+    win_rate_clay_vs_top50: found.win_rate_clay_vs_top50,
+    matches_hard_vs_top50:  found.matches_hard_vs_top50,
+    wins_hard_vs_top50:     found.wins_hard_vs_top50,
+    win_rate_hard_vs_top50: found.win_rate_hard_vs_top50,
+  }));
+  // ────────────────────────────────────────────────────────────────────────────
   return found;
 }
 

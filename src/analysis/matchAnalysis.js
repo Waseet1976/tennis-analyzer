@@ -343,12 +343,10 @@ function buildScores(pd, od, scoreAResult, surfaceStats, h2hPct, h2hSurface, pts
     notes: [],
   };
 }
-function normalizeMainScores(total1, total2) {
-  const diff = total1 - total2;
-
-  const score1 = 1 / (1 + Math.exp(-diff / 4));
+function normalizeMainScores(total1, total2, k = 3) {
+  const diff   = total1 - total2;
+  const score1 = 1 / (1 + Math.exp(-k * diff));
   const score2 = 1 - score1;
-
   return { score1, score2 };
 }
 
@@ -607,14 +605,19 @@ const scoreA2 = calculateScoreAFromDataModel(data2.allMatches ?? [], surface);
   // Nouveau modèle de comparaison (STATS + STATS_1Y + STATS_TOP50 + forme récente + H2H)
   rapport.comparison = comparePlayers(baseData1, baseData2, surface, player1Name, player2Name);
 
+  // TOTAL : somme des scores A-O, typiquement dans [-30, +30]
+  // k=0.25 pour éviter la saturation sur de grands écarts
   const mainNorm = normalizeMainScores(
     finalScores1.TOTAL ?? 0,
-    finalScores2.TOTAL ?? 0
+    finalScores2.TOTAL ?? 0,
+    0.25
   );
 
+  // comparison.scoreA/B : valeurs en [0, 1] — k=3 pour amplifier les écarts réels
   const dataNorm = normalizeMainScores(
     rapport.comparison.scoreA ?? 0.5,
-    rapport.comparison.scoreB ?? 0.5
+    rapport.comparison.scoreB ?? 0.5,
+    3
   );
 
   const dataScore1 = dataNorm.score1;

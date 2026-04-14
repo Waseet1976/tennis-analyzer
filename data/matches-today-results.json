@@ -5,12 +5,12 @@
     "surface": "clay",
     "tournoi": "ATP Barcelona",
     "summary": {
-      "favori": "Ofner S.",
+      "favori": "De Minaur A.",
       "confiance": "Conflit / Match piégeux",
       "niveauConfiance": 0,
-      "hybridScore1": 0.4804,
-      "hybridScore2": 0.5196,
-      "gap": 0.0392
+      "hybridScore1": 0.501,
+      "hybridScore2": 0.499,
+      "gap": 0.002
     },
     "result": {
       "match": {
@@ -88,8 +88,8 @@
         }
       },
       "verdict": {
-        "favori": "Ofner S.",
-        "ecart": 0.0392,
+        "favori": "De Minaur A.",
+        "ecart": 0.002,
         "confiance": "Conflit / Match piégeux",
         "niveauConfiance": 0
       },
@@ -355,14 +355,14 @@
         },
         "dataModel": {
           "winner": "De Minaur A.",
-          "score1": 0.5027,
-          "score2": 0.4973
+          "score1": 0.5321,
+          "score2": 0.4679
         },
         "merged": {
-          "winner": "Ofner S.",
-          "score1": 0.4804,
-          "score2": 0.5196,
-          "gap": 0.0392,
+          "winner": "De Minaur A.",
+          "score1": 0.501,
+          "score2": 0.499,
+          "gap": 0.002,
           "confidence": {
             "label": "Conflit / Match piégeux",
             "level": 0
@@ -383,9 +383,9 @@
       "favori": "Musetti L.",
       "confiance": "Élevée",
       "niveauConfiance": 3,
-      "hybridScore1": 0.4011,
-      "hybridScore2": 0.5989,
-      "gap": 0.1978
+      "hybridScore1": 0.3367,
+      "hybridScore2": 0.6633,
+      "gap": 0.3266
     },
     "result": {
       "match": {
@@ -464,7 +464,7 @@
       },
       "verdict": {
         "favori": "Musetti L.",
-        "ecart": 0.1978,
+        "ecart": 0.3266,
         "confiance": "Élevée",
         "niveauConfiance": 3
       },
@@ -730,14 +730,14 @@
         },
         "dataModel": {
           "winner": "Musetti L.",
-          "score1": 0.4915,
-          "score2": 0.5085
+          "score1": 0.3995,
+          "score2": 0.6005
         },
         "merged": {
           "winner": "Musetti L.",
-          "score1": 0.4011,
-          "score2": 0.5989,
-          "gap": 0.1978,
+          "score1": 0.3367,
+          "score2": 0.6633,
+          "gap": 0.3266,
           "confidence": {
             "label": "Élevée",
             "level": 3
@@ -758,9 +758,9 @@
       "favori": "Alcaraz C.",
       "confiance": "Élevée",
       "niveauConfiance": 3,
-      "hybridScore1": 0.6574,
-      "hybridScore2": 0.3426,
-      "gap": 0.3148
+      "hybridScore1": 0.7894,
+      "hybridScore2": 0.2106,
+      "gap": 0.5788
     },
     "result": {
       "match": {
@@ -839,7 +839,7 @@
       },
       "verdict": {
         "favori": "Alcaraz C.",
-        "ecart": 0.3148,
+        "ecart": 0.5788,
         "confiance": "Élevée",
         "niveauConfiance": 3
       },
@@ -1107,14 +1107,14 @@
         },
         "dataModel": {
           "winner": "Alcaraz C.",
-          "score1": 0.5183,
-          "score2": 0.4817
+          "score1": 0.7069,
+          "score2": 0.2931
         },
         "merged": {
           "winner": "Alcaraz C.",
-          "score1": 0.6574,
-          "score2": 0.3426,
-          "gap": 0.3148,
+          "score1": 0.7894,
+          "score2": 0.2106,
+          "gap": 0.5788,
           "confidence": {
             "label": "Élevée",
             "level": 3
@@ -1135,9 +1135,9 @@
       "favori": "Navone M.",
       "confiance": "Conflit modéré",
       "niveauConfiance": 1,
-      "hybridScore1": 0.6151,
-      "hybridScore2": 0.3849,
-      "gap": 0.2301
+      "hybridScore1": 0.6107,
+      "hybridScore2": 0.3893,
+      "gap": 0.2214
     },
     "result": {
       "match": {
@@ -1216,7 +1216,7 @@
       },
       "verdict": {
         "favori": "Navone M.",
-        "ecart": 0.2301,
+        "ecart": 0.2214,
         "confiance": "Conflit modéré",
         "niveauConfiance": 1
       },
@@ -1484,14 +1484,14 @@
         },
         "dataModel": {
           "winner": "Rublev A.",
-          "score1": 0.4994,
-          "score2": 0.5006
+          "score1": 0.4932,
+          "score2": 0.5068
         },
         "merged": {
           "winner": "Navone M.",
-          "score1": 0.6151,
-          "score2": 0.3849,
-          "gap": 0.2301,
+          "score1": 0.6107,
+          "score2": 0.3893,
+          "gap": 0.2214,
           "confidence": {
             "label": "Conflit modéré",
             "level": 1
@@ -1512,9 +1512,9 @@
       "favori": "Martinez P.",
       "confiance": "Élevée",
       "niveauConfiance": 3,
-      "hybridScore1": 0.6217,
-      "hybridScore2": 0.3783,
-      "gap": 0.2435
+      "hybridScore1": 0.6378,
+      "hybridScore2": 0.3622,
+      "gap": 0.2756
     },
     "result": {
       "match": {
@@ -1593,7 +1593,7 @@
       },
       "verdict": {
         "favori": "Martinez P.",
-        "ecart": 0.2435,
+        "ecart": 0.2756,
         "confiance": "Élevée",
         "niveauConfiance": 3
       },
@@ -1864,14 +1864,14 @@
         },
         "dataModel": {
           "winner": "Martinez P.",
-          "score1": 0.5021,
-          "score2": 0.4979
+          "score1": 0.525,
+          "score2": 0.475
         },
         "merged": {
           "winner": "Martinez P.",
-          "score1": 0.6217,
-          "score2": 0.3783,
-          "gap": 0.2435,
+          "score1": 0.6378,
+          "score2": 0.3622,
+          "gap": 0.2756,
           "confidence": {
             "label": "Élevée",
             "level": 3
@@ -1892,9 +1892,9 @@
       "favori": "Ugo Carabelli C.",
       "confiance": "Conflit modéré",
       "niveauConfiance": 1,
-      "hybridScore1": 0.6242,
-      "hybridScore2": 0.3758,
-      "gap": 0.2485
+      "hybridScore1": 0.6216,
+      "hybridScore2": 0.3784,
+      "gap": 0.2433
     },
     "result": {
       "match": {
@@ -1973,7 +1973,7 @@
       },
       "verdict": {
         "favori": "Ugo Carabelli C.",
-        "ecart": 0.2485,
+        "ecart": 0.2433,
         "confiance": "Conflit modéré",
         "niveauConfiance": 1
       },
@@ -2243,14 +2243,14 @@
         },
         "dataModel": {
           "winner": "Khachanov K.",
-          "score1": 0.4997,
-          "score2": 0.5003
+          "score1": 0.496,
+          "score2": 0.504
         },
         "merged": {
           "winner": "Ugo Carabelli C.",
-          "score1": 0.6242,
-          "score2": 0.3758,
-          "gap": 0.2485,
+          "score1": 0.6216,
+          "score2": 0.3784,
+          "gap": 0.2433,
           "confidence": {
             "label": "Conflit modéré",
             "level": 1
@@ -2271,9 +2271,9 @@
       "favori": "Baez S.",
       "confiance": "Conflit modéré",
       "niveauConfiance": 1,
-      "hybridScore1": 0.4075,
-      "hybridScore2": 0.5925,
-      "gap": 0.1849
+      "hybridScore1": 0.4611,
+      "hybridScore2": 0.5389,
+      "gap": 0.0778
     },
     "result": {
       "match": {
@@ -2352,7 +2352,7 @@
       },
       "verdict": {
         "favori": "Baez S.",
-        "ecart": 0.1849,
+        "ecart": 0.0778,
         "confiance": "Conflit modéré",
         "niveauConfiance": 1
       },
@@ -2623,14 +2623,14 @@
         },
         "dataModel": {
           "winner": "Machac T.",
-          "score1": 0.507,
-          "score2": 0.493
+          "score1": 0.5836,
+          "score2": 0.4164
         },
         "merged": {
           "winner": "Baez S.",
-          "score1": 0.4075,
-          "score2": 0.5925,
-          "gap": 0.1849,
+          "score1": 0.4611,
+          "score2": 0.5389,
+          "gap": 0.0778,
           "confidence": {
             "label": "Conflit modéré",
             "level": 1
@@ -2658,9 +2658,9 @@
       "favori": "Fils A.",
       "confiance": "Élevée",
       "niveauConfiance": 3,
-      "hybridScore1": 0.6034,
-      "hybridScore2": 0.3966,
-      "gap": 0.2069
+      "hybridScore1": 0.624,
+      "hybridScore2": 0.376,
+      "gap": 0.248
     },
     "result": {
       "match": {
@@ -2739,7 +2739,7 @@
       },
       "verdict": {
         "favori": "Fils A.",
-        "ecart": 0.2069,
+        "ecart": 0.248,
         "confiance": "Élevée",
         "niveauConfiance": 3
       },
@@ -3005,14 +3005,14 @@
         },
         "dataModel": {
           "winner": "Fils A.",
-          "score1": 0.5027,
-          "score2": 0.4973
+          "score1": 0.5321,
+          "score2": 0.4679
         },
         "merged": {
           "winner": "Fils A.",
-          "score1": 0.6034,
-          "score2": 0.3966,
-          "gap": 0.2069,
+          "score1": 0.624,
+          "score2": 0.376,
+          "gap": 0.248,
           "confidence": {
             "label": "Élevée",
             "level": 3
@@ -3033,9 +3033,9 @@
       "favori": "Tabilo A.",
       "confiance": "Élevée",
       "niveauConfiance": 3,
-      "hybridScore1": 0.6544,
-      "hybridScore2": 0.3456,
-      "gap": 0.3089
+      "hybridScore1": 0.7207,
+      "hybridScore2": 0.2793,
+      "gap": 0.4414
     },
     "result": {
       "match": {
@@ -3114,7 +3114,7 @@
       },
       "verdict": {
         "favori": "Tabilo A.",
-        "ecart": 0.3089,
+        "ecart": 0.4414,
         "confiance": "Élevée",
         "niveauConfiance": 3
       },
@@ -3383,14 +3383,14 @@
         },
         "dataModel": {
           "winner": "Tabilo A.",
-          "score1": 0.5087,
-          "score2": 0.4913
+          "score1": 0.6034,
+          "score2": 0.3966
         },
         "merged": {
           "winner": "Tabilo A.",
-          "score1": 0.6544,
-          "score2": 0.3456,
-          "gap": 0.3089,
+          "score1": 0.7207,
+          "score2": 0.2793,
+          "gap": 0.4414,
           "confidence": {
             "label": "Élevée",
             "level": 3
@@ -3411,9 +3411,9 @@
       "favori": "Zverev A.",
       "confiance": "Élevée",
       "niveauConfiance": 3,
-      "hybridScore1": 0.6541,
-      "hybridScore2": 0.3459,
-      "gap": 0.3081
+      "hybridScore1": 0.7446,
+      "hybridScore2": 0.2554,
+      "gap": 0.4892
     },
     "result": {
       "match": {
@@ -3492,7 +3492,7 @@
       },
       "verdict": {
         "favori": "Zverev A.",
-        "ecart": 0.3081,
+        "ecart": 0.4892,
         "confiance": "Élevée",
         "niveauConfiance": 3
       },
@@ -3760,14 +3760,14 @@
         },
         "dataModel": {
           "winner": "Zverev A.",
-          "score1": 0.5121,
-          "score2": 0.4879
+          "score1": 0.6415,
+          "score2": 0.3585
         },
         "merged": {
           "winner": "Zverev A.",
-          "score1": 0.6541,
-          "score2": 0.3459,
-          "gap": 0.3081,
+          "score1": 0.7446,
+          "score2": 0.2554,
+          "gap": 0.4892,
           "confidence": {
             "label": "Élevée",
             "level": 3
@@ -3788,9 +3788,9 @@
       "favori": "Molcan A.",
       "confiance": "Élevée",
       "niveauConfiance": 3,
-      "hybridScore1": 0.639,
-      "hybridScore2": 0.361,
-      "gap": 0.2779
+      "hybridScore1": 0.6484,
+      "hybridScore2": 0.3516,
+      "gap": 0.2968
     },
     "result": {
       "match": {
@@ -3869,7 +3869,7 @@
       },
       "verdict": {
         "favori": "Molcan A.",
-        "ecart": 0.2779,
+        "ecart": 0.2968,
         "confiance": "Élevée",
         "niveauConfiance": 3
       },
@@ -4137,14 +4137,14 @@
         },
         "dataModel": {
           "winner": "Molcan A.",
-          "score1": 0.5012,
-          "score2": 0.4988
+          "score1": 0.5147,
+          "score2": 0.4853
         },
         "merged": {
           "winner": "Molcan A.",
-          "score1": 0.639,
-          "score2": 0.361,
-          "gap": 0.2779,
+          "score1": 0.6484,
+          "score2": 0.3516,
+          "gap": 0.2968,
           "confidence": {
             "label": "Élevée",
             "level": 3
@@ -4163,11 +4163,11 @@
     "tournoi": "ATP Munich",
     "summary": {
       "favori": "Tsitsipas S.",
-      "confiance": "Légère",
-      "niveauConfiance": 1,
-      "hybridScore1": 0.4829,
-      "hybridScore2": 0.5171,
-      "gap": 0.0342
+      "confiance": "Élevée",
+      "niveauConfiance": 3,
+      "hybridScore1": 0.4314,
+      "hybridScore2": 0.5686,
+      "gap": 0.1371
     },
     "result": {
       "match": {
@@ -4246,9 +4246,9 @@
       },
       "verdict": {
         "favori": "Tsitsipas S.",
-        "ecart": 0.0342,
-        "confiance": "Légère",
-        "niveauConfiance": 1
+        "ecart": 0.1371,
+        "confiance": "Élevée",
+        "niveauConfiance": 3
       },
       "reglesActivees": {
         "joueur1": [
@@ -4517,17 +4517,17 @@
         },
         "dataModel": {
           "winner": "Tsitsipas S.",
-          "score1": 0.4933,
-          "score2": 0.5067
+          "score1": 0.4197,
+          "score2": 0.5803
         },
         "merged": {
           "winner": "Tsitsipas S.",
-          "score1": 0.4829,
-          "score2": 0.5171,
-          "gap": 0.0342,
+          "score1": 0.4314,
+          "score2": 0.5686,
+          "gap": 0.1371,
           "confidence": {
-            "label": "Légère",
-            "level": 1
+            "label": "Élevée",
+            "level": 3
           }
         },
         "agreement": {
@@ -4545,9 +4545,9 @@
       "favori": "Griekspoor T.",
       "confiance": "Élevée",
       "niveauConfiance": 3,
-      "hybridScore1": 0.6153,
-      "hybridScore2": 0.3847,
-      "gap": 0.2305
+      "hybridScore1": 0.6426,
+      "hybridScore2": 0.3574,
+      "gap": 0.2851
     },
     "result": {
       "match": {
@@ -4626,7 +4626,7 @@
       },
       "verdict": {
         "favori": "Griekspoor T.",
-        "ecart": 0.2305,
+        "ecart": 0.2851,
         "confiance": "Élevée",
         "niveauConfiance": 3
       },
@@ -4895,14 +4895,14 @@
         },
         "dataModel": {
           "winner": "Griekspoor T.",
-          "score1": 0.5036,
-          "score2": 0.4964
+          "score1": 0.5426,
+          "score2": 0.4574
         },
         "merged": {
           "winner": "Griekspoor T.",
-          "score1": 0.6153,
-          "score2": 0.3847,
-          "gap": 0.2305,
+          "score1": 0.6426,
+          "score2": 0.3574,
+          "gap": 0.2851,
           "confidence": {
             "label": "Élevée",
             "level": 3
@@ -4920,12 +4920,12 @@
     "surface": "clay",
     "tournoi": "ATP Munich",
     "summary": {
-      "favori": "Dedura D.",
+      "favori": "Cobolli F.",
       "confiance": "Conflit / Match piégeux",
       "niveauConfiance": 0,
-      "hybridScore1": 0.4858,
-      "hybridScore2": 0.5142,
-      "gap": 0.0283
+      "hybridScore1": 0.5109,
+      "hybridScore2": 0.4891,
+      "gap": 0.0217
     },
     "result": {
       "match": {
@@ -5003,8 +5003,8 @@
         }
       },
       "verdict": {
-        "favori": "Dedura D.",
-        "ecart": 0.0283,
+        "favori": "Cobolli F.",
+        "ecart": 0.0217,
         "confiance": "Conflit / Match piégeux",
         "niveauConfiance": 0
       },
@@ -5272,14 +5272,14 @@
         },
         "dataModel": {
           "winner": "Cobolli F.",
-          "score1": 0.5033,
-          "score2": 0.4967
+          "score1": 0.539,
+          "score2": 0.461
         },
         "merged": {
-          "winner": "Dedura D.",
-          "score1": 0.4858,
-          "score2": 0.5142,
-          "gap": 0.0283,
+          "winner": "Cobolli F.",
+          "score1": 0.5109,
+          "score2": 0.4891,
+          "gap": 0.0217,
           "confidence": {
             "label": "Conflit / Match piégeux",
             "level": 0
@@ -5300,9 +5300,9 @@
       "favori": "Cilic M.",
       "confiance": "Élevée",
       "niveauConfiance": 3,
-      "hybridScore1": 0.5863,
-      "hybridScore2": 0.4137,
-      "gap": 0.1727
+      "hybridScore1": 0.6153,
+      "hybridScore2": 0.3847,
+      "gap": 0.2305
     },
     "result": {
       "match": {
@@ -5381,7 +5381,7 @@
       },
       "verdict": {
         "favori": "Cilic M.",
-        "ecart": 0.1727,
+        "ecart": 0.2305,
         "confiance": "Élevée",
         "niveauConfiance": 3
       },
@@ -5652,14 +5652,14 @@
         },
         "dataModel": {
           "winner": "Cilic M.",
-          "score1": 0.5038,
-          "score2": 0.4962
+          "score1": 0.5451,
+          "score2": 0.4549
         },
         "merged": {
           "winner": "Cilic M.",
-          "score1": 0.5863,
-          "score2": 0.4137,
-          "gap": 0.1727,
+          "score1": 0.6153,
+          "score2": 0.3847,
+          "gap": 0.2305,
           "confidence": {
             "label": "Élevée",
             "level": 3
@@ -5680,9 +5680,9 @@
       "favori": "Darderi L.",
       "confiance": "Élevée",
       "niveauConfiance": 3,
-      "hybridScore1": 0.3842,
-      "hybridScore2": 0.6158,
-      "gap": 0.2315
+      "hybridScore1": 0.3791,
+      "hybridScore2": 0.6209,
+      "gap": 0.2417
     },
     "result": {
       "match": {
@@ -5761,7 +5761,7 @@
       },
       "verdict": {
         "favori": "Darderi L.",
-        "ecart": 0.2315,
+        "ecart": 0.2417,
         "confiance": "Élevée",
         "niveauConfiance": 3
       },
@@ -6030,14 +6030,14 @@
         },
         "dataModel": {
           "winner": "Darderi L.",
-          "score1": 0.4993,
-          "score2": 0.5007
+          "score1": 0.4921,
+          "score2": 0.5079
         },
         "merged": {
           "winner": "Darderi L.",
-          "score1": 0.3842,
-          "score2": 0.6158,
-          "gap": 0.2315,
+          "score1": 0.3791,
+          "score2": 0.6209,
+          "gap": 0.2417,
           "confidence": {
             "label": "Élevée",
             "level": 3
@@ -6058,9 +6058,9 @@
       "favori": "Kopriva V.",
       "confiance": "Élevée",
       "niveauConfiance": 3,
-      "hybridScore1": 0.4027,
-      "hybridScore2": 0.5973,
-      "gap": 0.1946
+      "hybridScore1": 0.3462,
+      "hybridScore2": 0.6538,
+      "gap": 0.3076
     },
     "result": {
       "match": {
@@ -6139,7 +6139,7 @@
       },
       "verdict": {
         "favori": "Kopriva V.",
-        "ecart": 0.1946,
+        "ecart": 0.3076,
         "confiance": "Élevée",
         "niveauConfiance": 3
       },
@@ -6409,14 +6409,14 @@
         },
         "dataModel": {
           "winner": "Kopriva V.",
-          "score1": 0.4926,
-          "score2": 0.5074
+          "score1": 0.4119,
+          "score2": 0.5881
         },
         "merged": {
           "winner": "Kopriva V.",
-          "score1": 0.4027,
-          "score2": 0.5973,
-          "gap": 0.1946,
+          "score1": 0.3462,
+          "score2": 0.6538,
+          "gap": 0.3076,
           "confidence": {
             "label": "Élevée",
             "level": 3
@@ -6437,9 +6437,9 @@
       "favori": "Topo M.",
       "confiance": "Conflit modéré",
       "niveauConfiance": 1,
-      "hybridScore1": 0.3816,
-      "hybridScore2": 0.6184,
-      "gap": 0.2367
+      "hybridScore1": 0.3875,
+      "hybridScore2": 0.6125,
+      "gap": 0.2251
     },
     "result": {
       "match": {
@@ -6518,7 +6518,7 @@
       },
       "verdict": {
         "favori": "Topo M.",
-        "ecart": 0.2367,
+        "ecart": 0.2251,
         "confiance": "Conflit modéré",
         "niveauConfiance": 1
       },
@@ -6786,14 +6786,14 @@
         },
         "dataModel": {
           "winner": "Bergs Z.",
-          "score1": 0.5008,
-          "score2": 0.4992
+          "score1": 0.5091,
+          "score2": 0.4909
         },
         "merged": {
           "winner": "Topo M.",
-          "score1": 0.3816,
-          "score2": 0.6184,
-          "gap": 0.2367,
+          "score1": 0.3875,
+          "score2": 0.6125,
+          "gap": 0.2251,
           "confidence": {
             "label": "Conflit modéré",
             "level": 1

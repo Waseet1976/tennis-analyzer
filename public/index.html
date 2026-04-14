@@ -1043,14 +1043,26 @@ function fmtScore(v) {
     return '<span style="color:#64748b">—</span>';
   }
 
-  const raw = String(v).replace(',', '.').trim();
-  const n = parseFloat(raw);
+  const raw     = String(v).trim();
+  const hasPct  = raw.includes('%');
+  const cleaned = raw.replace('%', '').replace(',', '.').trim();
+  const n       = parseFloat(cleaned);
 
   if (!isNaN(n)) {
+    // Champs de comptage : matches_, wins_, losses_ → entier brut, jamais converti en %
+    if (key.match(/^(matches|wins|losses)_/)) {
+      return Math.round(n).toString();
+    }
+
+    // Champs win_rate → pourcentage avec flag hasPct pour éviter la double conversion
     if (key.includes('win_rate')) {
-      const pct = n <= 1 ? n * 100 : n;
+      let pct;
+      if (hasPct)       pct = n;        // "85,9%" → déjà en 0-100
+      else if (n <= 1)  pct = n * 100;  // "0,859" → fraction → ×100
+      else              pct = n;        // "85.9"  → déjà en 0-100
       return pct.toFixed(1) + '%';
     }
+
     return n.toFixed(1);
   }
 
