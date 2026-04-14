@@ -252,6 +252,59 @@
 
   #section-resultats { display: none; }
 
+  /* ── Analyses du jour ── */
+  #section-daily { margin-top: 32px; }
+
+  .daily-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 14px;
+    margin-top: 14px;
+  }
+
+  .daily-card {
+    background: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 10px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .daily-matchup {
+    font-size: 0.9rem;
+    color: #94a3b8;
+  }
+
+  .daily-favori {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #22c55e;
+  }
+
+  .daily-confiance {
+    font-size: 0.8rem;
+    padding: 2px 8px;
+    border-radius: 999px;
+    display: inline-block;
+    width: fit-content;
+  }
+  .daily-confiance.lvl3 { background: #166534; color: #bbf7d0; }
+  .daily-confiance.lvl2 { background: #713f12; color: #fef9c3; }
+  .daily-confiance.lvl1 { background: #1e3a5f; color: #bfdbfe; }
+  .daily-confiance.lvl0 { background: #3f3f46; color: #d4d4d8; }
+
+  .daily-scores {
+    font-size: 0.8rem;
+    color: #64748b;
+  }
+
+  .daily-error {
+    color: #f87171;
+    font-size: 0.85rem;
+  }
+
   @media (max-width: 640px) {
     .form-grid { grid-template-columns: 1fr; }
     table { font-size: 0.75rem; }
@@ -469,6 +522,17 @@
   </div>
 
   <button class="btn-reset" onclick="nouvelleAnalyse()">🔄 Nouvelle analyse</button>
+</div>
+
+<!-- ANALYSES DU JOUR -->
+<div id="section-daily">
+  <h2 style="color:#22c55e; margin-bottom:4px;">📋 Analyses du jour</h2>
+  <p style="color:#64748b; font-size:0.85rem; margin-bottom:12px;">
+    Générées par <code>analyze-daily.js</code> — triées par niveau de confiance
+  </p>
+  <div class="daily-grid" id="daily-grid">
+    <p style="color:#64748b; font-size:0.9rem;">Chargement…</p>
+  </div>
 </div>
 
 <script>
@@ -1340,6 +1404,59 @@ if (analyzeBtn) {
 } else {
   console.error('btn-analyze introuvable');
 }
+
+// ─── Analyses du jour ─────────────────────────────────────────────────────────
+
+function confidenceClass(level) {
+  if (level >= 3) return 'lvl3';
+  if (level >= 2) return 'lvl2';
+  if (level >= 1) return 'lvl1';
+  return 'lvl0';
+}
+
+async function loadDailySummary() {
+  const grid = document.getElementById('daily-grid');
+  if (!grid) return;
+
+  try {
+    const res  = await fetch('/api/daily-summary');
+    const data = await res.json();
+
+    if (!res.ok || data.error) {
+      grid.innerHTML = `<p class="daily-error">${esc(data.error ?? 'Erreur inconnue')}</p>`;
+      return;
+    }
+
+    if (!Array.isArray(data) || data.length === 0) {
+      grid.innerHTML = '<p style="color:#64748b">Aucune analyse disponible.</p>';
+      return;
+    }
+
+    grid.innerHTML = data.map(m => {
+      const pct1 = m.score1 != null ? (m.score1 * 100).toFixed(1) + ' %' : '–';
+      const pct2 = m.score2 != null ? (m.score2 * 100).toFixed(1) + ' %' : '–';
+      const gap  = m.gap    != null ? (m.gap    * 100).toFixed(1) + ' pts' : '–';
+      const cls  = confidenceClass(m.niveauConfiance ?? 0);
+      return `
+        <div class="daily-card">
+          <div class="daily-matchup">${esc(m.joueur1)} <span style="color:#475569">vs</span> ${esc(m.joueur2)}</div>
+          <div class="daily-favori">Favori : ${esc(m.favori)}</div>
+          <div>
+            <span class="daily-confiance ${cls}">${esc(m.confiance)}</span>
+          </div>
+          <div class="daily-scores">
+            ${esc(m.joueur1)} ${pct1} · ${esc(m.joueur2)} ${pct2} · écart ${gap}
+          </div>
+          <div style="font-size:0.75rem; color:#475569">${esc(m.tournoi)} — ${esc(m.surface)}</div>
+        </div>`;
+    }).join('');
+
+  } catch (err) {
+    grid.innerHTML = `<p class="daily-error">Impossible de charger les analyses : ${esc(err.message)}</p>`;
+  }
+}
+
+loadDailySummary();
 
 </script>
 </body>

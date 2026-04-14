@@ -17,6 +17,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, '..', 'public')));
 app.use('/api', api);
+console.log('✅ app.use(/api, api) monté');
+
+// Route de diagnostic directe dans server.js
+app.get('/__ping', (_req, res) => res.json({ ok: true, source: 'server.js' }));
 
 // ─── Middleware de gestion d'erreurs ─────────────────────────────────────────
 // DOIT être déclaré après toutes les routes.

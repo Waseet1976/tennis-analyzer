@@ -1,4 +1,6 @@
 require('dotenv').config();
+const fs         = require('fs');
+const path       = require('path');
 const express    = require('express');
 const { google } = require('googleapis');
 const Anthropic  = require('@anthropic-ai/sdk');
@@ -13,6 +15,12 @@ console.log('[DEBUG API] cfg.sheets.matches =', cfg?.sheets?.matches);
 const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
 
 const router = express.Router();
+console.log('✅ API ROUTES LOADED');
+
+// ─── Route de test ────────────────────────────────────────────────────────────
+router.get('/test', (_req, res) => {
+  res.json({ ok: true, source: 'api.js' });
+});
 
 // ─── Cache (5 min) ────────────────────────────────────────────────────────────
 let _playerCache     = null;
@@ -132,6 +140,23 @@ RÈGLES :
 
   return response.content[0].text;
 }
+
+// ─── GET /api/daily-summary ──────────────────────────────────────────────────
+router.get('/daily-summary', (req, res) => {
+  console.log('📊 /api/daily-summary appelée');
+  const filePath = path.join(__dirname, '..', 'data', 'matches-today-summary.json');
+  console.log('[daily-summary] chemin fichier :', filePath);
+  if (!fs.existsSync(filePath)) {
+    return res.status(404).json({ error: 'Aucune analyse du jour disponible. Lancez analyze-daily.js.' });
+  }
+  try {
+    const raw  = fs.readFileSync(filePath, 'utf-8');
+    const data = JSON.parse(raw);
+    res.json(data);
+  } catch (err) {
+    res.status(500).json({ error: `Lecture impossible : ${err.message}` });
+  }
+});
 
 // ─── GET /api/health ──────────────────────────────────────────────────────────
 router.get('/health', async (_req, res) => {
