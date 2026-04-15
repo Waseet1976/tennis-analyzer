@@ -1280,6 +1280,33 @@ function remplirTableStats(ps1, ps2, comparisonData = null) {
     ? (comparisonData.scoreA >= comparisonData.scoreB ? esc(nameP1) : esc(nameP2))
     : '=';
 
+  // Moyenne simple visuelle (4 blocs, sans H2H)
+  const avg = (d) => {
+    const vals = [d?.long_term_block, d?.one_year_block, d?.top50_block, d?.recent_form_block]
+      .filter(v => v != null);
+    return vals.length > 0 ? (vals.reduce((s, v) => s + v, 0) / vals.length) : null;
+  };
+  const avg1 = avg(d1);
+  const avg2 = avg(d2);
+
+  // Fiabilité Top 50 selon la surface
+  const top50Matches = (ps, surf) => {
+    const t = ps?.statsTop50;
+    if (!t) return 0;
+    const key = surf === 'clay' ? 'matches_clay_vs_top50'
+      : (surf === 'hard' || surf === 'indoor_hard') ? 'matches_hard_vs_top50'
+      : 'matches_vs_top50';
+    return toNumber(t[key]) ?? 0;
+  };
+  const t50m1 = top50Matches(ps1, currentSurface);
+  const t50m2 = top50Matches(ps2, currentSurface);
+  const top50Label = (n) =>
+    n === 0   ? '⚠️ Aucune donnée'
+    : n < 10  ? `⚠️ Données insuffisantes (${n} matchs)`
+    : n <= 25 ? `🔶 Fiabilité moyenne (${n} matchs)`
+    :           `✅ Données suffisantes (${n} matchs)`;
+  const top50Color = (n) => n < 10 ? '#f97316' : n <= 25 ? '#facc15' : '#22c55e';
+
   rows.push(`
     <tr>
       <td colspan="3" style="background:#14532d;color:#dcfce7;font-weight:700;padding:12px;border-bottom:1px solid #334155">
@@ -1315,6 +1342,16 @@ function remplirTableStats(ps1, ps2, comparisonData = null) {
       <td style="color:#94a3b8;font-size:0.82rem;font-weight:600">Score final</td>
       <td style="text-align:center;font-weight:700">${fB(comparisonData?.scoreA)}</td>
       <td style="text-align:center;font-weight:700">${fB(comparisonData?.scoreB)}</td>
+    </tr>
+    <tr>
+      <td style="color:#64748b;font-size:0.78rem;font-style:italic">Niveau moyen (visuel)</td>
+      <td style="text-align:center;font-size:0.78rem;color:#94a3b8">${avg1 != null ? avg1.toFixed(3) : '—'}</td>
+      <td style="text-align:center;font-size:0.78rem;color:#94a3b8">${avg2 != null ? avg2.toFixed(3) : '—'}</td>
+    </tr>
+    <tr>
+      <td style="color:#64748b;font-size:0.78rem;font-style:italic">Fiabilité Top 50</td>
+      <td style="text-align:center;font-size:0.78rem;color:${top50Color(t50m1)}">${top50Label(t50m1)}</td>
+      <td style="text-align:center;font-size:0.78rem;color:${top50Color(t50m2)}">${top50Label(t50m2)}</td>
     </tr>
   `);
 
