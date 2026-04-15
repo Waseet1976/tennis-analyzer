@@ -833,19 +833,33 @@ function afficherResultats(data) {
   document.getElementById('verdict-ecart').textContent = 'Écart : +' + Number(data.verdict.ecart).toFixed(1) + ' pts';
   document.getElementById('verdict-confiance').textContent = data.verdict.confiance;
 
-  // Probabilités finales — uniquement depuis comparison (nouveau système)
+  // Probabilités finales — transformation logistique garantissant probA + probB = 100%
   const probaEl = document.getElementById('verdict-proba');
   const scoreA  = data?.comparison?.scoreA;
   const scoreB  = data?.comparison?.scoreB;
   if (probaEl && scoreA != null && scoreB != null) {
-    const pct1 = (scoreA * 100).toFixed(1);
-    const pct2 = (scoreB * 100).toFixed(1);
-    const gap  = (Math.abs(scoreA - scoreB) * 100).toFixed(1);
+    const k     = 3;
+    const probA = 1 / (1 + Math.exp(-k * (scoreA - scoreB)));
+    const probB = 1 - probA;
+    const pct1  = (probA * 100).toFixed(1);
+    const pct2  = (probB * 100).toFixed(1);
+    const gap   = ((probA - probB) * 100).toFixed(1);
+
+    console.log('[PROBA DEBUG]', {
+      comparison_scoreA:  scoreA,
+      comparison_scoreB:  scoreB,
+      probA:              parseFloat(pct1),
+      probB:              parseFloat(pct2),
+      total:              probA + probB,
+      winnerDisplayed:    probA >= probB ? p1 : p2,
+      winnerComparison:   data?.comparison?.winner,
+    });
+
     probaEl.innerHTML =
-      `<span style="color:#e2e8f0;font-weight:600">${esc(p1)}</span> ${pct1} %` +
+      `<span style="color:#e2e8f0;font-weight:600">${esc(label1)}</span> ${pct1} %` +
       `&nbsp;&nbsp;·&nbsp;&nbsp;` +
-      `<span style="color:#e2e8f0;font-weight:600">${esc(p2)}</span> ${pct2} %` +
-      `&nbsp;&nbsp;<span style="font-size:0.9rem">(écart ${gap} pts)</span>`;
+      `<span style="color:#e2e8f0;font-weight:600">${esc(label2)}</span> ${pct2} %` +
+      `&nbsp;&nbsp;<span style="font-size:0.9rem">(écart ${Math.abs(parseFloat(gap)).toFixed(1)} pts)</span>`;
     probaEl.style.display = 'block';
   } else if (probaEl) {
     probaEl.style.display = 'none';
@@ -1276,9 +1290,7 @@ function remplirTableStats(ps1, ps2, comparisonData = null) {
   const d2  = comparisonData?.details?.joueur2;
   const fB  = v => (v != null ? v.toFixed(3) : '—');
   const fAdj = v => (v != null ? (v >= 0 ? '+' + v.toFixed(3) : v.toFixed(3)) : '—');
-  const scoreWinner = comparisonData?.scoreA != null && comparisonData?.scoreB != null
-    ? (comparisonData.scoreA >= comparisonData.scoreB ? esc(nameP1) : esc(nameP2))
-    : '=';
+  const scoreWinner = comparisonData?.winner ? esc(comparisonData.winner) : '=';
 
   // Moyenne simple visuelle (4 blocs, sans H2H)
   const avg = (d) => {
@@ -1302,8 +1314,8 @@ function remplirTableStats(ps1, ps2, comparisonData = null) {
   const t50m2 = top50Matches(ps2, currentSurface);
 
   // Fiabilité depuis sourceUsed du modèle (priorité) ou comptage Sheets (fallback)
-  const top50Source1 = d1?.raw?.sourceUsed ?? null;
-  const top50Source2 = d2?.raw?.sourceUsed ?? null;
+  const top50Source1 = d1?.raw?.top50?.sourceUsed ?? null;
+  const top50Source2 = d2?.raw?.top50?.sourceUsed ?? null;
 
   const top50LabelFromSource = (src, n) => {
     if (src === 'top50')         return `✅ Données Top 50 suffisantes (${n} matchs)`;
@@ -1678,9 +1690,22 @@ async function loadDailySummary() {
     }
 
     grid.innerHTML = data.map(m => {
-      const pct1 = m.score1 != null ? (m.score1 * 100).toFixed(1) + ' %' : '–';
-      const pct2 = m.score2 != null ? (m.score2 * 100).toFixed(1) + ' %' : '–';
-      const gap  = m.gap    != null ? (m.gap    * 100).toFixed(1) + ' pts' : '–';
+      // Transformation logistique — score1/score2 sont des scores bruts (non bornés à 1)
+      // probA + probB = 1 garanti
+      let pct1 = '–', pct2 = '–', gap = '–';
+      if (m.score1 != null && m.score2 != null) {
+        const k     = 3;
+        const probA = 1 / (1 + Math.exp(-k * (m.score1 - m.score2)));
+        const probB = 1 - probA;
+        pct1 = (probA * 100).toFixed(1) + ' %';
+        pct2 = (probB * 100).toFixed(1) + ' %';
+        gap  = (Math.abs(probA - probB) * 100).toFixed(1) + ' pts';
+        console.log('[PROBA FINAL DEBUG]', {
+          scoreA: m.score1, scoreB: m.score2,
+          probA: parseFloat(pct1), probB: parseFloat(pct2),
+          total: probA + probB,
+        });
+      }
       const cls  = confidenceClass(m.niveauConfiance ?? 0);
       return `
         <div class="daily-card">

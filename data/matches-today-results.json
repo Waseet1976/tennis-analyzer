@@ -10,7 +10,7 @@
       "niveauConfiance": 3,
       "hybridScore1": 0.4345,
       "hybridScore2": 0.05,
-      "gap": 0.3845
+      "gap": 0.5203
     },
     "result": {
       "match": {
@@ -241,6 +241,13 @@
                 "last10_wins": 2,
                 "last10_total": 10,
                 "avgDiff": -2
+              },
+              "top50": {
+                "globalRate": 0.19047619047619047,
+                "surfaceRate": 0.3333333333333333,
+                "top50MatchCount": 21,
+                "top100MatchCount": 16,
+                "sourceUsed": "top50"
               }
             }
           },
@@ -253,7 +260,8 @@
             "raw": {
               "lt": {},
               "oy": {},
-              "form": {}
+              "form": {},
+              "top50": null
             }
           },
           "weights": {
@@ -312,7 +320,7 @@
       "niveauConfiance": 2,
       "hybridScore1": 0.5793,
       "hybridScore2": 0.5086,
-      "gap": 0.0707
+      "gap": 0.1057
     },
     "result": {
       "match": {
@@ -601,6 +609,13 @@
                 "last10_wins": 6,
                 "last10_total": 10,
                 "avgDiff": 0.1
+              },
+              "top50": {
+                "globalRate": 0.5,
+                "surfaceRate": 0.4,
+                "top50MatchCount": 38,
+                "top100MatchCount": 22,
+                "sourceUsed": "top50"
               }
             }
           },
@@ -633,6 +648,13 @@
                 "last10_wins": 6,
                 "last10_total": 10,
                 "avgDiff": 1.8
+              },
+              "top50": {
+                "globalRate": 0.25,
+                "surfaceRate": 0.25,
+                "top50MatchCount": 12,
+                "top100MatchCount": 17,
+                "sourceUsed": "top50"
               }
             }
           },
@@ -698,7 +720,7 @@
       "niveauConfiance": 3,
       "hybridScore1": 0.6564,
       "hybridScore2": 0.4331,
-      "gap": 0.2233
+      "gap": 0.323
     },
     "result": {
       "match": {
@@ -989,6 +1011,13 @@
                 "last10_wins": 8,
                 "last10_total": 10,
                 "avgDiff": 4.4
+              },
+              "top50": {
+                "globalRate": 0.25,
+                "surfaceRate": 0.25,
+                "top50MatchCount": 8,
+                "top100MatchCount": 7,
+                "sourceUsed": "top50+top100"
               }
             }
           },
@@ -1021,6 +1050,13 @@
                 "last10_wins": 5,
                 "last10_total": 10,
                 "avgDiff": -2.2
+              },
+              "top50": {
+                "globalRate": 0.08333333333333333,
+                "surfaceRate": 0.25,
+                "top50MatchCount": 12,
+                "top100MatchCount": 25,
+                "sourceUsed": "top50"
               }
             }
           },
@@ -1086,7 +1122,7 @@
       "niveauConfiance": 3,
       "hybridScore1": 0.5428,
       "hybridScore2": 0.416,
-      "gap": 0.1268
+      "gap": 0.1879
     },
     "result": {
       "match": {
@@ -1375,6 +1411,13 @@
                 "last10_wins": 5,
                 "last10_total": 10,
                 "avgDiff": 0.8
+              },
+              "top50": {
+                "globalRate": 0.46153846153846156,
+                "surfaceRate": 0.42857142857142855,
+                "top50MatchCount": 26,
+                "top100MatchCount": 19,
+                "sourceUsed": "top50"
               }
             }
           },
@@ -1407,6 +1450,13 @@
                 "last10_wins": 8,
                 "last10_total": 10,
                 "avgDiff": 2.1
+              },
+              "top50": {
+                "globalRate": 0.29411764705882354,
+                "surfaceRate": 0,
+                "top50MatchCount": 17,
+                "top100MatchCount": 13,
+                "sourceUsed": "top50"
               }
             }
           },
@@ -1471,7 +1521,7 @@
       "niveauConfiance": 3,
       "hybridScore1": 0.4162,
       "hybridScore2": 0.5045,
-      "gap": 0.0883
+      "gap": 0.1317
     },
     "result": {
       "match": {
@@ -1764,6 +1814,13 @@
                 "last10_wins": 3,
                 "last10_total": 10,
                 "avgDiff": -1.6
+              },
+              "top50": {
+                "globalRate": 0.5,
+                "surfaceRate": 0.2,
+                "top50MatchCount": 32,
+                "top100MatchCount": 12,
+                "sourceUsed": "top50"
               }
             }
           },
@@ -1796,6 +1853,13 @@
                 "last10_wins": 5,
                 "last10_total": 10,
                 "avgDiff": 0.9
+              },
+              "top50": {
+                "globalRate": 0.4782608695652174,
+                "surfaceRate": 0.25,
+                "top50MatchCount": 23,
+                "top100MatchCount": 9,
+                "sourceUsed": "top50"
               }
             }
           },
@@ -1860,7 +1924,7 @@
       "niveauConfiance": 2,
       "hybridScore1": 0.4874,
       "hybridScore2": 0.5282,
-      "gap": 0.0408
+      "gap": 0.0611
     },
     "result": {
       "match": {
@@ -2153,6 +2217,13 @@
                 "last10_wins": 3,
                 "last10_total": 10,
                 "avgDiff": -0.5
+              },
+              "top50": {
+                "globalRate": 0.34375,
+                "surfaceRate": 0.375,
+                "top50MatchCount": 32,
+                "top100MatchCount": 13,
+                "sourceUsed": "top50"
               }
             }
           },
@@ -2185,6 +2256,13 @@
                 "last10_wins": 4,
                 "last10_total": 10,
                 "avgDiff": -0.6
+              },
+              "top50": {
+                "globalRate": 0.375,
+                "surfaceRate": 0.2,
+                "top50MatchCount": 16,
+                "top100MatchCount": 11,
+                "sourceUsed": "top50"
               }
             }
           },
@@ -2250,7 +2328,7 @@
       "niveauConfiance": 0,
       "hybridScore1": 0.5336,
       "hybridScore2": 0.5425,
-      "gap": 0.0089
+      "gap": 0.0133
     },
     "result": {
       "match": {
@@ -2539,6 +2617,13 @@
                 "last10_wins": 6,
                 "last10_total": 10,
                 "avgDiff": 1.5
+              },
+              "top50": {
+                "globalRate": 0,
+                "surfaceRate": 0,
+                "top50MatchCount": 3,
+                "top100MatchCount": 6,
+                "sourceUsed": "top50+top100"
               }
             }
           },
@@ -2571,6 +2656,13 @@
                 "last10_wins": 7,
                 "last10_total": 10,
                 "avgDiff": 0.9
+              },
+              "top50": {
+                "globalRate": 0.5945945945945946,
+                "surfaceRate": 0.5,
+                "top50MatchCount": 37,
+                "top100MatchCount": 17,
+                "sourceUsed": "top50"
               }
             }
           },
@@ -2635,7 +2727,7 @@
       "niveauConfiance": 3,
       "hybridScore1": 0.5517,
       "hybridScore2": 0.4093,
-      "gap": 0.1424
+      "gap": 0.2104
     },
     "result": {
       "match": {
@@ -2928,6 +3020,13 @@
                 "last10_wins": 6,
                 "last10_total": 10,
                 "avgDiff": -0.3
+              },
+              "top50": {
+                "globalRate": 0.4444444444444444,
+                "surfaceRate": 0.6666666666666666,
+                "top50MatchCount": 27,
+                "top100MatchCount": 18,
+                "sourceUsed": "top50"
               }
             }
           },
@@ -2960,6 +3059,13 @@
                 "last10_wins": 3,
                 "last10_total": 10,
                 "avgDiff": -1
+              },
+              "top50": {
+                "globalRate": 0.34782608695652173,
+                "surfaceRate": 0,
+                "top50MatchCount": 23,
+                "top100MatchCount": 13,
+                "sourceUsed": "top50"
               }
             }
           },
@@ -3024,7 +3130,7 @@
       "niveauConfiance": 0,
       "hybridScore1": 0.4739,
       "hybridScore2": 0.4752,
-      "gap": 0.0013
+      "gap": 0.0019
     },
     "result": {
       "match": {
@@ -3317,6 +3423,13 @@
                 "last10_wins": 3,
                 "last10_total": 10,
                 "avgDiff": -1.1
+              },
+              "top50": {
+                "globalRate": 0.125,
+                "surfaceRate": 0.25,
+                "top50MatchCount": 8,
+                "top100MatchCount": 17,
+                "sourceUsed": "top50+top100"
               }
             }
           },
@@ -3349,6 +3462,13 @@
                 "last10_wins": 5,
                 "last10_total": 10,
                 "avgDiff": 0.5
+              },
+              "top50": {
+                "globalRate": 0.3,
+                "surfaceRate": 0.4,
+                "top50MatchCount": 20,
+                "top100MatchCount": 20,
+                "sourceUsed": "top50"
               }
             }
           },

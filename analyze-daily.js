@@ -65,16 +65,18 @@ async function analyzeAll(matches) {
       const confiance       = cmp?.confidence?.label      ?? result?.verdict?.confiance ?? '?';
       const niveauConfiance = cmp?.confidence?.level      ?? result?.verdict?.niveauConfiance ?? 0;
 
-      // Probabilités logistiques : scoreA/scoreB de comparison → prob logistique
-      // scoreA = prob de joueur1 (position dans comparePlayers = position dans JSON)
-      // scoreB = prob de joueur2
-      const scoreA          = cmp?.scoreA ?? null;
-      const scoreB          = cmp?.scoreB ?? null;
-      const score1          = scoreA;
-      const score2          = scoreB;
-      const gap             = (scoreA != null && scoreB != null)
-        ? parseFloat(Math.abs(scoreA - scoreB).toFixed(4))
-        : null;
+      // Scores bruts de comparaison (la transformation logistique est appliquée côté front)
+      // score1 = cmp.scoreA, score2 = cmp.scoreB — ne somment PAS forcément à 1
+      const score1 = cmp?.scoreA != null ? parseFloat(cmp.scoreA.toFixed(4)) : null;
+      const score2 = cmp?.scoreB != null ? parseFloat(cmp.scoreB.toFixed(4)) : null;
+
+      // gap calculé en espace probabiliste pour le tri (niveauConfiance prime, gap sert de tie-break)
+      let gap = null;
+      if (score1 != null && score2 != null) {
+        const k    = 3;
+        const prob = 1 / (1 + Math.exp(-k * (score1 - score2)));
+        gap = parseFloat(Math.abs(prob - (1 - prob)).toFixed(4));
+      }
 
       console.log('[SUMMARY DEBUG]', {
         joueur1_input:  joueur1,
@@ -84,11 +86,9 @@ async function analyzeAll(matches) {
         comparison_winner:  cmp?.winner,
         comparison_scoreA:  cmp?.scoreA,
         comparison_scoreB:  cmp?.scoreB,
-        hybrid_score1:  result?.hybrid?.merged?.score1,
-        hybrid_score2:  result?.hybrid?.merged?.score2,
-        summary_score1: score1,
-        summary_score2: score2,
-        summary_gap:    gap,
+        stored_score1: score1,   // brut — logistique appliqué côté front
+        stored_score2: score2,   // brut — logistique appliqué côté front
+        summary_gap:    gap,     // gap en espace probabiliste (pour tri)
       });
 
       console.log(`  ✓ Favori : ${favori} — Confiance : ${confiance}`);

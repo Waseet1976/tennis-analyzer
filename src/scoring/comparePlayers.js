@@ -625,7 +625,7 @@ console.log('[TOP50 1Y]', {
     top50_block: t50A.available ? t50A.score : null,
     recent_form_block: formA.available ? formA.score : null,
     h2h_adjustment: h2hA.adjustment,
-    raw: { lt: ltA.raw, oy: oyA.raw, form: formA.raw },
+    raw: { lt: ltA.raw, oy: oyA.raw, form: formA.raw, top50: t50A.raw ?? null },
   };
 
   const detailsB = {
@@ -634,7 +634,7 @@ console.log('[TOP50 1Y]', {
     top50_block: t50B.available ? t50B.score : null,
     recent_form_block: formB.available ? formB.score : null,
     h2h_adjustment: h2hB.adjustment,
-    raw: { lt: ltB.raw, oy: oyB.raw, form: formB.raw },
+    raw: { lt: ltB.raw, oy: oyB.raw, form: formB.raw, top50: t50B.raw ?? null },
   };
 
   const { explanation, key_advantages } = buildExplanation(
