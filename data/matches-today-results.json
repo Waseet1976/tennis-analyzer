@@ -696,9 +696,9 @@
       "favori": "Jodar R.",
       "confiance": "Élevée",
       "niveauConfiance": 3,
-      "hybridScore1": 0.6092,
+      "hybridScore1": 0.6564,
       "hybridScore2": 0.4331,
-      "gap": 0.1761
+      "gap": 0.2233
     },
     "result": {
       "match": {
@@ -777,7 +777,7 @@
       },
       "verdict": {
         "favori": "Jodar R.",
-        "ecart": 0.1761,
+        "ecart": 0.2233,
         "confiance": "Élevée",
         "niveauConfiance": 3
       },
@@ -952,7 +952,7 @@
         }
       },
       "comparison": {
-        "scoreA": 0.6092,
+        "scoreA": 0.6564,
         "scoreB": 0.4331,
         "winner": "Jodar R.",
         "confidence": {
@@ -963,7 +963,7 @@
           "joueur1": {
             "long_term_block": 0.648942372,
             "one_year_block": 0.6536020288725001,
-            "top50_block": 0.25,
+            "top50_block": 0.43896103896103894,
             "recent_form_block": 0.928,
             "h2h_adjustment": 0.03,
             "raw": {
@@ -1037,7 +1037,7 @@
             "onSurface": true
           }
         },
-        "explanation": "Jodar R. est favori avec un avantage net sur clay, avec un score de 0.609 contre 0.433 (écart : 0.176). Ses principaux atouts sont : Stats long terme, Forme sur 1 an, Niveau contre top 50.",
+        "explanation": "Jodar R. est favori avec un avantage net sur clay, avec un score de 0.656 contre 0.433 (écart : 0.223). Ses principaux atouts sont : Stats long terme, Forme sur 1 an, Niveau contre top 50.",
         "key_advantages": [
           "Jodar R. › Stats long terme",
           "Jodar R. › Forme sur 1 an",
@@ -1056,14 +1056,14 @@
         },
         "dataModel": {
           "winner": "Jodar R.",
-          "score1": 0.6092,
+          "score1": 0.6564,
           "score2": 0.4331
         },
         "merged": {
           "winner": "Jodar R.",
-          "score1": 0.6291,
-          "score2": 0.3709,
-          "gap": 0.2582,
+          "score1": 0.6615,
+          "score2": 0.3385,
+          "gap": 0.323,
           "confidence": {
             "label": "Élevée",
             "level": 3
@@ -2246,11 +2246,11 @@
     "tournoi": "ATP Munich",
     "summary": {
       "favori": "Shelton B.",
-      "confiance": "Élevée",
-      "niveauConfiance": 3,
-      "hybridScore1": 0.4253,
+      "confiance": "Très serré",
+      "niveauConfiance": 0,
+      "hybridScore1": 0.5336,
       "hybridScore2": 0.5425,
-      "gap": 0.1172
+      "gap": 0.0089
     },
     "result": {
       "match": {
@@ -2329,9 +2329,9 @@
       },
       "verdict": {
         "favori": "Shelton B.",
-        "ecart": 0.1172,
-        "confiance": "Élevée",
-        "niveauConfiance": 3
+        "ecart": 0.0089,
+        "confiance": "Très serré",
+        "niveauConfiance": 0
       },
       "reglesActivees": {
         "joueur1": [],
@@ -2502,18 +2502,18 @@
         }
       },
       "comparison": {
-        "scoreA": 0.4253,
+        "scoreA": 0.5336,
         "scoreB": 0.5425,
         "winner": "Shelton B.",
         "confidence": {
-          "label": "Élevée",
-          "level": 3
+          "label": "Très serré",
+          "level": 0
         },
         "details": {
           "joueur1": {
             "long_term_block": 0.568157540315,
             "one_year_block": 0.5570647517625,
-            "top50_block": 0,
+            "top50_block": 0.43333333333333335,
             "recent_form_block": 0.61,
             "h2h_adjustment": 0,
             "raw": {
@@ -2587,7 +2587,7 @@
             "onSurface": false
           }
         },
-        "explanation": "Shelton B. est favori avec un avantage net sur clay, avec un score de 0.542 contre 0.425 (écart : 0.117). Ses principaux atouts sont : Niveau contre top 50.",
+        "explanation": "Shelton B. garde un très léger avantage dans un match extrêmement serré sur clay, avec un score de 0.542 contre 0.534 (écart : 0.009). Ses principaux atouts sont : Niveau contre top 50. Blockx A. conserve néanmoins des arguments solides, notamment : Stats long terme, Forme sur 1 an.",
         "key_advantages": [
           "Blockx A. › Stats long terme",
           "Blockx A. › Forme sur 1 an",
@@ -2605,17 +2605,17 @@
         },
         "dataModel": {
           "winner": "Shelton B.",
-          "score1": 0.4253,
+          "score1": 0.5336,
           "score2": 0.5425
         },
         "merged": {
           "winner": "Shelton B.",
-          "score1": 0.413,
-          "score2": 0.587,
-          "gap": 0.174,
+          "score1": 0.4933,
+          "score2": 0.5067,
+          "gap": 0.0133,
           "confidence": {
-            "label": "Élevée",
-            "level": 3
+            "label": "Très serré",
+            "level": 0
           }
         },
         "agreement": {
@@ -3020,11 +3020,11 @@
     "tournoi": "ATP Munich",
     "summary": {
       "favori": "Darderi L.",
-      "confiance": "Légère",
-      "niveauConfiance": 1,
-      "hybridScore1": 0.452,
+      "confiance": "Très serré",
+      "niveauConfiance": 0,
+      "hybridScore1": 0.4739,
       "hybridScore2": 0.4752,
-      "gap": 0.0232
+      "gap": 0.0013
     },
     "result": {
       "match": {
@@ -3103,9 +3103,9 @@
       },
       "verdict": {
         "favori": "Darderi L.",
-        "ecart": 0.0232,
-        "confiance": "Légère",
-        "niveauConfiance": 1
+        "ecart": 0.0013,
+        "confiance": "Très serré",
+        "niveauConfiance": 0
       },
       "reglesActivees": {
         "joueur1": [
@@ -3280,18 +3280,18 @@
         }
       },
       "comparison": {
-        "scoreA": 0.452,
+        "scoreA": 0.4739,
         "scoreB": 0.4752,
         "winner": "Darderi L.",
         "confidence": {
-          "label": "Légère",
-          "level": 1
+          "label": "Très serré",
+          "level": 0
         },
         "details": {
           "joueur1": {
             "long_term_block": 0.545937426554,
             "one_year_block": 0.543478571421,
-            "top50_block": 0.2,
+            "top50_block": 0.28770053475935825,
             "recent_form_block": 0.268,
             "h2h_adjustment": 0.02142857142857142,
             "raw": {
@@ -3365,7 +3365,7 @@
             "onSurface": true
           }
         },
-        "explanation": "Darderi L. est légèrement favori sur clay, avec un score de 0.475 contre 0.452 (écart : 0.023). Ses principaux atouts sont : Stats long terme, Forme sur 1 an, Niveau contre top 50. Kopriva V. conserve néanmoins des arguments solides, notamment : Head-to-Head (4/7).",
+        "explanation": "Darderi L. garde un très léger avantage dans un match extrêmement serré sur clay, avec un score de 0.475 contre 0.474 (écart : 0.001). Ses principaux atouts sont : Stats long terme, Forme sur 1 an, Niveau contre top 50. Kopriva V. conserve néanmoins des arguments solides, notamment : Head-to-Head (4/7).",
         "key_advantages": [
           "Darderi L. › Stats long terme",
           "Darderi L. › Forme sur 1 an",
@@ -3384,17 +3384,17 @@
         },
         "dataModel": {
           "winner": "Darderi L.",
-          "score1": 0.452,
+          "score1": 0.4739,
           "score2": 0.4752
         },
         "merged": {
           "winner": "Darderi L.",
-          "score1": 0.4826,
-          "score2": 0.5174,
-          "gap": 0.0348,
+          "score1": 0.499,
+          "score2": 0.501,
+          "gap": 0.0019,
           "confidence": {
-            "label": "Légère",
-            "level": 1
+            "label": "Très serré",
+            "level": 0
           }
         },
         "agreement": {

@@ -19,9 +19,9 @@
     "favori": "Jodar R.",
     "confiance": "Élevée",
     "niveauConfiance": 3,
-    "score1": 0.6092,
+    "score1": 0.6564,
     "score2": 0.4331,
-    "gap": 0.1761
+    "gap": 0.2233
   },
   {
     "joueur1": "Cobolli F.",
@@ -46,18 +46,6 @@
     "score1": 0.5428,
     "score2": 0.416,
     "gap": 0.1268
-  },
-  {
-    "joueur1": "Blockx A.",
-    "joueur2": "Shelton B.",
-    "surface": "clay",
-    "tournoi": "ATP Munich",
-    "favori": "Shelton B.",
-    "confiance": "Élevée",
-    "niveauConfiance": 3,
-    "score1": 0.4253,
-    "score2": 0.5425,
-    "gap": 0.1172
   },
   {
     "joueur1": "Rinderknech A.",
@@ -96,15 +84,27 @@
     "gap": 0.0408
   },
   {
+    "joueur1": "Blockx A.",
+    "joueur2": "Shelton B.",
+    "surface": "clay",
+    "tournoi": "ATP Munich",
+    "favori": "Shelton B.",
+    "confiance": "Très serré",
+    "niveauConfiance": 0,
+    "score1": 0.5336,
+    "score2": 0.5425,
+    "gap": 0.0089
+  },
+  {
     "joueur1": "Kopriva V.",
     "joueur2": "Darderi L.",
     "surface": "clay",
     "tournoi": "ATP Munich",
     "favori": "Darderi L.",
-    "confiance": "Légère",
-    "niveauConfiance": 1,
-    "score1": 0.452,
+    "confiance": "Très serré",
+    "niveauConfiance": 0,
+    "score1": 0.4739,
     "score2": 0.4752,
-    "gap": 0.0232
+    "gap": 0.0013
   }
 ]

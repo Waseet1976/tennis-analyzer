@@ -1300,12 +1300,29 @@ function remplirTableStats(ps1, ps2, comparisonData = null) {
   };
   const t50m1 = top50Matches(ps1, currentSurface);
   const t50m2 = top50Matches(ps2, currentSurface);
-  const top50Label = (n) =>
-    n === 0   ? '⚠️ Aucune donnée'
-    : n < 10  ? `⚠️ Données insuffisantes (${n} matchs)`
-    : n <= 25 ? `🔶 Fiabilité moyenne (${n} matchs)`
-    :           `✅ Données suffisantes (${n} matchs)`;
-  const top50Color = (n) => n < 10 ? '#f97316' : n <= 25 ? '#facc15' : '#22c55e';
+
+  // Fiabilité depuis sourceUsed du modèle (priorité) ou comptage Sheets (fallback)
+  const top50Source1 = d1?.raw?.sourceUsed ?? null;
+  const top50Source2 = d2?.raw?.sourceUsed ?? null;
+
+  const top50LabelFromSource = (src, n) => {
+    if (src === 'top50')         return `✅ Données Top 50 suffisantes (${n} matchs)`;
+    if (src === 'top50+top100')  return `⚠️ Top 50 insuffisant, complété avec Top 100`;
+    if (src === 'top100_only')   return `⚠️ Aucune donnée Top 50, estimation Top 100`;
+    // fallback comptage Sheets
+    if (n === 0)   return '⚠️ Aucune donnée';
+    if (n < 10)    return `⚠️ Données insuffisantes (${n} matchs)`;
+    if (n <= 25)   return `🔶 Fiabilité moyenne (${n} matchs)`;
+    return             `✅ Données suffisantes (${n} matchs)`;
+  };
+  const top50ColorFromSource = (src, n) => {
+    if (src === 'top50')        return '#22c55e';
+    if (src === 'top50+top100') return '#facc15';
+    if (src === 'top100_only')  return '#f97316';
+    return n < 10 ? '#f97316' : n <= 25 ? '#facc15' : '#22c55e';
+  };
+  const top50Label = (src, n) => top50LabelFromSource(src, n);
+  const top50Color = (src, n) => top50ColorFromSource(src, n);
 
   rows.push(`
     <tr>
@@ -1350,8 +1367,8 @@ function remplirTableStats(ps1, ps2, comparisonData = null) {
     </tr>
     <tr>
       <td style="color:#64748b;font-size:0.78rem;font-style:italic">Fiabilité Top 50</td>
-      <td style="text-align:center;font-size:0.78rem;color:${top50Color(t50m1)}">${top50Label(t50m1)}</td>
-      <td style="text-align:center;font-size:0.78rem;color:${top50Color(t50m2)}">${top50Label(t50m2)}</td>
+      <td style="text-align:center;font-size:0.78rem;color:${top50Color(top50Source1, t50m1)}">${top50Label(top50Source1, t50m1)}</td>
+      <td style="text-align:center;font-size:0.78rem;color:${top50Color(top50Source2, t50m2)}">${top50Label(top50Source2, t50m2)}</td>
     </tr>
   `);
 
@@ -1494,6 +1511,77 @@ function remplirTableStats(ps1, ps2, comparisonData = null) {
       });
     }
   });
+  // ─── Section Top 20 (informatif) ─────────────────────────────────────────
+  const getTop20 = (srcs) => {
+    const get = (key) => srcs.map(s => s?.[key]).find(v => v !== null && v !== undefined) ?? null;
+    const mRaw = get('matches_vs_top20');
+    const wRaw = get('wins_vs_top20');
+    const m = parseFloat(String(mRaw ?? '').replace(',', '.')) || 0;
+    const w = parseFloat(String(wRaw ?? '').replace(',', '.')) || 0;
+    const winRate = m > 0 ? (w / m) * 100 : null;
+    return { m, w, winRate };
+  };
+
+  const top20_1 = getTop20(sources1);
+  const top20_2 = getTop20(sources2);
+  const hasTop20 = top20_1.m > 0 || top20_2.m > 0;
+
+  if (hasTop20) {
+    // Fiabilité : basée sur le nombre de matchs
+    const top20Reliability = (m) => {
+      if (m < 3) return { label: '⚠️ Très peu de matchs vs Top 20', color: '#f97316' };
+      if (m < 8) return { label: 'ℹ️ Échantillon limité vs Top 20',  color: '#facc15' };
+      return           { label: '✅ Données fiables vs Top 20',       color: '#22c55e' };
+    };
+
+    // Lecture qualitative : basée sur le win rate
+    const top20Quality = (m, winRate) => {
+      if (m === 0 || winRate === null) return { label: '—', color: '#64748b' };
+      if (winRate < 20) return { label: '⚠️ Très faible niveau vs Top 20', color: '#f97316' };
+      if (winRate < 40) return { label: 'ℹ️ Niveau moyen vs Top 20',        color: '#facc15' };
+      if (winRate < 60) return { label: '👍 Compétitif vs Top 20',          color: '#60a5fa' };
+      return                   { label: '🔥 Très solide vs Top 20',          color: '#22c55e' };
+    };
+
+    const rel1 = top20Reliability(top20_1.m);
+    const rel2 = top20Reliability(top20_2.m);
+    const qual1 = top20Quality(top20_1.m, top20_1.winRate);
+    const qual2 = top20Quality(top20_2.m, top20_2.winRate);
+
+    rows.push(`
+      <tr>
+        <td colspan="3" style="background:#0f172a;color:#22c55e;font-weight:700;padding:10px 12px;border-top:1px solid #334155">
+          🏆 Niveau vs Top 20 <span style="font-weight:400;font-size:0.78rem;color:#64748b">(informatif)</span>
+        </td>
+      </tr>
+      <tr>
+        <td style="color:#94a3b8;font-size:0.82rem">Matchs vs Top 20</td>
+        <td style="text-align:center">${top20_1.m || '—'}</td>
+        <td style="text-align:center">${top20_2.m || '—'}</td>
+      </tr>
+      <tr>
+        <td style="color:#94a3b8;font-size:0.82rem">Victoires vs Top 20</td>
+        <td style="text-align:center">${top20_1.m > 0 ? top20_1.w : '—'}</td>
+        <td style="text-align:center">${top20_2.m > 0 ? top20_2.w : '—'}</td>
+      </tr>
+      <tr>
+        <td style="color:#94a3b8;font-size:0.82rem">Win rate vs Top 20</td>
+        <td style="text-align:center">${top20_1.winRate != null ? top20_1.winRate.toFixed(1) + '%' : '—'}</td>
+        <td style="text-align:center">${top20_2.winRate != null ? top20_2.winRate.toFixed(1) + '%' : '—'}</td>
+      </tr>
+      <tr>
+        <td style="color:#64748b;font-size:0.78rem;font-style:italic">Fiabilité</td>
+        <td style="text-align:center;font-size:0.78rem;color:${rel1.color}">${rel1.label}</td>
+        <td style="text-align:center;font-size:0.78rem;color:${rel2.color}">${rel2.label}</td>
+      </tr>
+      <tr>
+        <td style="color:#64748b;font-size:0.78rem;font-style:italic">Lecture</td>
+        <td style="text-align:center;font-size:0.78rem;color:${qual1.color}">${qual1.label}</td>
+        <td style="text-align:center;font-size:0.78rem;color:${qual2.color}">${qual2.label}</td>
+      </tr>
+    `);
+  }
+
   tbody.innerHTML = rows.length > 0
     ? rows.join('')
     : '<tr><td colspan="3" style="color:#64748b;text-align:center;padding:16px">Aucune stat disponible</td></tr>';

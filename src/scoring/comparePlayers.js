@@ -162,6 +162,21 @@ function calcRateFromCounts(winsRaw, matchesRaw) {
   return clamp(w / m, 0, 1);
 }
 
+/**
+ * Calcule un score global+surface depuis un ensemble de matchs filtrés.
+ * Retourne null si aucun match.
+ */
+function _calcRateFromMatches(filtered, surface) {
+  if (filtered.length === 0) return null;
+  const globalWins = filtered.filter(m => m.resultat === 'V').length;
+  const globalRate = clamp(globalWins / filtered.length, 0, 1);
+  const onSurface  = filtered.filter(m => m.surface === surface);
+  const surfaceRate = onSurface.length > 0
+    ? clamp(onSurface.filter(m => m.resultat === 'V').length / onSurface.length, 0, 1)
+    : globalRate;
+  return { globalRate, surfaceRate, matchCount: filtered.length };
+}
+
 function calcTop50Block(allMatches, surface) {
   if (!allMatches || allMatches.length === 0) {
     return { score: 0, available: false, reduced: false, matchCount: 0 };
@@ -170,33 +185,83 @@ function calcTop50Block(allMatches, surface) {
   const cutoff = new Date();
   cutoff.setFullYear(cutoff.getFullYear() - 1);
 
-  // Filtre : 12 derniers mois + adversaire classé Top 50
-  const vs50 = allMatches.filter(m =>
-    m.rangAdversaire !== null &&
-    m.rangAdversaire !== undefined &&
-    Number(m.rangAdversaire) <= 50 &&
-    m.date && new Date(m.date) >= cutoff
+  const inRange = (m) => m.date && new Date(m.date) >= cutoff;
+  const hasRank = (m) => m.rangAdversaire !== null && m.rangAdversaire !== undefined;
+
+  // Matchs 12 mois vs Top 50
+  const vs50 = allMatches.filter(m => inRange(m) && hasRank(m) && Number(m.rangAdversaire) <= 50);
+  // Matchs 12 mois vs Top 51–100 (complément)
+  const vs100 = allMatches.filter(m =>
+    inRange(m) && hasRank(m) &&
+    Number(m.rangAdversaire) > 50 && Number(m.rangAdversaire) <= 100
   );
 
-  const matchCount = vs50.length;
-  if (matchCount === 0) return { score: 0, available: false, reduced: false, matchCount: 0 };
+  const top50Count  = vs50.length;
+  const top100Count = vs100.length;
 
-  // Win rate global vs top 50 (12 mois)
-  const globalWins = vs50.filter(m => m.resultat === 'V').length;
-  const globalRate = clamp(globalWins / matchCount, 0, 1);
+  // Aucune donnée exploitable
+  if (top50Count === 0 && top100Count === 0) {
+    return { score: 0, available: false, reduced: false, matchCount: 0 };
+  }
 
-  // Win rate surface vs top 50 (12 mois)
-  const vs50Surface = vs50.filter(m => m.surface === surface);
-  const surfaceRate = vs50Surface.length > 0
-    ? clamp(vs50Surface.filter(m => m.resultat === 'V').length / vs50Surface.length, 0, 1)
-    : globalRate;
+  const r50  = _calcRateFromMatches(vs50,  surface);
+  const r100 = _calcRateFromMatches(vs100, surface);
 
-  const score   = clamp((globalRate * 0.40) + (surfaceRate * 0.60), 0, 1);
-  const reduced = matchCount < 5;
+  let score, sourceUsed;
 
-  console.log(`[Top50Block-1Y] surface=${surface} | n=${matchCount} | global=${globalRate.toFixed(3)} | surface=${surfaceRate.toFixed(3)} | score=${score.toFixed(3)}`);
+  // Poids dynamique Top 50 : croît linéairement de 0 à 1 entre 0 et 10 matchs
+  const weight50 = Math.min(1, top50Count / 10);
 
-  return { score, available: true, reduced, matchCount, raw: { globalRate, surfaceRate } };
+  if (top50Count >= 10) {
+    // CAS 1 — données Top 50 suffisantes : Top 50 seul
+    const gr = r50.globalRate;
+    const sr = r50.surfaceRate;
+    score      = clamp((gr * 0.40) + (sr * 0.60), 0, 1);
+    sourceUsed = 'top50';
+
+  } else if (top50Count > 0) {
+    // CAS 2 — Top 50 partiel : pondération dynamique Top50 + Top100 (×0.30)
+    const gr50    = r50.globalRate;
+    const sr50    = r50.surfaceRate;
+    const score50 = clamp((gr50 * 0.40) + (sr50 * 0.60), 0, 1);
+
+    if (r100) {
+      const gr100    = r100.globalRate;
+      const sr100    = r100.surfaceRate;
+      const score100 = clamp((gr100 * 0.40) + (sr100 * 0.60), 0, 1);
+      score = clamp((score50 * weight50 + score100 * 0.30) / (weight50 + 0.30), 0, 1);
+      sourceUsed = 'top50+top100';
+    } else {
+      score = score50;
+      sourceUsed = 'top50';
+    }
+
+  } else {
+    // CAS 3 — 0 match Top 50 : Top 100 comme estimation de secours
+    const gr = r100.globalRate;
+    const sr = r100.surfaceRate;
+    score      = clamp((gr * 0.40) + (sr * 0.60), 0, 1);
+    sourceUsed = 'top100_only';
+  }
+
+  const matchCount = top50Count + (sourceUsed !== 'top50' ? top100Count : 0);
+  const reduced    = top50Count < 5;
+
+  console.log(`[Top50Block-1Y] surface=${surface} | top50=${top50Count} | top100=${top100Count} | source=${sourceUsed} | score=${score.toFixed(3)}`);
+
+  return {
+    score,
+    available: true,
+    reduced,
+    matchCount,
+    raw: {
+      globalRate:     r50?.globalRate  ?? r100?.globalRate  ?? 0,
+      surfaceRate:    r50?.surfaceRate ?? r100?.surfaceRate ?? 0,
+      top50MatchCount:  top50Count,
+      top100MatchCount: top100Count,
+      sourceUsed,
+    },
+  };
 }
 
 // ─── Bloc 4 : Forme récente (2025-atp-season) ─────────────────────────────────
