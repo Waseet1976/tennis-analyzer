@@ -509,8 +509,44 @@ console.log('[TOP50 1Y]', {
   console.log(`[Compare] Domination → bonusA=${domBonus.bonusA.toFixed(3)} | bonusB=${domBonus.bonusB.toFixed(3)}`);
   console.log(`[Compare] Scores avant bonus → ${nameA}=${preA.toFixed(3)} | ${nameB}=${preB.toFixed(3)}`);
 
-  const finalA = clamp(preA + domBonus.bonusA, 0, 1);
-  const finalB = clamp(preB + domBonus.bonusB, 0, 1);
+  let rawA = clamp(preA + domBonus.bonusA, 0, 1);
+  let rawB = clamp(preB + domBonus.bonusB, 0, 1);
+
+  // ─── Equilibrium adjustment ───────────────────────────────────────────────
+  // Si les blocs long terme et 1 an sont serrés mais qu'un seul bloc (ex. surface)
+  // tire le score vers un faux 60/40, on rapproche légèrement les scores finaux.
+  const deltaLT   = Math.abs(ltA.score   - ltB.score);
+  const delta1Y   = Math.abs(oyA.score   - oyB.score);
+  const deltaT50  = Math.abs(t50A.score  - t50B.score);
+  const deltaForm = Math.abs(formA.score - formB.score);
+  const deltaFinal = Math.abs(rawA - rawB);
+
+  // Top 50 compense en faveur du perdant actuel ?
+  const leaderRaw   = rawA >= rawB ? 'A' : 'B';
+  const t50Leader   = t50A.score >= t50B.score ? 'A' : 'B';
+  const top50Compensates = t50A.available && t50B.available && t50Leader !== leaderRaw;
+
+  const equilibriumDetected =
+    deltaLT   <= 0.08 &&
+    delta1Y   <= 0.08 &&
+    deltaForm <= 0.10 &&
+    top50Compensates;
+
+  let adjustmentApplied = 0;
+  let finalA = rawA;
+  let finalB = rawB;
+
+  if (equilibriumDetected && deltaFinal > 0.04) {
+    // Rapprocher les scores de 20%, sans les inverser
+    const ratio = 0.20;
+    const mid   = (rawA + rawB) / 2;
+    finalA = rawA + (mid - rawA) * ratio;
+    finalB = rawB + (mid - rawB) * ratio;
+    adjustmentApplied = ratio;
+  }
+
+  console.log(`[Equilibrium] deltaLT=${deltaLT.toFixed(3)} delta1Y=${delta1Y.toFixed(3)} deltaT50=${deltaT50.toFixed(3)} deltaForm=${deltaForm.toFixed(3)}`);
+  console.log(`[Equilibrium] top50Compensates=${top50Compensates} equilibriumDetected=${equilibriumDetected} adjustment=${adjustmentApplied} | ${nameA}: ${rawA.toFixed(3)}→${finalA.toFixed(3)} | ${nameB}: ${rawB.toFixed(3)}→${finalB.toFixed(3)}`);
 
   const confidence = calcConfidence(
     finalA, finalB,
@@ -542,11 +578,11 @@ console.log('[TOP50 1Y]', {
 
   console.log(
     `[Compare] ${nameA}: LT=${ltA.score.toFixed(3)} 1Y=${oyA.score.toFixed(3)}` +
-    ` T50=${t50A.score.toFixed(3)} Form=${formA.score.toFixed(3)} bonus=${domBonus.bonusA.toFixed(3)} Final=${finalA.toFixed(3)}`
+    ` T50=${t50A.score.toFixed(3)} Form=${formA.score.toFixed(3)} bonus=${domBonus.bonusA.toFixed(3)} raw=${rawA.toFixed(3)} Final=${finalA.toFixed(3)}`
   );
   console.log(
     `[Compare] ${nameB}: LT=${ltB.score.toFixed(3)} 1Y=${oyB.score.toFixed(3)}` +
-    ` T50=${t50B.score.toFixed(3)} Form=${formB.score.toFixed(3)} bonus=${domBonus.bonusB.toFixed(3)} Final=${finalB.toFixed(3)}`
+    ` T50=${t50B.score.toFixed(3)} Form=${formB.score.toFixed(3)} bonus=${domBonus.bonusB.toFixed(3)} raw=${rawB.toFixed(3)} Final=${finalB.toFixed(3)}`
   );
 
   return {
