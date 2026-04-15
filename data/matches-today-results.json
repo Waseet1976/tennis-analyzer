@@ -5,12 +5,12 @@
     "surface": "clay",
     "tournoi": "ATP Barcelona",
     "summary": {
-      "favori": "Borges N.",
-      "confiance": "Élevée",
-      "niveauConfiance": 3,
+      "favori": "Etcheverry T.",
+      "confiance": "Légère",
+      "niveauConfiance": 1,
       "hybridScore1": 0.4345,
-      "hybridScore2": 0.05,
-      "gap": 0.5203
+      "hybridScore2": 0.4514,
+      "gap": 0.0253
     },
     "result": {
       "match": {
@@ -35,16 +35,16 @@
           ]
         },
         "joueur2": {
-          "total": 0,
+          "total": 0.32,
           "details": [
             {
               "source": "comparison_recent_form",
-              "last5Wins": 0,
-              "last5Total": 0,
-              "last10Wins": 0,
-              "last10Total": 0,
-              "avgDiff": 0,
-              "recentFormBlock": 0.5
+              "last5Wins": 3,
+              "last5Total": 5,
+              "last10Wins": 6,
+              "last10Total": 10,
+              "avgDiff": 0.2,
+              "recentFormBlock": 0.5401
             }
           ]
         }
@@ -59,39 +59,39 @@
           "F": null,
           "G": 0,
           "H": 2,
-          "I": -1,
+          "I": 1,
           "J": 0,
           "K": 1,
           "L": 0,
           "M": -2,
           "N": 0,
           "O": -0.2560975609756097,
-          "TOTAL": 0.7439024390243902
+          "TOTAL": 2.7439024390243905
         },
         "joueur2": {
-          "A": 0,
+          "A": 0.32,
           "B": 1,
           "C": null,
           "D": 2,
           "E": null,
           "F": null,
-          "G": 0,
+          "G": -2,
           "H": 2,
           "I": -1,
-          "J": 1,
+          "J": 0,
           "K": 1,
           "L": 0,
           "M": 0,
           "N": 0,
-          "O": 0,
-          "TOTAL": 6
+          "O": 5.666666666666666,
+          "TOTAL": 8.986666666666666
         }
       },
       "verdict": {
-        "favori": "Borges N.",
-        "ecart": 0.3845,
-        "confiance": "Élevée",
-        "niveauConfiance": 3
+        "favori": "Etcheverry T.",
+        "ecart": 0.0169,
+        "confiance": "Légère",
+        "niveauConfiance": 1
       },
       "reglesActivees": {
         "joueur1": [
@@ -111,14 +111,14 @@
           "statsTop50": "sheet"
         },
         "joueur2": {
-          "matches": "absent",
+          "matches": "sheet",
           "tiebreakPct": "absent",
           "decidingSetPct": "absent",
           "firstServePct": "absent",
           "winnersAvg": "absent",
-          "stats": "absent",
-          "stats1y": "absent",
-          "statsTop50": "absent"
+          "stats": "sheet",
+          "stats1y": "sheet",
+          "statsTop50": "sheet"
         }
       },
       "playerStats": {
@@ -188,9 +188,69 @@
           }
         },
         "joueur2": {
-          "stats": null,
-          "stats1y": null,
-          "statsTop50": null
+          "stats": {
+            "player": "Etcheverry T. M.",
+            "matches_total": "363",
+            "wins_total": "200",
+            "win_rate_total": "55,10%",
+            "matches_clay": "215",
+            "wins_clay": "131",
+            "win_rate_clay": "60,93%",
+            "matchs_hard": "123",
+            "wins_hard": "59",
+            "win_rate_hard": "47,97%",
+            "aces_avg": "5,672176309",
+            "double_faults_avg": "1,683195592",
+            "service_points_won_avg": "64,51239669",
+            "return_points_won_avg": "38",
+            "breaks_converted_avg": "39,53168044",
+            "break_saved_avg": "57,87603306",
+            "games_diff_avg": "0,870523416",
+            "games_won_avg": "13,0137741",
+            "games_lost_avg": "12,14325069",
+            "score_global": "0,5404988981",
+            "score_surface": "0,5859670703",
+            "level_global": "Solide",
+            "level_surface": "Très fort surface",
+            "comment_simple": "Solide , Très fort surface"
+          },
+          "stats1y": {
+            "player": "Etcheverry T. M.",
+            "matches_total_1y": "323",
+            "wins_total_1y": "180",
+            "win_rate_total_1y": "55,73%",
+            "matches_clay_1y": "200",
+            "wins_clay_1y": "121",
+            "win_rate_clay_1y": "60,50%",
+            "matches_hard_1y": "98",
+            "wins_hard_1y": "49",
+            "win_rate_hard_1y": "50,00%",
+            "aces_avg_1y": "5,674922601",
+            "double_faults_avg_1y": "1,743034056",
+            "service_points_won_avg_1y": "64,33126935",
+            "return_points_won_avg_1y": "38,17956656",
+            "breaks_converted_avg_1y": "39,87616099",
+            "break_saved_avg_1y": "57,25696594",
+            "games_diff_avg_1y": "0,907120743",
+            "games_won_avg_1y": "12,9876161",
+            "games_lost_avg_1y": "12,08049536",
+            "score_global_1y": "54,52%",
+            "score_surface_1y": "58,59%",
+            "level_global_1y": "Solide",
+            "level_surface_1y": "Très fort surface",
+            "comment_simple_1y": "Solide , Très fort surface"
+          },
+          "statsTop50": {
+            "A1 = player": "Etcheverry T. M.",
+            "matches_vs_top50": "115",
+            "win_rate_vs_top50": "1",
+            "matches_clay_vs_top50": "52",
+            "wins_clay_vs_top50": "18",
+            "win_rate_clay_vs_top50": "0,3461538462",
+            "matches_hard_vs_top50": "57",
+            "wins_hard_vs_top50": "16",
+            "win_rate_hard_vs_top50": "0,2807017544"
+          }
         }
       },
       "playerMeta": {
@@ -200,16 +260,16 @@
         },
         "joueur2": {
           "name": "Etcheverry T.",
-          "ranking": null
+          "ranking": 31
         }
       },
       "comparison": {
         "scoreA": 0.4345,
-        "scoreB": 0.05,
-        "winner": "Borges N.",
+        "scoreB": 0.4514,
+        "winner": "Etcheverry T.",
         "confidence": {
-          "label": "Élevée",
-          "level": 3
+          "label": "Légère",
+          "level": 1
         },
         "details": {
           "joueur1": {
@@ -252,16 +312,42 @@
             }
           },
           "joueur2": {
-            "long_term_block": null,
-            "one_year_block": null,
-            "top50_block": null,
-            "recent_form_block": null,
-            "h2h_adjustment": 0,
+            "long_term_block": 0.5506414305924999,
+            "one_year_block": 0.5532153560325002,
+            "top50_block": 0.20769230769230768,
+            "recent_form_block": 0.584,
+            "h2h_adjustment": -0.018,
             "raw": {
-              "lt": {},
-              "oy": {},
-              "form": {},
-              "top50": null
+              "lt": {
+                "score_global": 0.5404988981,
+                "score_surface": 0.5859670703,
+                "win_rate": 0.551,
+                "games_diff": 0.870523416,
+                "service": 64.51239669,
+                "returnPts": 38
+              },
+              "oy": {
+                "score_global": 0.5452,
+                "score_surface": 0.5859000000000001,
+                "win_rate": 0.5573,
+                "games_diff": 0.907120743,
+                "service": 64.33126935,
+                "returnPts": 38.17956656
+              },
+              "form": {
+                "last5_wins": 3,
+                "last5_total": 5,
+                "last10_wins": 6,
+                "last10_total": 10,
+                "avgDiff": 0.2
+              },
+              "top50": {
+                "globalRate": 0.2692307692307692,
+                "surfaceRate": 0.16666666666666666,
+                "top50MatchCount": 26,
+                "top100MatchCount": 15,
+                "sourceUsed": "top50"
+              }
             }
           },
           "weights": {
@@ -277,30 +363,35 @@
             "onSurface": false
           }
         },
-        "explanation": "Borges N. est favori avec un avantage net sur clay, avec un score de 0.434 contre 0.050 (écart : 0.384).",
-        "key_advantages": []
+        "explanation": "Etcheverry T. est légèrement favori sur clay, avec un score de 0.451 contre 0.434 (écart : 0.017). Ses principaux atouts sont : Stats long terme, Forme sur 1 an, Forme récente. Borges N. conserve néanmoins des arguments solides, notamment : Niveau contre top 50.",
+        "key_advantages": [
+          "Etcheverry T. › Stats long terme",
+          "Etcheverry T. › Forme sur 1 an",
+          "Borges N. › Niveau contre top 50",
+          "Etcheverry T. › Forme récente"
+        ]
       },
       "hybrid": {
         "mainModel": {
-          "winner": "Borges N.",
-          "total1": 0.7439024390243902,
-          "total2": 6,
+          "winner": "Etcheverry T.",
+          "total1": 2.7439024390243905,
+          "total2": 8.986666666666666,
           "score1": null,
           "score2": null
         },
         "dataModel": {
-          "winner": "Borges N.",
+          "winner": "Etcheverry T.",
           "score1": 0.4345,
-          "score2": 0.05
+          "score2": 0.4514
         },
         "merged": {
-          "winner": "Borges N.",
-          "score1": 0.7601,
-          "score2": 0.2399,
-          "gap": 0.5203,
+          "winner": "Etcheverry T.",
+          "score1": 0.4873,
+          "score2": 0.5127,
+          "gap": 0.0253,
           "confidence": {
-            "label": "Élevée",
-            "level": 3
+            "label": "Légère",
+            "level": 1
           }
         },
         "agreement": {

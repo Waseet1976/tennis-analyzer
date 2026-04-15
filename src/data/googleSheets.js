@@ -18,6 +18,51 @@ function norm(str) {
   return (str ?? '').trim().toLowerCase();
 }
 
+// ─── Matching robuste des noms de joueurs ─────────────────────────────────────
+
+/** Normalisation forte : minuscules, sans points, espaces uniques. */
+function normName(str) {
+  return (str ?? '')
+    .toLowerCase()
+    .replace(/\./g, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+/**
+ * Extrait nom de famille + première initiale depuis un nom normalisé.
+ * Format attendu : "Lastname F." ou "Lastname F. M." ou "Last Name F."
+ * Exemple : "Etcheverry T. M." → { lastName: "etcheverry", firstInitial: "t" }
+ *           "De Minaur A."    → { lastName: "de minaur",  firstInitial: "a" }
+ */
+function parseName(str) {
+  const tokens = normName(str).split(' ');
+  // Un token est une initiale si c'est une seule lettre (points déjà supprimés)
+  const firstInitialIdx = tokens.findIndex((t) => /^[a-z]$/.test(t));
+  if (firstInitialIdx <= 0) {
+    return { lastName: tokens.join(' '), firstInitial: tokens[tokens.length - 1] ?? '' };
+  }
+  return {
+    lastName:     tokens.slice(0, firstInitialIdx).join(' '),
+    firstInitial: tokens[firstInitialIdx],
+  };
+}
+
+/**
+ * Retourne true si deux noms désignent le même joueur.
+ * Étape 1 — correspondance exacte (après normName).
+ * Étape 2 — fallback : même nom de famille + même première initiale.
+ *            "Etcheverry T." === "Etcheverry T. M." grâce à ce fallback.
+ */
+function samePlayer(a, b) {
+  const na = normName(a);
+  const nb = normName(b);
+  if (na === nb) return true;
+  const pa = parseName(a);
+  const pb = parseName(b);
+  return pa.lastName === pb.lastName && pa.firstInitial !== '' && pa.firstInitial === pb.firstInitial;
+}
+
 /**
  * Convertit une lettre de colonne Sheets (ex: "A", "Z", "AA", "AP") en index 0-based.
  * Nécessaire pour supporter les colonnes multi-lettres (AA, AB, … AP).
@@ -157,13 +202,19 @@ async function getPlayerMatches(playerName) {
   const rows = await readSheet(cfg.sheets.matches, cfg.matchsColumns);
   if (rows === null) return null;
 
-  const pn      = norm(playerName);
   const matches = [];
+  let _loggedMatch = false;
 
   for (const r of rows) {
-    const isP1 = norm(r.player1) === pn;
-    const isP2 = norm(r.player2) === pn;
+    const isP1 = samePlayer(r.player1, playerName);
+    const isP2 = samePlayer(r.player2, playerName);
     if (!isP1 && !isP2) continue;
+
+    if (!_loggedMatch) {
+      const matched = isP1 ? r.player1 : r.player2;
+      console.log('[MATCH DEBUG]', { input: playerName, matched });
+      _loggedMatch = true;
+    }
 
     const adversaire     = isP1 ? r.player2 : r.player1;
     const rangAdversaire = isP1
@@ -245,7 +296,7 @@ async function getPointsToDefend(playerName, tournoi) {
   if (rows === null) return null;
 
   const row = rows.find(
-    (r) => norm(r.joueur) === norm(playerName) && norm(r.tournoi) === norm(tournoi)
+    (r) => samePlayer(r.joueur, playerName) && norm(r.tournoi) === norm(tournoi)
   );
 
   if (!row) {
@@ -273,19 +324,13 @@ async function getH2H(player1, player2) {
   const rows = await readSheet(cfg.sheets.matches, cfg.matchsColumns);
   if (rows === null) return null;
 
-  const n1 = norm(player1);
-  const n2 = norm(player2);
-
   let victoiresJ1 = 0;
   let victoiresJ2 = 0;
 
   for (const r of rows) {
-    const rP1 = norm(r.player1);
-    const rP2 = norm(r.player2);
-
     // La ligne concerne ce H2H si les deux joueurs y apparaissent (peu importe l'ordre)
-    const p1estP1 = rP1 === n1 && rP2 === n2;
-    const p1estP2 = rP1 === n2 && rP2 === n1;
+    const p1estP1 = samePlayer(r.player1, player1) && samePlayer(r.player2, player2);
+    const p1estP2 = samePlayer(r.player1, player2) && samePlayer(r.player2, player1);
     if (!p1estP1 && !p1estP2) continue;
 
     // Résultat via win_player ou sets gagnés
@@ -436,7 +481,6 @@ async function getSheetData(sheetName) {
  */
 function findPlayerRow(rows, playerName) {
   if (!rows || rows.length === 0) return null;
-  const pn = norm(playerName);
 
   // Détecte la clé "joueur" / "player" dans les en-têtes
   const sample   = rows[0];
@@ -444,7 +488,9 @@ function findPlayerRow(rows, playerName) {
     (k) => norm(k).includes('joueur') || norm(k).includes('player') || norm(k) === 'nom'
   ) ?? Object.keys(sample)[0]; // fallback : première colonne
 
-  return rows.find((r) => norm(r[nameKey]) === pn) ?? null;
+  const found = rows.find((r) => samePlayer(r[nameKey], playerName)) ?? null;
+  if (found) console.log('[MATCH DEBUG]', { input: playerName, matched: found[nameKey] });
+  return found;
 }
 
 /**
@@ -456,13 +502,12 @@ function findPlayerRow(rows, playerName) {
  */
 function findPlayerRows(rows, playerName) {
   if (!rows || rows.length === 0) return [];
-  const pn      = norm(playerName);
   const sample  = rows[0];
   const nameKey = Object.keys(sample).find(
     (k) => norm(k).includes('joueur') || norm(k).includes('player') || norm(k) === 'nom'
   ) ?? Object.keys(sample)[0];
 
-  return rows.filter((r) => norm(r[nameKey]) === pn);
+  return rows.filter((r) => samePlayer(r[nameKey], playerName));
 }
 
 /**
