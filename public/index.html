@@ -1690,13 +1690,13 @@ async function loadDailySummary() {
     }
 
     grid.innerHTML = data.map(m => {
-      // Transformation logistique — score1/score2 sont des scores bruts (non bornés à 1)
-      // probA + probB = 1 garanti
+      // ── Probabilités (logistique garantit probA + probB = 1) ──────────────────
       let pct1 = '–', pct2 = '–', gap = '–';
+      let probA = null, probB = null;
       if (m.score1 != null && m.score2 != null) {
-        const k     = 3;
-        const probA = 1 / (1 + Math.exp(-k * (m.score1 - m.score2)));
-        const probB = 1 - probA;
+        const k = 3;
+        probA = 1 / (1 + Math.exp(-k * (m.score1 - m.score2)));
+        probB = 1 - probA;
         pct1 = (probA * 100).toFixed(1) + ' %';
         pct2 = (probB * 100).toFixed(1) + ' %';
         gap  = (Math.abs(probA - probB) * 100).toFixed(1) + ' pts';
@@ -1706,7 +1706,74 @@ async function loadDailySummary() {
           total: probA + probB,
         });
       }
-      const cls  = confidenceClass(m.niveauConfiance ?? 0);
+
+      // ── Lecture terrain (3 blocs indépendants, pas de modification du modèle) ─
+      let terrainHtml = '';
+      if (probA !== null) {
+        const gapPct    = Math.abs(probA - probB);
+        const dir       = probA > probB ? 'j1' : 'j2'; // direction brute
+
+        // Bloc 1 — Forme récente : niveauConfiance reflète la solidité des données
+        const blocForme = (m.niveauConfiance ?? 0) >= 2 ? dir : 'draw';
+
+        // Bloc 2 — Avantage surface : seuil variable selon revêtement
+        const surfSeuil = m.surface === 'clay'  ? 0.12
+                        : m.surface === 'grass' ? 0.15
+                        :                         0.10;  // hard / indoor
+        const blocSurf  = gapPct > surfSeuil ? dir : 'draw';
+
+        // Bloc 3 — Performance générale : seuil souple (6 %)
+        const blocPerf  = gapPct > 0.06 ? dir : 'draw';
+
+        const j1Blocs = [blocForme, blocSurf, blocPerf].filter(b => b === 'j1').length;
+        const j2Blocs = [blocForme, blocSurf, blocPerf].filter(b => b === 'j2').length;
+
+        let terrainWinner, terrainLabel, terrainColor;
+        if (j1Blocs >= 2) {
+          terrainWinner = m.joueur1;
+          terrainLabel  = `Avantage : ${esc(m.joueur1)}`;
+          terrainColor  = '#22c55e';
+        } else if (j2Blocs >= 2) {
+          terrainWinner = m.joueur2;
+          terrainLabel  = `Avantage : ${esc(m.joueur2)}`;
+          terrainColor  = '#22c55e';
+        } else {
+          terrainWinner = null;
+          terrainLabel  = 'Équilibré';
+          terrainColor  = '#94a3b8';
+        }
+
+        // Synthèse
+        let signal, signalColor;
+        const conf = m.niveauConfiance ?? 0;
+        if (gapPct < 0.08) {
+          signal      = '⚖️ Match incertain';
+          signalColor = '#94a3b8';
+        } else if (terrainWinner === null && conf >= 3) {
+          // Modèle très confiant mais terrain équilibré → contradiction
+          signal      = '⚠️ Signaux contradictoires';
+          signalColor = '#f97316';
+        } else if (terrainWinner !== null && conf <= 1) {
+          // Terrain désigne un favori mais modèle peu confiant → contradiction
+          signal      = '⚠️ Signaux contradictoires';
+          signalColor = '#f97316';
+        } else if (terrainWinner !== null && terrainWinner === m.favori && conf >= 2) {
+          signal      = '🔥 Signal fort';
+          signalColor = '#22c55e';
+        } else {
+          signal      = '📊 Signal modéré';
+          signalColor = '#facc15';
+        }
+
+        terrainHtml = `
+          <div style="margin-top:8px;padding-top:8px;border-top:1px solid #1e293b">
+            <div style="font-size:0.75rem;color:#64748b;margin-bottom:3px">📊 Lecture terrain</div>
+            <div style="font-size:0.83rem;font-weight:600;color:${terrainColor}">${terrainLabel}</div>
+            <div style="margin-top:3px;font-size:0.78rem;font-weight:600;color:${signalColor}">${signal}</div>
+          </div>`;
+      }
+
+      const cls = confidenceClass(m.niveauConfiance ?? 0);
       return `
         <div class="daily-card">
           <div class="daily-matchup">${esc(m.joueur1)} <span style="color:#475569">vs</span> ${esc(m.joueur2)}</div>
@@ -1716,6 +1783,7 @@ async function loadDailySummary() {
             ${esc(m.joueur1)} ${pct1} · ${esc(m.joueur2)} ${pct2} · écart ${gap}
           </div>
           <div style="font-size:0.75rem; color:#475569">${esc(m.tournoi)} — ${esc(m.surface)}</div>
+          ${terrainHtml}
         </div>`;
     }).join('');
 
