@@ -511,17 +511,35 @@ async function analyzeMatch(player1Name, player2Name, surface, tournament) {
       ` | top50=${d?.statsTop50 ? '✓' : '✗'}`
     );
   }
+
+  console.log('[PLAYER DATA CHECK]', {
+    joueur: player1Name,
+    allMatches: !!baseData1?.allMatches,
+    allMatchesCount: baseData1?.allMatches?.length || 0,
+    stats: !!baseData1?.stats,
+    stats1y: !!baseData1?.stats1y,
+    statsTop50: !!baseData1?.statsTop50,
+  });
+  console.log('[PLAYER DATA CHECK]', {
+    joueur: player2Name,
+    allMatches: !!baseData2?.allMatches,
+    allMatchesCount: baseData2?.allMatches?.length || 0,
+    stats: !!baseData2?.stats,
+    stats1y: !!baseData2?.stats1y,
+    statsTop50: !!baseData2?.statsTop50,
+  });
   // ─────────────────────────────────────────────────────────────────────────
 
+// Bloque UNIQUEMENT si fetchCompletePlayerData n'a rien renvoyé du tout
+// (baseData null) ou si allMatches est absent ET stats est absent.
+// Un joueur avec allMatches=[], stats=null, stats1y=X est autorisé → fallbacks actifs.
 const player1HasMinimumData =
-  (baseData1?.allMatches?.length ?? 0) > 0 ||
-  !!baseData1?.stats ||
-  !!baseData1?.stats1y;
+  !!baseData1?.allMatches ||   // tableau initialisé (même vide)
+  !!baseData1?.stats;           // ou stats long terme présentes
 
 const player2HasMinimumData =
-  (baseData2?.allMatches?.length ?? 0) > 0 ||
-  !!baseData2?.stats ||
-  !!baseData2?.stats1y;
+  !!baseData2?.allMatches ||
+  !!baseData2?.stats;
 
 if (!player1HasMinimumData || !player2HasMinimumData) {
   throw new Error(

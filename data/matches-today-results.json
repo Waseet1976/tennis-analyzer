@@ -4,7 +4,302 @@
     "joueur2": "Etcheverry T.",
     "surface": "clay",
     "tournoi": "ATP Barcelona",
-    "error": "Données insuffisantes pour l'analyse : Etcheverry T."
+    "summary": {
+      "favori": "Borges N.",
+      "confiance": "Élevée",
+      "niveauConfiance": 3,
+      "hybridScore1": 0.7601,
+      "hybridScore2": 0.2399,
+      "gap": 0.5203
+    },
+    "result": {
+      "match": {
+        "joueur1": "Borges N.",
+        "joueur2": "Etcheverry T.",
+        "surface": "clay",
+        "tournoi": "ATP Barcelona"
+      },
+      "scoreA": {
+        "joueur1": {
+          "total": -2,
+          "details": [
+            {
+              "source": "comparison_recent_form",
+              "last5Wins": 1,
+              "last5Total": 5,
+              "last10Wins": 2,
+              "last10Total": 10,
+              "avgDiff": -2,
+              "recentFormBlock": 0.1882
+            }
+          ]
+        },
+        "joueur2": {
+          "total": 0,
+          "details": [
+            {
+              "source": "comparison_recent_form",
+              "last5Wins": 0,
+              "last5Total": 0,
+              "last10Wins": 0,
+              "last10Total": 0,
+              "avgDiff": 0,
+              "recentFormBlock": 0.5
+            }
+          ]
+        }
+      },
+      "scores": {
+        "joueur1": {
+          "A": -2,
+          "B": 1,
+          "C": null,
+          "D": 2,
+          "E": null,
+          "F": null,
+          "G": 0,
+          "H": 2,
+          "I": -1,
+          "J": 0,
+          "K": 1,
+          "L": 0,
+          "M": -2,
+          "N": 0,
+          "O": -0.2560975609756097,
+          "TOTAL": 0.7439024390243902
+        },
+        "joueur2": {
+          "A": 0,
+          "B": 1,
+          "C": null,
+          "D": 2,
+          "E": null,
+          "F": null,
+          "G": 0,
+          "H": 2,
+          "I": -1,
+          "J": 1,
+          "K": 1,
+          "L": 0,
+          "M": 0,
+          "N": 0,
+          "O": 0,
+          "TOTAL": 6
+        }
+      },
+      "verdict": {
+        "favori": "Borges N.",
+        "ecart": 0.3845,
+        "confiance": "Élevée",
+        "niveauConfiance": 3
+      },
+      "reglesActivees": {
+        "joueur1": [
+          "RÈGLE 2 activée : Score A négatif → J=0, M=-2"
+        ],
+        "joueur2": []
+      },
+      "dataSource": {
+        "joueur1": {
+          "matches": "sheet",
+          "tiebreakPct": "absent",
+          "decidingSetPct": "absent",
+          "firstServePct": "absent",
+          "winnersAvg": "absent",
+          "stats": "sheet",
+          "stats1y": "sheet",
+          "statsTop50": "sheet"
+        },
+        "joueur2": {
+          "matches": "absent",
+          "tiebreakPct": "absent",
+          "decidingSetPct": "absent",
+          "firstServePct": "absent",
+          "winnersAvg": "absent",
+          "stats": "absent",
+          "stats1y": "absent",
+          "statsTop50": "absent"
+        }
+      },
+      "playerStats": {
+        "joueur1": {
+          "stats": {
+            "player": "Borges N.",
+            "matches_total": "334",
+            "wins_total": "186",
+            "win_rate_total": "55,69%",
+            "matches_clay": "105",
+            "wins_clay": "63",
+            "win_rate_clay": "60,00%",
+            "matchs_hard": "193",
+            "wins_hard": "110",
+            "win_rate_hard": "56,99%",
+            "aces_avg": "5,190332326",
+            "double_faults_avg": "2,268882175",
+            "service_points_won_avg": "64,62839879",
+            "return_points_won_avg": "36,85498489",
+            "breaks_converted_avg": "41,08459215",
+            "break_saved_avg": "56,63141994",
+            "games_diff_avg": "0,4191616766",
+            "games_won_avg": "12,61676647",
+            "games_lost_avg": "12,19760479",
+            "score_global": "0,5195188198",
+            "score_surface": "0,582754491",
+            "level_global": "Solide",
+            "level_surface": "Très fort surface",
+            "comment_simple": "Solide , Très fort surface"
+          },
+          "stats1y": {
+            "player": "Borges N.",
+            "matches_total_1y": "292",
+            "wins_total_1y": "161",
+            "win_rate_total_1y": "55,14%",
+            "matches_clay_1y": "98",
+            "wins_clay_1y": "57",
+            "win_rate_clay_1y": "58,16%",
+            "matches_hard_1y": "158",
+            "wins_hard_1y": "91",
+            "win_rate_hard_1y": "57,59%",
+            "aces_avg_1y": "5,027681661",
+            "double_faults_avg_1y": "2,294117647",
+            "service_points_won_avg_1y": "64,24221453",
+            "return_points_won_avg_1y": "36,59515571",
+            "breaks_converted_avg_1y": "39,12802768",
+            "break_saved_avg_1y": "56,58131488",
+            "games_diff_avg_1y": "0,2260273973",
+            "games_won_avg_1y": "12,78424658",
+            "games_lost_avg_1y": "12,55821918",
+            "score_global_1y": "50,44%",
+            "score_surface_1y": "56,95%",
+            "level_global_1y": "Solide",
+            "level_surface_1y": "Bon surface",
+            "comment_simple_1y": "Solide , Bon surface"
+          },
+          "statsTop50": {
+            "A1 = player": "Borges N.",
+            "matches_vs_top50": "76",
+            "win_rate_vs_top50": "1",
+            "matches_clay_vs_top50": "21",
+            "wins_clay_vs_top50": "7",
+            "win_rate_clay_vs_top50": "0,3333333333",
+            "matches_hard_vs_top50": "45",
+            "wins_hard_vs_top50": "12",
+            "win_rate_hard_vs_top50": "0,2666666667"
+          }
+        },
+        "joueur2": {
+          "stats": null,
+          "stats1y": null,
+          "statsTop50": null
+        }
+      },
+      "playerMeta": {
+        "joueur1": {
+          "name": "Borges N.",
+          "ranking": 48
+        },
+        "joueur2": {
+          "name": "Etcheverry T.",
+          "ranking": null
+        }
+      },
+      "comparison": {
+        "scoreA": 0.4345,
+        "scoreB": 0.05,
+        "winner": "Borges N.",
+        "confidence": {
+          "label": "Élevée",
+          "level": 3
+        },
+        "details": {
+          "joueur1": {
+            "long_term_block": 0.536238198889,
+            "one_year_block": 0.5247971237595,
+            "top50_block": 0.2761904761904762,
+            "recent_form_block": 0.22,
+            "h2h_adjustment": 0,
+            "raw": {
+              "lt": {
+                "score_global": 0.5195188198,
+                "score_surface": 0.582754491,
+                "win_rate": 0.5569,
+                "games_diff": 0.4191616766,
+                "service": 64.62839879,
+                "returnPts": 36.85498489
+              },
+              "oy": {
+                "score_global": 0.5044,
+                "score_surface": 0.5695,
+                "win_rate": 0.5514,
+                "games_diff": 0.2260273973,
+                "service": 64.24221453,
+                "returnPts": 36.59515571
+              },
+              "form": {
+                "last5_wins": 1,
+                "last5_total": 5,
+                "last10_wins": 2,
+                "last10_total": 10,
+                "avgDiff": -2
+              }
+            }
+          },
+          "joueur2": {
+            "long_term_block": null,
+            "one_year_block": null,
+            "top50_block": null,
+            "recent_form_block": null,
+            "h2h_adjustment": 0,
+            "raw": {
+              "lt": {},
+              "oy": {},
+              "form": {}
+            }
+          },
+          "weights": {
+            "long_term": 0.2,
+            "one_year": 0.45,
+            "top50": 0.25,
+            "recent_form": 0.1
+          },
+          "h2h": {
+            "total": 0,
+            "winsA": 0,
+            "winsB": 0,
+            "onSurface": false
+          }
+        },
+        "explanation": "Borges N. est favori avec un avantage net sur clay, avec un score de 0.434 contre 0.050 (écart : 0.384).",
+        "key_advantages": []
+      },
+      "hybrid": {
+        "mainModel": {
+          "winner": "Borges N.",
+          "total1": 0.7439024390243902,
+          "total2": 6,
+          "score1": null,
+          "score2": null
+        },
+        "dataModel": {
+          "winner": "Borges N.",
+          "score1": 0.4345,
+          "score2": 0.05
+        },
+        "merged": {
+          "winner": "Borges N.",
+          "score1": 0.7601,
+          "score2": 0.2399,
+          "gap": 0.5203,
+          "confidence": {
+            "label": "Élevée",
+            "level": 3
+          }
+        },
+        "agreement": {
+          "aligned": true
+        }
+      }
+    }
   },
   {
     "joueur1": "De Minaur A.",

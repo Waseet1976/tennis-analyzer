@@ -28,13 +28,27 @@ function readMatches() {
 
 // ─── Analyse de chaque match ──────────────────────────────────────────────────
 
+const cleanName = (s) => (s || '').replace(/\s+/g, ' ').trim();
+
 async function analyzeAll(matches) {
   const results = [];
 
   for (let i = 0; i < matches.length; i++) {
-    const { joueur1, joueur2, surface, tournoi = '' } = matches[i];
+    const { joueur1: raw1, joueur2: raw2, surface, tournoi = '' } = matches[i];
+
+    const joueur1 = cleanName(raw1);
+    const joueur2 = cleanName(raw2);
 
     console.log(`\n[${i + 1}/${matches.length}] ${joueur1} vs ${joueur2} — ${surface}${tournoi ? ` (${tournoi})` : ''}`);
+
+    console.log('[BATCH INPUT]', {
+      joueur1_raw:    raw1,
+      joueur2_raw:    raw2,
+      joueur1_json:   JSON.stringify(raw1),
+      joueur2_json:   JSON.stringify(raw2),
+      joueur1_length: raw1?.length,
+      joueur2_length: raw2?.length,
+    });
 
     if (!joueur1 || !joueur2 || !surface) {
       console.error('  ✗ Champs manquants (joueur1, joueur2, surface requis) — match ignoré.');
