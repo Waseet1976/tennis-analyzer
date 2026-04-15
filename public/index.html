@@ -1356,6 +1356,43 @@ function remplirTableStats(ps1, ps2, comparisonData = null) {
   `);
 
 
+  // ─── Notes de lecture (calculateStatsNote + calculNoteTop50) ────────────────
+  const note1      = calculateStatsNote(ps1, currentSurface);
+  const note2      = calculateStatsNote(ps2, currentSurface);
+  const top50Note1 = calculNoteTop50(ps1?.statsTop50, currentSurface);
+  const top50Note2 = calculNoteTop50(ps2?.statsTop50, currentSurface);
+
+  const toPct = (note) =>
+    (note === null || note === undefined) ? '—' : (note * 10).toFixed(1) + '%';
+
+  rows.push(`
+    <tr>
+      <td colspan="3" style="background:#1e3a5f;color:#bfdbfe;font-weight:700;padding:10px 12px;border-top:2px solid #334155">
+        📋 Note stats finale — ${esc(nameP1)} : ${toPct(note1.final)} — ${esc(nameP2)} : ${toPct(note2.final)}
+      </td>
+    </tr>
+    <tr>
+      <td style="color:#94a3b8;font-size:0.82rem">Global</td>
+      <td style="text-align:center">${toPct(note1.global)}</td>
+      <td style="text-align:center">${toPct(note2.global)}</td>
+    </tr>
+    <tr>
+      <td style="color:#94a3b8;font-size:0.82rem">Surface</td>
+      <td style="text-align:center">${toPct(note1.surface)}</td>
+      <td style="text-align:center">${toPct(note2.surface)}</td>
+    </tr>
+    <tr>
+      <td style="color:#94a3b8;font-size:0.82rem">Performance</td>
+      <td style="text-align:center">${toPct(note1.performance)}</td>
+      <td style="text-align:center">${toPct(note2.performance)}</td>
+    </tr>
+    <tr>
+      <td style="color:#94a3b8;font-size:0.82rem">Top 50 corrigé fiabilité</td>
+      <td style="text-align:center">${toPct(top50Note1)}</td>
+      <td style="text-align:center">${toPct(top50Note2)}</td>
+    </tr>
+  `);
+
   // Fusionner les clés de stats + stats1y + statsTop50
   const sources1 = [ps1?.stats, ps1?.stats1y, ps1?.statsTop50];
   const sources2 = [ps2?.stats, ps2?.stats1y, ps2?.statsTop50];
