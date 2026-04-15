@@ -385,6 +385,7 @@
     <div id="verdict-favori" class="verdict-favori"></div>
     <div id="verdict-ecart" class="verdict-ecart"></div>
     <div id="verdict-confiance" class="verdict-confiance"></div>
+    <div id="verdict-proba" style="margin-top:12px;font-size:1.05rem;color:#94a3b8;display:none"></div>
   </div>
  <!-- H2H -->
   <div class="card" id="card-h2h" style="display:none">
@@ -825,6 +826,24 @@ function afficherResultats(data) {
   document.getElementById('verdict-favori').textContent = '🏆 ' + data.verdict.favori.toUpperCase() + ' favori';
   document.getElementById('verdict-ecart').textContent = 'Écart : +' + Number(data.verdict.ecart).toFixed(1) + ' pts';
   document.getElementById('verdict-confiance').textContent = data.verdict.confiance;
+
+  // Probabilités finales — uniquement depuis comparison (nouveau système)
+  const probaEl = document.getElementById('verdict-proba');
+  const scoreA  = data?.comparison?.scoreA;
+  const scoreB  = data?.comparison?.scoreB;
+  if (probaEl && scoreA != null && scoreB != null) {
+    const pct1 = (scoreA * 100).toFixed(1);
+    const pct2 = (scoreB * 100).toFixed(1);
+    const gap  = (Math.abs(scoreA - scoreB) * 100).toFixed(1);
+    probaEl.innerHTML =
+      `<span style="color:#e2e8f0;font-weight:600">${esc(p1)}</span> ${pct1} %` +
+      `&nbsp;&nbsp;·&nbsp;&nbsp;` +
+      `<span style="color:#e2e8f0;font-weight:600">${esc(p2)}</span> ${pct2} %` +
+      `&nbsp;&nbsp;<span style="font-size:0.9rem">(écart ${gap} pts)</span>`;
+    probaEl.style.display = 'block';
+  } else if (probaEl) {
+    probaEl.style.display = 'none';
+  }
 
   // H2H
   const h2hCard = document.getElementById('card-h2h');
