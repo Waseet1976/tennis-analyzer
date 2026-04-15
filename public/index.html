@@ -944,7 +944,7 @@ function afficherResultats(data) {
   if (data.playerStats) {
     document.getElementById('stats-col-j1').textContent = p1;
     document.getElementById('stats-col-j2').textContent = p2;
-    remplirTableStats(data.playerStats.joueur1, data.playerStats.joueur2);
+    remplirTableStats(data.playerStats.joueur1, data.playerStats.joueur2, data.comparison);
     document.getElementById('card-stats').style.display = '';
   } else {
     document.getElementById('card-stats').style.display = 'none';
@@ -1255,7 +1255,7 @@ const saved = toNumber(stats1y.breaks_saved_avg_1y ?? stats.break_saved_avg);
     final: parseFloat(final.toFixed(1))
   };
 }
-function remplirTableStats(ps1, ps2) {
+function remplirTableStats(ps1, ps2, comparisonData = null) {
   const tbody = document.querySelector('#table-stats tbody');
   const rows  = [];
 
@@ -1271,74 +1271,52 @@ function remplirTableStats(ps1, ps2) {
   if (th1) th1.textContent = nameP1;
   if (th2) th2.textContent = nameP2;
 
-const note1 = calculateStatsNote(ps1, currentSurface);
-const note2 = calculateStatsNote(ps2, currentSurface);
+  // Blocs du modèle réel (comparison.details)
+  const d1  = comparisonData?.details?.joueur1;
+  const d2  = comparisonData?.details?.joueur2;
+  const fB  = v => (v != null ? v.toFixed(3) : '—');
+  const fAdj = v => (v != null ? (v >= 0 ? '+' + v.toFixed(3) : v.toFixed(3)) : '—');
+  const scoreWinner = comparisonData?.scoreA != null && comparisonData?.scoreB != null
+    ? (comparisonData.scoreA >= comparisonData.scoreB ? esc(nameP1) : esc(nameP2))
+    : '=';
 
-const top50Note1 = calculNoteTop50(ps1?.statsTop50, currentSurface);
-const top50Note2 = calculNoteTop50(ps2?.statsTop50, currentSurface);
-
-function getTop50Status(statsTop50, surface) {
-  if (!statsTop50) return { matches: 0, label: '⚠️ Aucune donnée Top 50 sur cette surface', status: 'warning' };
-  let mKey;
-  if (surface === 'clay')                          mKey = 'matches_clay_vs_top50';
-  else if (surface === 'hard' || surface === 'indoor_hard') mKey = 'matches_hard_vs_top50';
-  else                                             mKey = 'matches_vs_top50';
-  const matches = toNumber(statsTop50[mKey]) ?? 0;
-  if (matches === 0) return { matches, label: '⚠️ Aucune donnée Top 50 sur cette surface', status: 'warning' };
-  if (matches < 5)  return { matches, label: `⚠️ Pas assez de matchs Top 50 pour juger (${matches})`, status: 'warning' };
-  return { matches, label: `✅ Données suffisantes (${matches} matchs)`, status: 'ok' };
-}
-
-const top50Status1 = getTop50Status(ps1?.statsTop50, currentSurface);
-const top50Status2 = getTop50Status(ps2?.statsTop50, currentSurface);
-
-let avantageStats = '=';
-
-if (note1.final > note2.final) {
-  avantageStats = esc(nameP1);
-} else if (note2.final > note1.final) {
-  avantageStats = esc(nameP2);
-}
   rows.push(`
     <tr>
       <td colspan="3" style="background:#14532d;color:#dcfce7;font-weight:700;padding:12px;border-bottom:1px solid #334155">
-        🧠 Note stats finale — ${esc(nameP1)} : ${note1.final}/10 — ${esc(nameP2)} : ${note2.final}/10
+        🧠 Score modèle réel — Favori : ${scoreWinner}
       </td>
     </tr>
-  `);
-
-  rows.push(`
     <tr>
-      <td style="color:#94a3b8;font-size:0.82rem">Détail des notes</td>
-      <td style="text-align:center">
-        Global ${note1.global}/10 , Surface ${note1.surface}/10 , Performance ${note1.performance}/10
-      </td>
-      <td style="text-align:center">
-        Global ${note2.global}/10 , Surface ${note2.surface}/10 , Performance ${note2.performance}/10
-      </td>
+      <td style="color:#94a3b8;font-size:0.82rem">Long terme</td>
+      <td style="text-align:center">${fB(d1?.long_term_block)}</td>
+      <td style="text-align:center">${fB(d2?.long_term_block)}</td>
+    </tr>
+    <tr>
+      <td style="color:#94a3b8;font-size:0.82rem">1 an</td>
+      <td style="text-align:center">${fB(d1?.one_year_block)}</td>
+      <td style="text-align:center">${fB(d2?.one_year_block)}</td>
+    </tr>
+    <tr>
+      <td style="color:#94a3b8;font-size:0.82rem">Top 50 (1 an)</td>
+      <td style="text-align:center">${fB(d1?.top50_block)}</td>
+      <td style="text-align:center">${fB(d2?.top50_block)}</td>
+    </tr>
+    <tr>
+      <td style="color:#94a3b8;font-size:0.82rem">Forme récente</td>
+      <td style="text-align:center">${fB(d1?.recent_form_block)}</td>
+      <td style="text-align:center">${fB(d2?.recent_form_block)}</td>
+    </tr>
+    <tr>
+      <td style="color:#94a3b8;font-size:0.82rem">Ajust. H2H</td>
+      <td style="text-align:center">${fAdj(d1?.h2h_adjustment)}</td>
+      <td style="text-align:center">${fAdj(d2?.h2h_adjustment)}</td>
+    </tr>
+    <tr>
+      <td style="color:#94a3b8;font-size:0.82rem;font-weight:600">Score final</td>
+      <td style="text-align:center;font-weight:700">${fB(comparisonData?.scoreA)}</td>
+      <td style="text-align:center;font-weight:700">${fB(comparisonData?.scoreB)}</td>
     </tr>
   `);
-rows.push(`
-  <tr>
-    <td style="color:#94a3b8;font-size:0.82rem">Top 50 corrigé fiabilité</td>
-    <td style="text-align:center">${top50Note1.toFixed(1)}/10</td>
-    <td style="text-align:center">${top50Note2.toFixed(1)}/10</td>
-  </tr>
-  <tr>
-    <td style="color:#64748b;font-size:0.78rem;font-style:italic">Fiabilité Top 50</td>
-    <td style="text-align:center;font-size:0.78rem;color:${top50Status1.status === 'ok' ? '#22c55e' : '#f97316'}">${top50Status1.label}</td>
-    <td style="text-align:center;font-size:0.78rem;color:${top50Status2.status === 'ok' ? '#22c55e' : '#f97316'}">${top50Status2.label}</td>
-  </tr>
-`);
-
-rows.push(`
-  <tr>
-    <td style="color:#94a3b8;font-size:0.82rem">Avantage stats</td>
-    <td colspan="2" style="text-align:center;font-weight:700">
-      ${avantageStats}
-    </td>
-  </tr>
-`);
 
 
   // Fusionner les clés de stats + stats1y + statsTop50

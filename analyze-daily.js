@@ -59,20 +59,41 @@ async function analyzeAll(matches) {
     try {
       const result = await analyzeMatch(joueur1, joueur2, surface, tournoi);
 
-      // Verdict issus du modèle stats détaillées
-      // Probabilités logistiques issues de hybrid.merged (transformation appliquée dans matchAnalysis)
+      // Verdict et probabilités : uniquement depuis comparison (modèle décisionnel unique)
       const cmp             = result?.comparison;
-      const merged          = result?.hybrid?.merged;
       const favori          = cmp?.winner                 ?? result?.verdict?.favori    ?? '?';
       const confiance       = cmp?.confidence?.label      ?? result?.verdict?.confiance ?? '?';
       const niveauConfiance = cmp?.confidence?.level      ?? result?.verdict?.niveauConfiance ?? 0;
-      const hybridScore1    = merged?.score1              ?? null;
-      const hybridScore2    = merged?.score2              ?? null;
-      const gap             = merged?.gap                 ?? null;
+
+      // Probabilités logistiques : scoreA/scoreB de comparison → prob logistique
+      // scoreA = prob de joueur1 (position dans comparePlayers = position dans JSON)
+      // scoreB = prob de joueur2
+      const scoreA          = cmp?.scoreA ?? null;
+      const scoreB          = cmp?.scoreB ?? null;
+      const score1          = scoreA;
+      const score2          = scoreB;
+      const gap             = (scoreA != null && scoreB != null)
+        ? parseFloat(Math.abs(scoreA - scoreB).toFixed(4))
+        : null;
+
+      console.log('[SUMMARY DEBUG]', {
+        joueur1_input:  joueur1,
+        joueur2_input:  joueur2,
+        match_joueur1:  result?.match?.joueur1,
+        match_joueur2:  result?.match?.joueur2,
+        comparison_winner:  cmp?.winner,
+        comparison_scoreA:  cmp?.scoreA,
+        comparison_scoreB:  cmp?.scoreB,
+        hybrid_score1:  result?.hybrid?.merged?.score1,
+        hybrid_score2:  result?.hybrid?.merged?.score2,
+        summary_score1: score1,
+        summary_score2: score2,
+        summary_gap:    gap,
+      });
 
       console.log(`  ✓ Favori : ${favori} — Confiance : ${confiance}`);
 
-      const summary = { favori, confiance, niveauConfiance, hybridScore1, hybridScore2, gap };
+      const summary = { favori, confiance, niveauConfiance, hybridScore1: score1, hybridScore2: score2, gap };
       results.push({ joueur1, joueur2, surface, tournoi, summary, result });
     } catch (err) {
       console.error(`  ✗ Erreur : ${err.message}`);
