@@ -13,11 +13,11 @@
     "tournoi": "ATP Barcelona",
     "summary": {
       "favori": "De Minaur A.",
-      "confiance": "Élevée",
-      "niveauConfiance": 3,
-      "hybridScore1": 0.5818,
-      "hybridScore2": 0.4182,
-      "gap": 0.1637
+      "confiance": "Modérée",
+      "niveauConfiance": 2,
+      "hybridScore1": 0.5528,
+      "hybridScore2": 0.4472,
+      "gap": 0.1057
     },
     "result": {
       "match": {
@@ -96,9 +96,9 @@
       },
       "verdict": {
         "favori": "De Minaur A.",
-        "ecart": 0.1101,
-        "confiance": "Élevée",
-        "niveauConfiance": 3
+        "ecart": 0.0707,
+        "confiance": "Modérée",
+        "niveauConfiance": 2
       },
       "reglesActivees": {
         "joueur1": [],
@@ -260,11 +260,11 @@
       },
       "comparison": {
         "scoreA": 0.5793,
-        "scoreB": 0.4692,
+        "scoreB": 0.5086,
         "winner": "De Minaur A.",
         "confidence": {
-          "label": "Élevée",
-          "level": 3
+          "label": "Modérée",
+          "level": 2
         },
         "details": {
           "joueur1": {
@@ -302,7 +302,7 @@
           "joueur2": {
             "long_term_block": 0.5978308411825001,
             "one_year_block": 0.6064766666625,
-            "top50_block": 0.09230769230769231,
+            "top50_block": 0.25,
             "recent_form_block": 0.7160000000000001,
             "h2h_adjustment": -0.018,
             "raw": {
@@ -344,7 +344,7 @@
             "onSurface": false
           }
         },
-        "explanation": "De Minaur A. est favori avec un avantage net sur clay, avec un score de 0.579 contre 0.469 (écart : 0.110). Ses principaux atouts sont : Stats long terme, Forme sur 1 an, Niveau contre top 50.",
+        "explanation": "De Minaur A. est favori avec un avantage assez clair sur clay, avec un score de 0.579 contre 0.509 (écart : 0.071). Ses principaux atouts sont : Stats long terme, Forme sur 1 an, Niveau contre top 50.",
         "key_advantages": [
           "De Minaur A. › Stats long terme",
           "De Minaur A. › Forme sur 1 an",
@@ -364,16 +364,16 @@
         "dataModel": {
           "winner": "De Minaur A.",
           "score1": 0.5793,
-          "score2": 0.4692
+          "score2": 0.5086
         },
         "merged": {
           "winner": "De Minaur A.",
-          "score1": 0.5818,
-          "score2": 0.4182,
-          "gap": 0.1637,
+          "score1": 0.5528,
+          "score2": 0.4472,
+          "gap": 0.1057,
           "confidence": {
-            "label": "Élevée",
-            "level": 3
+            "label": "Modérée",
+            "level": 2
           }
         },
         "agreement": {
@@ -459,7 +459,7 @@
           "E": null,
           "F": null,
           "G": 2,
-          "H": 1,
+          "H": 2,
           "I": -2,
           "J": 0,
           "K": 1,
@@ -467,7 +467,7 @@
           "M": -2,
           "N": 0,
           "O": 6.935294117647059,
-          "TOTAL": 9.775294117647059
+          "TOTAL": 10.775294117647059
         }
       },
       "verdict": {
@@ -735,7 +735,7 @@
         "mainModel": {
           "winner": "Jodar R.",
           "total1": 15.411111111111111,
-          "total2": 9.775294117647059,
+          "total2": 10.775294117647059,
           "score1": null,
           "score2": null
         },
@@ -1523,9 +1523,9 @@
       "favori": "Tsitsipas S.",
       "confiance": "Modérée",
       "niveauConfiance": 2,
-      "hybridScore1": 0.4443,
-      "hybridScore2": 0.5557,
-      "gap": 0.1114
+      "hybridScore1": 0.4618,
+      "hybridScore2": 0.5382,
+      "gap": 0.0764
     },
     "result": {
       "match": {
@@ -1604,7 +1604,7 @@
       },
       "verdict": {
         "favori": "Tsitsipas S.",
-        "ecart": 0.0746,
+        "ecart": 0.051,
         "confiance": "Modérée",
         "niveauConfiance": 2
       },
@@ -1772,7 +1772,7 @@
       },
       "comparison": {
         "scoreA": 0.4823,
-        "scoreB": 0.5569,
+        "scoreB": 0.5333,
         "winner": "Tsitsipas S.",
         "confidence": {
           "label": "Modérée",
@@ -1814,7 +1814,7 @@
           "joueur2": {
             "long_term_block": 0.6234161262175001,
             "one_year_block": 0.6272963735700001,
-            "top50_block": 0.36470588235294116,
+            "top50_block": 0.27,
             "recent_form_block": 0.40800000000000003,
             "h2h_adjustment": 0.018,
             "raw": {
@@ -1856,11 +1856,11 @@
             "onSurface": false
           }
         },
-        "explanation": "Tsitsipas S. est favori avec un avantage assez clair sur clay, avec un score de 0.557 contre 0.482 (écart : 0.075). Ses principaux atouts sont : Stats long terme, Forme sur 1 an, Niveau contre top 50.",
+        "explanation": "Tsitsipas S. est favori avec un avantage assez clair sur clay, avec un score de 0.533 contre 0.482 (écart : 0.051). Ses principaux atouts sont : Stats long terme, Forme sur 1 an, Forme récente.",
         "key_advantages": [
           "Tsitsipas S. › Stats long terme",
           "Tsitsipas S. › Forme sur 1 an",
-          "Tsitsipas S. › Niveau contre top 50",
+          "Marozsan F. › Niveau contre top 50",
           "Tsitsipas S. › Forme récente",
           "Tsitsipas S. › Head-to-Head"
         ]
@@ -1876,13 +1876,13 @@
         "dataModel": {
           "winner": "Tsitsipas S.",
           "score1": 0.4823,
-          "score2": 0.5569
+          "score2": 0.5333
         },
         "merged": {
           "winner": "Tsitsipas S.",
-          "score1": 0.4443,
-          "score2": 0.5557,
-          "gap": 0.1114,
+          "score1": 0.4618,
+          "score2": 0.5382,
+          "gap": 0.0764,
           "confidence": {
             "label": "Modérée",
             "level": 2
@@ -2657,9 +2657,9 @@
       "favori": "Darderi L.",
       "confiance": "Légère",
       "niveauConfiance": 1,
-      "hybridScore1": 0.474,
-      "hybridScore2": 0.526,
-      "gap": 0.052
+      "hybridScore1": 0.4826,
+      "hybridScore2": 0.5174,
+      "gap": 0.0348
     },
     "result": {
       "match": {
@@ -2738,7 +2738,7 @@
       },
       "verdict": {
         "favori": "Darderi L.",
-        "ecart": 0.0347,
+        "ecart": 0.0232,
         "confiance": "Légère",
         "niveauConfiance": 1
       },
@@ -2906,7 +2906,7 @@
       },
       "comparison": {
         "scoreA": 0.452,
-        "scoreB": 0.4867,
+        "scoreB": 0.4752,
         "winner": "Darderi L.",
         "confidence": {
           "label": "Légère",
@@ -2948,7 +2948,7 @@
           "joueur2": {
             "long_term_block": 0.5747823791275001,
             "one_year_block": 0.568171494875,
-            "top50_block": 0.406060606060606,
+            "top50_block": 0.36,
             "recent_form_block": 0.36,
             "h2h_adjustment": -0.021428571428571436,
             "raw": {
@@ -2990,7 +2990,7 @@
             "onSurface": true
           }
         },
-        "explanation": "Darderi L. est légèrement favori sur clay, avec un score de 0.487 contre 0.452 (écart : 0.035). Ses principaux atouts sont : Stats long terme, Forme sur 1 an, Niveau contre top 50. Kopriva V. conserve néanmoins des arguments solides, notamment : Head-to-Head (4/7).",
+        "explanation": "Darderi L. est légèrement favori sur clay, avec un score de 0.475 contre 0.452 (écart : 0.023). Ses principaux atouts sont : Stats long terme, Forme sur 1 an, Niveau contre top 50. Kopriva V. conserve néanmoins des arguments solides, notamment : Head-to-Head (4/7).",
         "key_advantages": [
           "Darderi L. › Stats long terme",
           "Darderi L. › Forme sur 1 an",
@@ -3010,13 +3010,13 @@
         "dataModel": {
           "winner": "Darderi L.",
           "score1": 0.452,
-          "score2": 0.4867
+          "score2": 0.4752
         },
         "merged": {
           "winner": "Darderi L.",
-          "score1": 0.474,
-          "score2": 0.526,
-          "gap": 0.052,
+          "score1": 0.4826,
+          "score2": 0.5174,
+          "gap": 0.0348,
           "confidence": {
             "label": "Légère",
             "level": 1

@@ -48,18 +48,6 @@
     "gap": 0.174
   },
   {
-    "joueur1": "De Minaur A.",
-    "joueur2": "Medjedovic H.",
-    "surface": "clay",
-    "tournoi": "ATP Barcelona",
-    "favori": "De Minaur A.",
-    "confiance": "Élevée",
-    "niveauConfiance": 3,
-    "score1": 0.5818,
-    "score2": 0.4182,
-    "gap": 0.1637
-  },
-  {
     "joueur1": "Rinderknech A.",
     "joueur2": "Fonseca J.",
     "surface": "clay",
@@ -72,6 +60,18 @@
     "gap": 0.1317
   },
   {
+    "joueur1": "De Minaur A.",
+    "joueur2": "Medjedovic H.",
+    "surface": "clay",
+    "tournoi": "ATP Barcelona",
+    "favori": "De Minaur A.",
+    "confiance": "Modérée",
+    "niveauConfiance": 2,
+    "score1": 0.5528,
+    "score2": 0.4472,
+    "gap": 0.1057
+  },
+  {
     "joueur1": "Marozsan F.",
     "joueur2": "Tsitsipas S.",
     "surface": "clay",
@@ -79,9 +79,9 @@
     "favori": "Tsitsipas S.",
     "confiance": "Modérée",
     "niveauConfiance": 2,
-    "score1": 0.4443,
-    "score2": 0.5557,
-    "gap": 0.1114
+    "score1": 0.4618,
+    "score2": 0.5382,
+    "gap": 0.0764
   },
   {
     "joueur1": "Kopriva V.",
@@ -91,8 +91,8 @@
     "favori": "Darderi L.",
     "confiance": "Légère",
     "niveauConfiance": 1,
-    "score1": 0.474,
-    "score2": 0.526,
-    "gap": 0.052
+    "score1": 0.4826,
+    "score2": 0.5174,
+    "gap": 0.0348
   }
 ]

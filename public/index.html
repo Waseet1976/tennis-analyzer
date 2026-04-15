@@ -1138,21 +1138,45 @@ const globalBase = (winRateTotal1y ?? 50) / 10;
   const globalBonus = gamesDiff !== null ? clamp(gamesDiff * 0.15, -1, 1) : 0;
   const global = clamp(globalBase + globalBonus, 0, 10);
 
+  // Prend la première valeur valide et non nulle parmi une liste de candidats
+  const firstValid = (...candidates) => {
+    for (const v of candidates) {
+      const n = toNumber(v);
+      if (n !== null && n > 0) return n;
+    }
+    return null;
+  };
+
   let winRateSurface = null;
   let winRateSurface1y = null;
   if (surface === 'clay') {
-  winRateSurface = toNumber(stats.win_rate_clay);
-  winRateSurface1y = toNumber(stats1y.win_rate_clay_1y);
-  matchesSurface = toNumber(stats1y.matches_clay_1y ?? stats.matches_clay);
-} else if (surface === 'hard' || surface === 'indoor_hard') {
-  winRateSurface = toNumber(stats.win_rate_hard);
-  winRateSurface1y = toNumber(stats1y.win_rate_hard_1y);
-  matchesSurface = toNumber(stats1y.matches_hard_1y ?? stats1y.matchs_hard_1y ?? stats.matchs_hard ?? stats.matches_hard);
-} else {
-  winRateSurface = toNumber(stats.win_rate_total);
-  winRateSurface1y = toNumber(stats1y.win_rate_total_1y);
-  matchesSurface = toNumber(stats1y.matches_total_1y ?? stats.matches_total);
-}
+    winRateSurface   = toNumber(stats.win_rate_clay);
+    winRateSurface1y = toNumber(stats1y.win_rate_clay_1y);
+    matchesSurface   = firstValid(
+      stats1y.matches_clay_1y,
+      stats1y.matchs_clay_1y,
+      stats.matches_clay,
+      stats.matchs_clay
+    );
+  } else if (surface === 'hard' || surface === 'indoor_hard') {
+    winRateSurface   = toNumber(stats.win_rate_hard);
+    winRateSurface1y = toNumber(stats1y.win_rate_hard_1y);
+    matchesSurface   = firstValid(
+      stats1y.matches_hard_1y,
+      stats1y.matchs_hard_1y,
+      stats.matches_hard,
+      stats.matchs_hard
+    );
+  } else {
+    winRateSurface   = toNumber(stats.win_rate_total);
+    winRateSurface1y = toNumber(stats1y.win_rate_total_1y);
+    matchesSurface   = firstValid(
+      stats1y.matches_total_1y,
+      stats.matches_total
+    );
+  }
+
+  console.log('[SurfaceDebug]', { surface, winRateSurface1y, matchesSurface });
 
 
  const surfaceBase = ajusterFiabilite(
@@ -1228,6 +1252,21 @@ const note2 = calculateStatsNote(ps2, currentSurface);
 const top50Note1 = calculNoteTop50(ps1?.statsTop50, currentSurface);
 const top50Note2 = calculNoteTop50(ps2?.statsTop50, currentSurface);
 
+function getTop50Status(statsTop50, surface) {
+  if (!statsTop50) return { matches: 0, label: '⚠️ Aucune donnée Top 50 sur cette surface', status: 'warning' };
+  let mKey;
+  if (surface === 'clay')                          mKey = 'matches_clay_vs_top50';
+  else if (surface === 'hard' || surface === 'indoor_hard') mKey = 'matches_hard_vs_top50';
+  else                                             mKey = 'matches_vs_top50';
+  const matches = toNumber(statsTop50[mKey]) ?? 0;
+  if (matches === 0) return { matches, label: '⚠️ Aucune donnée Top 50 sur cette surface', status: 'warning' };
+  if (matches < 5)  return { matches, label: `⚠️ Pas assez de matchs Top 50 pour juger (${matches})`, status: 'warning' };
+  return { matches, label: `✅ Données suffisantes (${matches} matchs)`, status: 'ok' };
+}
+
+const top50Status1 = getTop50Status(ps1?.statsTop50, currentSurface);
+const top50Status2 = getTop50Status(ps2?.statsTop50, currentSurface);
+
 let avantageStats = '=';
 
 if (note1.final > note2.final) {
@@ -1259,6 +1298,11 @@ rows.push(`
     <td style="color:#94a3b8;font-size:0.82rem">Top 50 corrigé fiabilité</td>
     <td style="text-align:center">${top50Note1.toFixed(1)}/10</td>
     <td style="text-align:center">${top50Note2.toFixed(1)}/10</td>
+  </tr>
+  <tr>
+    <td style="color:#64748b;font-size:0.78rem;font-style:italic">Fiabilité Top 50</td>
+    <td style="text-align:center;font-size:0.78rem;color:${top50Status1.status === 'ok' ? '#22c55e' : '#f97316'}">${top50Status1.label}</td>
+    <td style="text-align:center;font-size:0.78rem;color:${top50Status2.status === 'ok' ? '#22c55e' : '#f97316'}">${top50Status2.label}</td>
   </tr>
 `);
 
