@@ -1713,20 +1713,20 @@ async function loadDailySummary() {
         const gapPct    = Math.abs(probA - probB);
         const dir       = probA > probB ? 'j1' : 'j2'; // direction brute
 
-        // Bloc 1 — Forme récente : niveauConfiance reflète la solidité des données
-        const blocForme = (m.niveauConfiance ?? 0) >= 2 ? dir : 'draw';
-
-        // Bloc 2 — Avantage surface : seuil variable selon revêtement
-        const surfSeuil = m.surface === 'clay'  ? 0.12
-                        : m.surface === 'grass' ? 0.15
-                        :                         0.10;  // hard / indoor
+        // Bloc 1 — Surface : dominance nette requise (seuil strict, variable selon revêtement)
+        const surfSeuil = m.surface === 'clay'  ? 0.20
+                        : m.surface === 'grass' ? 0.18
+                        :                         0.15;  // hard / indoor
         const blocSurf  = gapPct > surfSeuil ? dir : 'draw';
 
-        // Bloc 3 — Performance générale : seuil souple (6 %)
-        const blocPerf  = gapPct > 0.06 ? dir : 'draw';
+        // Bloc 2 — Forme récente : proxy = confiance maximale uniquement (indépendant du gap)
+        const blocForme = (m.niveauConfiance ?? 0) >= 3 ? dir : 'draw';
 
-        const j1Blocs = [blocForme, blocSurf, blocPerf].filter(b => b === 'j1').length;
-        const j2Blocs = [blocForme, blocSurf, blocPerf].filter(b => b === 'j2').length;
+        // Bloc 3 — Dynamique 1 an : seuil modéré (10 %)
+        const bloc1Y    = gapPct > 0.10 ? dir : 'draw';
+
+        const j1Blocs = [blocSurf, blocForme, bloc1Y].filter(b => b === 'j1').length;
+        const j2Blocs = [blocSurf, blocForme, bloc1Y].filter(b => b === 'j2').length;
 
         let terrainWinner, terrainLabel, terrainColor;
         if (j1Blocs >= 2) {
