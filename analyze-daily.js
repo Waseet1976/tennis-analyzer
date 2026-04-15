@@ -117,21 +117,79 @@ function saveResults(results) {
   console.log(`\nRésultats complets sauvegardés dans : ${OUTPUT_FILE}`);
 }
 
+// ─── Extraction des stats visuelles par joueur ────────────────────────────────
+
+/** Convertit une valeur formatée fr (ex: "88,81%" ou "68,07") en nombre ou null. */
+function parseFr(v) {
+  if (v == null || v === '') return null;
+  const n = parseFloat(String(v).replace('%', '').replace(',', '.').trim());
+  return isNaN(n) ? null : n;
+}
+
+/**
+ * Extrait les 6 stats visuelles depuis les sous-objets du résultat d'analyse.
+ * @param {Object} compDetails  result.comparison.details.joueur1 ou joueur2
+ * @param {Object} playerStats  result.playerStats.joueur1 ou joueur2
+ */
+function extractVisualStats(compDetails, playerStats) {
+  const d   = compDetails  ?? {};
+  const s   = playerStats?.stats    ?? {};
+  const s1y = playerStats?.stats1y  ?? {};
+  const st  = playerStats?.statsTop50 ?? {};
+
+  // 1. Top 50 clay (1 an) — taux de victoire surface contre Top50 (allMatches 12 mois)
+  const top50_1y = d.raw?.top50?.surfaceRate != null
+    ? parseFloat((d.raw.top50.surfaceRate * 100).toFixed(1)) : null;
+
+  // 2. Win rate global 1 an
+  const win_rate_1y = parseFr(s1y.win_rate_total_1y);
+
+  // 3. Win rate clay long terme
+  const win_rate_clay = parseFr(s.win_rate_clay);
+
+  // 4. Win rate clay 1 an
+  const win_rate_clay_1y = parseFr(s1y.win_rate_clay_1y);
+
+  // 5. % points service gagnés (1 an)
+  const raw_srv = parseFr(s1y.service_points_won_avg_1y);
+  const service_1y = raw_srv != null ? parseFloat(raw_srv.toFixed(1)) : null;
+
+  // 6. % points retour gagnés (1 an)
+  const raw_ret = parseFr(s1y.return_points_won_avg_1y);
+  const return_1y = raw_ret != null ? parseFloat(raw_ret.toFixed(1)) : null;
+
+  // 7. Win rate clay vs Top50 — calculé depuis les compteurs bruts (colonne win_rate corrompue)
+  const wT50 = parseInt(st.wins_clay_vs_top50,    10) || 0;
+  const mT50 = parseInt(st.matches_clay_vs_top50, 10) || 0;
+  const wr_clay_top50 = mT50 > 0 ? parseFloat(((wT50 / mT50) * 100).toFixed(1)) : null;
+
+  return { top50_1y, win_rate_1y, win_rate_clay, win_rate_clay_1y, service_1y, return_1y, wr_clay_top50 };
+}
+
 function saveSummary(results) {
   const summary = results
     .filter(r => !r.error)
-    .map(r => ({
-      joueur1:         r.joueur1,
-      joueur2:         r.joueur2,
-      surface:         r.surface,
-      tournoi:         r.tournoi,
-      favori:          r.summary.favori,
-      confiance:       r.summary.confiance,
-      niveauConfiance: r.summary.niveauConfiance,
-      score1:          r.summary.hybridScore1,
-      score2:          r.summary.hybridScore2,
-      gap:             r.summary.gap,
-    }))
+    .map(r => {
+      const d1  = r.result?.comparison?.details?.joueur1;
+      const d2  = r.result?.comparison?.details?.joueur2;
+      const ps1 = r.result?.playerStats?.joueur1;
+      const ps2 = r.result?.playerStats?.joueur2;
+
+      return {
+        joueur1:         r.joueur1,
+        joueur2:         r.joueur2,
+        surface:         r.surface,
+        tournoi:         r.tournoi,
+        favori:          r.summary.favori,
+        confiance:       r.summary.confiance,
+        niveauConfiance: r.summary.niveauConfiance,
+        score1:          r.summary.hybridScore1,
+        score2:          r.summary.hybridScore2,
+        gap:             r.summary.gap,
+        stats_j1:        extractVisualStats(d1, ps1),
+        stats_j2:        extractVisualStats(d2, ps2),
+      };
+    })
     .sort((a, b) =>
       b.niveauConfiance - a.niveauConfiance || b.gap - a.gap
     );

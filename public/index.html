@@ -305,6 +305,57 @@
     font-size: 0.85rem;
   }
 
+  /* ── Stats visuelles par joueur ── */
+  .stats-duo {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .stats-col-name {
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: #94a3b8;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4px;
+  }
+
+  .stat-badge {
+    background: #0f172a;
+    border: 1px solid #1e293b;
+    border-radius: 6px;
+    padding: 5px 4px 4px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+  }
+
+  .stat-val {
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: #e2e8f0;
+    line-height: 1;
+  }
+
+  .stat-lbl {
+    font-size: 0.6rem;
+    color: #475569;
+    line-height: 1.1;
+    text-align: center;
+  }
+
   @media (max-width: 640px) {
     .form-grid { grid-template-columns: 1fr; }
     table { font-size: 0.75rem; }
@@ -1773,6 +1824,38 @@ async function loadDailySummary() {
           </div>`;
       }
 
+      // ── Grille de stats visuelles ────────────────────────────────────────────
+      const fmt = (v, unit = '%') => v != null ? v.toFixed(1) + unit : '—';
+      const badge = (label, v, unit = '%') => `
+        <div class="stat-badge">
+          <span class="stat-val">${v != null ? parseFloat(v).toFixed(1) + unit : '—'}</span>
+          <span class="stat-lbl">${label}</span>
+        </div>`;
+
+      const statsRow = (s) => s ? `
+        <div class="stat-grid">
+          ${badge('Top50 clay 1an', s.top50_1y)}
+          ${badge('Clay WR', s.win_rate_clay)}
+          ${badge('Clay 1an', s.win_rate_clay_1y)}
+          ${badge('Service', s.service_1y)}
+          ${badge('Retour', s.return_1y)}
+          ${badge('Clay vs T50', s.wr_clay_top50)}
+        </div>` : '';
+
+      const statsHtml = (m.stats_j1 || m.stats_j2) ? `
+        <div style="margin-top:10px;padding-top:10px;border-top:1px solid #1e293b">
+          <div class="stats-duo">
+            <div class="stats-col">
+              <div class="stats-col-name">${esc(m.joueur1)}</div>
+              ${statsRow(m.stats_j1)}
+            </div>
+            <div class="stats-col">
+              <div class="stats-col-name">${esc(m.joueur2)}</div>
+              ${statsRow(m.stats_j2)}
+            </div>
+          </div>
+        </div>` : '';
+
       const cls = confidenceClass(m.niveauConfiance ?? 0);
       return `
         <div class="daily-card">
@@ -1783,6 +1866,7 @@ async function loadDailySummary() {
             ${esc(m.joueur1)} ${pct1} · ${esc(m.joueur2)} ${pct2} · écart ${gap}
           </div>
           <div style="font-size:0.75rem; color:#475569">${esc(m.tournoi)} — ${esc(m.surface)}</div>
+          ${statsHtml}
           ${terrainHtml}
         </div>`;
     }).join('');

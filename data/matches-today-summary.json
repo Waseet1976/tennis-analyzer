@@ -9,7 +9,25 @@
     "niveauConfiance": 3,
     "score1": 0.7956,
     "score2": 0.4494,
-    "gap": 0.4772
+    "gap": 0.4772,
+    "stats_j1": {
+      "top50_1y": 90.9,
+      "win_rate_1y": 86.61,
+      "win_rate_clay": 88.81,
+      "win_rate_clay_1y": 88.81,
+      "service_1y": 68.2,
+      "return_1y": 43.2,
+      "wr_clay_top50": 85.9
+    },
+    "stats_j2": {
+      "top50_1y": 0,
+      "win_rate_1y": 63.04,
+      "win_rate_clay": 57.5,
+      "win_rate_clay_1y": 57.5,
+      "service_1y": 64.3,
+      "return_1y": 39.7,
+      "wr_clay_top50": 50
+    }
   },
   {
     "joueur1": "Zverev A.",
@@ -21,7 +39,25 @@
     "niveauConfiance": 3,
     "score1": 0.7002,
     "score2": 0.4588,
-    "gap": 0.3471
+    "gap": 0.3471,
+    "stats_j1": {
+      "top50_1y": 60,
+      "win_rate_1y": 70.9,
+      "win_rate_clay": 73.44,
+      "win_rate_clay_1y": 73.44,
+      "service_1y": 68.3,
+      "return_1y": 38.2,
+      "wr_clay_top50": 60.3
+    },
+    "stats_j2": {
+      "top50_1y": 42.9,
+      "win_rate_1y": 54.4,
+      "win_rate_clay": 51.35,
+      "win_rate_clay_1y": 51.35,
+      "service_1y": 66,
+      "return_1y": 36.4,
+      "wr_clay_top50": 42.9
+    }
   },
   {
     "joueur1": "Moutet C.",
@@ -33,7 +69,25 @@
     "niveauConfiance": 3,
     "score1": 0.4481,
     "score2": 0.6704,
-    "gap": 0.3216
+    "gap": 0.3216,
+    "stats_j1": {
+      "top50_1y": 50,
+      "win_rate_1y": 53.85,
+      "win_rate_clay": 55.88,
+      "win_rate_clay_1y": 57,
+      "service_1y": 61.2,
+      "return_1y": 39.4,
+      "wr_clay_top50": 28.6
+    },
+    "stats_j2": {
+      "top50_1y": 70,
+      "win_rate_1y": 61.41,
+      "win_rate_clay": 66.92,
+      "win_rate_clay_1y": 66.92,
+      "service_1y": 64.7,
+      "return_1y": 38.8,
+      "wr_clay_top50": 62.3
+    }
   },
   {
     "joueur1": "Van De Zandschulp B.",
@@ -45,7 +99,25 @@
     "niveauConfiance": 3,
     "score1": 0.3941,
     "score2": 0.5724,
-    "gap": 0.2613
+    "gap": 0.2613,
+    "stats_j1": {
+      "top50_1y": 0,
+      "win_rate_1y": 49.05,
+      "win_rate_clay": 52.22,
+      "win_rate_clay_1y": 52.22,
+      "service_1y": 62.5,
+      "return_1y": 38.9,
+      "wr_clay_top50": 30.4
+    },
+    "stats_j2": {
+      "top50_1y": 44.4,
+      "win_rate_1y": 59.54,
+      "win_rate_clay": 64.88,
+      "win_rate_clay_1y": 64.88,
+      "service_1y": 62,
+      "return_1y": 40.7,
+      "wr_clay_top50": 50.8
+    }
   },
   {
     "joueur1": "Norrie C.",
@@ -57,7 +129,25 @@
     "niveauConfiance": 3,
     "score1": 0.5248,
     "score2": 0.6444,
-    "gap": 0.1775
+    "gap": 0.1775,
+    "stats_j1": {
+      "top50_1y": 42.9,
+      "win_rate_1y": 60.33,
+      "win_rate_clay": 64,
+      "win_rate_clay_1y": 64,
+      "service_1y": 64,
+      "return_1y": 37.8,
+      "wr_clay_top50": 31.6
+    },
+    "stats_j2": {
+      "top50_1y": 25,
+      "win_rate_1y": 73.56,
+      "win_rate_clay": 66.67,
+      "win_rate_clay_1y": 66.67,
+      "service_1y": 65.4,
+      "return_1y": 42.5,
+      "wr_clay_top50": null
+    }
   },
   {
     "joueur1": "Medjedovic H.",
@@ -69,7 +159,25 @@
     "niveauConfiance": 3,
     "score1": 0.5516,
     "score2": 0.4345,
-    "gap": 0.1739
+    "gap": 0.1739,
+    "stats_j1": {
+      "top50_1y": 25,
+      "win_rate_1y": 64.71,
+      "win_rate_clay": 68.07,
+      "win_rate_clay_1y": 68.07,
+      "service_1y": 65.4,
+      "return_1y": 38.5,
+      "wr_clay_top50": 50
+    },
+    "stats_j2": {
+      "top50_1y": 33.3,
+      "win_rate_1y": 55.14,
+      "win_rate_clay": 60,
+      "win_rate_clay_1y": 58.16,
+      "service_1y": 64.2,
+      "return_1y": 36.6,
+      "wr_clay_top50": 33.3
+    }
   },
   {
     "joueur1": "Sonego L.",
@@ -81,7 +189,25 @@
     "niveauConfiance": 3,
     "score1": 0.4343,
     "score2": 0.5252,
-    "gap": 0.1355
+    "gap": 0.1355,
+    "stats_j1": {
+      "top50_1y": 33.3,
+      "win_rate_1y": 47.84,
+      "win_rate_clay": 47.44,
+      "win_rate_clay_1y": 47.44,
+      "service_1y": 65.5,
+      "return_1y": 34.8,
+      "wr_clay_top50": 40
+    },
+    "stats_j2": {
+      "top50_1y": 33.3,
+      "win_rate_1y": 65.84,
+      "win_rate_clay": 70.71,
+      "win_rate_clay_1y": 70.71,
+      "service_1y": 66.8,
+      "return_1y": 38.2,
+      "wr_clay_top50": 64.6
+    }
   },
   {
     "joueur1": "Altmaier D.",
@@ -93,7 +219,25 @@
     "niveauConfiance": 3,
     "score1": 0.487,
     "score2": 0.5728,
-    "gap": 0.128
+    "gap": 0.128,
+    "stats_j1": {
+      "top50_1y": 40,
+      "win_rate_1y": 47.51,
+      "win_rate_clay": 59.76,
+      "win_rate_clay_1y": 57.43,
+      "service_1y": 62.6,
+      "return_1y": 36.7,
+      "wr_clay_top50": 34.4
+    },
+    "stats_j2": {
+      "top50_1y": 100,
+      "win_rate_1y": 52.45,
+      "win_rate_clay": 56.15,
+      "win_rate_clay_1y": 57.14,
+      "service_1y": 61,
+      "return_1y": 38.5,
+      "wr_clay_top50": 27.3
+    }
   },
   {
     "joueur1": "Cobolli F.",
@@ -105,7 +249,25 @@
     "niveauConfiance": 2,
     "score1": 0.4697,
     "score2": 0.5225,
-    "gap": 0.079
+    "gap": 0.079,
+    "stats_j1": {
+      "top50_1y": 66.7,
+      "win_rate_1y": 56.29,
+      "win_rate_clay": 59.91,
+      "win_rate_clay_1y": 58.05,
+      "service_1y": 61.3,
+      "return_1y": 39.5,
+      "wr_clay_top50": 45
+    },
+    "stats_j2": {
+      "top50_1y": 25,
+      "win_rate_1y": 56.51,
+      "win_rate_clay": 60.66,
+      "win_rate_clay_1y": 60.09,
+      "service_1y": 59.5,
+      "return_1y": 41.6,
+      "wr_clay_top50": 28.6
+    }
   },
   {
     "joueur1": "Fils A.",
@@ -117,7 +279,25 @@
     "niveauConfiance": 2,
     "score1": 0.5306,
     "score2": 0.4815,
-    "gap": 0.0735
+    "gap": 0.0735,
+    "stats_j1": {
+      "top50_1y": 40,
+      "win_rate_1y": 61.65,
+      "win_rate_clay": 59.32,
+      "win_rate_clay_1y": 59.32,
+      "service_1y": 63.9,
+      "return_1y": 37.8,
+      "wr_clay_top50": 48.3
+    },
+    "stats_j2": {
+      "top50_1y": 25,
+      "win_rate_1y": 53.08,
+      "win_rate_clay": 50,
+      "win_rate_clay_1y": 50,
+      "service_1y": 67.5,
+      "return_1y": 34.9,
+      "wr_clay_top50": 28.6
+    }
   },
   {
     "joueur1": "Fonseca J.",
@@ -129,7 +309,25 @@
     "niveauConfiance": 1,
     "score1": 0.5045,
     "score2": 0.5425,
-    "gap": 0.0569
+    "gap": 0.0569,
+    "stats_j1": {
+      "top50_1y": 25,
+      "win_rate_1y": 61.48,
+      "win_rate_clay": 54.72,
+      "win_rate_clay_1y": 55.1,
+      "service_1y": 65.5,
+      "return_1y": 38,
+      "wr_clay_top50": 55.6
+    },
+    "stats_j2": {
+      "top50_1y": 50,
+      "win_rate_1y": 57.77,
+      "win_rate_clay": 48,
+      "win_rate_clay_1y": 48,
+      "service_1y": 68,
+      "return_1y": 33.2,
+      "wr_clay_top50": 30
+    }
   },
   {
     "joueur1": "Shapovalov D.",
@@ -141,6 +339,24 @@
     "niveauConfiance": 1,
     "score1": 0.4834,
     "score2": 0.5003,
-    "gap": 0.0253
+    "gap": 0.0253,
+    "stats_j1": {
+      "top50_1y": 50,
+      "win_rate_1y": 52.02,
+      "win_rate_clay": 44.74,
+      "win_rate_clay_1y": 44.74,
+      "service_1y": 65.2,
+      "return_1y": 36.1,
+      "wr_clay_top50": 45.5
+    },
+    "stats_j2": {
+      "top50_1y": 37.5,
+      "win_rate_1y": 57.34,
+      "win_rate_clay": 66.88,
+      "win_rate_clay_1y": 66.88,
+      "service_1y": 64.2,
+      "return_1y": 38.6,
+      "wr_clay_top50": 34.8
+    }
   }
 ]
