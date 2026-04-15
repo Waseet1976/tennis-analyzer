@@ -814,8 +814,13 @@ function afficherResultats(data) {
   const p1 = data.match.joueur1;
   const p2 = data.match.joueur2;
 
+  const r1 = data.playerMeta?.joueur1?.ranking;
+  const r2 = data.playerMeta?.joueur2?.ranking;
+  const label1 = r1 ? `${p1} (#${r1})` : p1;
+  const label2 = r2 ? `${p2} (#${r2})` : p2;
+
   // En-tête match
-  document.getElementById('match-header').textContent = p1 + '  vs  ' + p2;
+  document.getElementById('match-header').textContent = label1 + '  vs  ' + label2;
   document.getElementById('match-meta').textContent =
     (data.match.surface || '').toUpperCase() + (data.match.tournoi ? '  ·  ' + data.match.tournoi : '');
 
@@ -823,7 +828,8 @@ function afficherResultats(data) {
   const lvl = data.verdict.niveauConfiance ?? 0;
   const vCard = document.getElementById('verdict-card');
   vCard.className = 'verdict-card ' + (lvl >= 2 ? 'verdict-high' : lvl === 1 ? 'verdict-medium' : 'verdict-low');
-  document.getElementById('verdict-favori').textContent = '🏆 ' + data.verdict.favori.toUpperCase() + ' favori';
+  const favoriLabel = data.verdict.favori === p1 ? label1 : data.verdict.favori === p2 ? label2 : data.verdict.favori;
+  document.getElementById('verdict-favori').textContent = '🏆 ' + favoriLabel.toUpperCase() + ' favori';
   document.getElementById('verdict-ecart').textContent = 'Écart : +' + Number(data.verdict.ecart).toFixed(1) + ' pts';
   document.getElementById('verdict-confiance').textContent = data.verdict.confiance;
 

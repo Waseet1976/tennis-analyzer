@@ -460,6 +460,27 @@ function calculateScoreAFromDataModel(allMatches, targetSurface = 'clay') {
     }],
   };
 }
+// ─── Ranking helper ──────────────────────────────────────────────────────────
+
+/**
+ * Cherche le classement ATP dans stats puis stats1y.
+ * Retourne un entier ou null.
+ */
+function getPlayerRanking(baseData) {
+  const candidates = ['rank', 'ranking', 'atp_rank', 'classement'];
+  for (const src of [baseData?.stats, baseData?.stats1y]) {
+    if (!src) continue;
+    for (const key of candidates) {
+      const v = src[key];
+      if (v !== null && v !== undefined && v !== '') {
+        const n = parseInt(String(v).replace(',', '.').trim(), 10);
+        if (!isNaN(n) && n > 0) return n;
+      }
+    }
+  }
+  return null;
+}
+
 // ─── Fonction principale ──────────────────────────────────────────────────────
 
 /**
@@ -590,6 +611,13 @@ const scoreA2 = calculateScoreAFromDataModel(data2.allMatches ?? [], surface);
       statsTop50: baseData2.statsTop50 ?? null,
     },
   };
+
+  // Classement ATP des deux joueurs
+  rapport.playerMeta = {
+    joueur1: { name: player1Name, ranking: getPlayerRanking(baseData1) },
+    joueur2: { name: player2Name, ranking: getPlayerRanking(baseData2) },
+  };
+  console.log(`[PlayerMeta] ${player1Name} rank=${rapport.playerMeta.joueur1.ranking} | ${player2Name} rank=${rapport.playerMeta.joueur2.ranking}`);
 
   // ─── Modèle stats détaillées (seul modèle décisionnel) ──────────────────────
   // L'ancien système A→O reste calculé dans rapport.scores pour l'affichage,
