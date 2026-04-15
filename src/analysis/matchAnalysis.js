@@ -463,19 +463,15 @@ function calculateScoreAFromDataModel(allMatches, targetSurface = 'clay') {
 // ─── Ranking helper ──────────────────────────────────────────────────────────
 
 /**
- * Cherche le classement ATP dans stats puis stats1y.
+ * Cherche le classement ATP le plus récent du joueur dans allMatches.
+ * Utilise rankJoueur (rank_player1 ou rank_player2 selon la perspective).
  * Retourne un entier ou null.
  */
-function getPlayerRanking(baseData) {
-  const candidates = ['rank', 'ranking', 'atp_rank', 'classement'];
-  for (const src of [baseData?.stats, baseData?.stats1y]) {
-    if (!src) continue;
-    for (const key of candidates) {
-      const v = src[key];
-      if (v !== null && v !== undefined && v !== '') {
-        const n = parseInt(String(v).replace(',', '.').trim(), 10);
-        if (!isNaN(n) && n > 0) return n;
-      }
+function getLatestPlayerRanking(allMatches) {
+  if (!allMatches || allMatches.length === 0) return null;
+  for (const m of allMatches) {
+    if (m.rankJoueur !== null && m.rankJoueur !== undefined && m.rankJoueur > 0) {
+      return m.rankJoueur;
     }
   }
   return null;
@@ -614,8 +610,8 @@ const scoreA2 = calculateScoreAFromDataModel(data2.allMatches ?? [], surface);
 
   // Classement ATP des deux joueurs
   rapport.playerMeta = {
-    joueur1: { name: player1Name, ranking: getPlayerRanking(baseData1) },
-    joueur2: { name: player2Name, ranking: getPlayerRanking(baseData2) },
+    joueur1: { name: player1Name, ranking: getLatestPlayerRanking(baseData1.allMatches) },
+    joueur2: { name: player2Name, ranking: getLatestPlayerRanking(baseData2.allMatches) },
   };
   console.log(`[PlayerMeta] ${player1Name} rank=${rapport.playerMeta.joueur1.ranking} | ${player2Name} rank=${rapport.playerMeta.joueur2.ranking}`);
 

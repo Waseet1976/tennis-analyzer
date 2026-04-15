@@ -169,6 +169,9 @@ async function getPlayerMatches(playerName) {
     const rangAdversaire = isP1
       ? (r.rank_player2 ? Number(r.rank_player2) : null)
       : (r.rank_player1 ? Number(r.rank_player1) : null);
+    const rankJoueur     = isP1
+      ? (r.rank_player1 ? Number(r.rank_player1) : null)
+      : (r.rank_player2 ? Number(r.rank_player2) : null);
 
     const sP1 = parseInt(r.sets_won_player1, 10) || 0;
     const sP2 = parseInt(r.sets_won_player2, 10) || 0;
@@ -184,6 +187,7 @@ async function getPlayerMatches(playerName) {
       tour:            r.round,
       adversaire,
       rangAdversaire,
+      rankJoueur,
       resultat:        deduceResult(r, isP1),
       score:           buildScore(r),
       nbSets:          sP1 + sP2,

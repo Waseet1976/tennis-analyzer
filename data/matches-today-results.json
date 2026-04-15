@@ -261,11 +261,11 @@
       "playerMeta": {
         "joueur1": {
           "name": "De Minaur A.",
-          "ranking": null
+          "ranking": 6
         },
         "joueur2": {
           "name": "Medjedovic H.",
-          "ranking": null
+          "ranking": 115
         }
       },
       "comparison": {
@@ -649,11 +649,11 @@
       "playerMeta": {
         "joueur1": {
           "name": "Jodar R.",
-          "ranking": null
+          "ranking": 89
         },
         "joueur2": {
           "name": "Ugo Carabelli C.",
-          "ranking": null
+          "ranking": 67
         }
       },
       "comparison": {
@@ -1035,11 +1035,11 @@
       "playerMeta": {
         "joueur1": {
           "name": "Norrie C.",
-          "ranking": null
+          "ranking": 24
         },
         "joueur2": {
           "name": "Quinn E.",
-          "ranking": null
+          "ranking": 56
         }
       },
       "comparison": {
@@ -1424,11 +1424,11 @@
       "playerMeta": {
         "joueur1": {
           "name": "Rinderknech A.",
-          "ranking": null
+          "ranking": 27
         },
         "joueur2": {
           "name": "Fonseca J.",
-          "ranking": null
+          "ranking": 40
         }
       },
       "comparison": {
@@ -1813,11 +1813,11 @@
       "playerMeta": {
         "joueur1": {
           "name": "Marozsan F.",
-          "ranking": null
+          "ranking": 47
         },
         "joueur2": {
           "name": "Tsitsipas S.",
-          "ranking": null
+          "ranking": 49
         }
       },
       "comparison": {
@@ -2199,11 +2199,11 @@
       "playerMeta": {
         "joueur1": {
           "name": "Blockx A.",
-          "ranking": null
+          "ranking": 92
         },
         "joueur2": {
           "name": "Shelton B.",
-          "ranking": null
+          "ranking": 9
         }
       },
       "comparison": {
@@ -2588,11 +2588,11 @@
       "playerMeta": {
         "joueur1": {
           "name": "Cobolli F.",
-          "ranking": null
+          "ranking": 13
         },
         "joueur2": {
           "name": "Bergs Z.",
-          "ranking": null
+          "ranking": 46
         }
       },
       "comparison": {
@@ -2977,11 +2977,11 @@
       "playerMeta": {
         "joueur1": {
           "name": "Kopriva V.",
-          "ranking": null
+          "ranking": 70
         },
         "joueur2": {
           "name": "Darderi L.",
-          "ranking": null
+          "ranking": 19
         }
       },
       "comparison": {
