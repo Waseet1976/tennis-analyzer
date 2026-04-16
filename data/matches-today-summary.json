@@ -1,6 +1,36 @@
 [
   {
     "joueur1": "Alcaraz C.",
+    "joueur2": "Virtanen O.",
+    "surface": "clay",
+    "tournoi": "ATP Barcelona",
+    "favori": "Alcaraz C.",
+    "confiance": "Élevée",
+    "niveauConfiance": 3,
+    "score1": 0.8066,
+    "score2": 0.4466,
+    "gap": 0.493,
+    "stats_j1": {
+      "top50_1y": 90.9,
+      "win_rate_1y": 86.61,
+      "win_rate_clay": 88.81,
+      "win_rate_clay_1y": 88.81,
+      "service_1y": 68.2,
+      "return_1y": 43.2,
+      "wr_clay_top50": 85.9
+    },
+    "stats_j2": {
+      "top50_1y": 0,
+      "win_rate_1y": 54.35,
+      "win_rate_clay": 34.25,
+      "win_rate_clay_1y": 34.25,
+      "service_1y": 64.2,
+      "return_1y": 36.4,
+      "wr_clay_top50": 0
+    }
+  },
+  {
+    "joueur1": "Alcaraz C.",
     "joueur2": "Machac T.",
     "surface": "clay",
     "tournoi": "ATP Barcelona",
@@ -57,6 +87,36 @@
       "service_1y": 66,
       "return_1y": 36.4,
       "wr_clay_top50": 42.9
+    }
+  },
+  {
+    "joueur1": "Jodar R.",
+    "joueur2": "Ugo Carabelli C.",
+    "surface": "clay",
+    "tournoi": "ATP Barcelona",
+    "favori": "Jodar R.",
+    "confiance": "Élevée",
+    "niveauConfiance": 3,
+    "score1": 0.6564,
+    "score2": 0.4331,
+    "gap": 0.323,
+    "stats_j1": {
+      "top50_1y": 25,
+      "win_rate_1y": 73.56,
+      "win_rate_clay": 66.67,
+      "win_rate_clay_1y": 66.67,
+      "service_1y": 65.4,
+      "return_1y": 42.5,
+      "wr_clay_top50": null
+    },
+    "stats_j2": {
+      "top50_1y": 25,
+      "win_rate_1y": 58.77,
+      "win_rate_clay": 64.87,
+      "win_rate_clay_1y": 64.62,
+      "service_1y": 59.9,
+      "return_1y": 41,
+      "wr_clay_top50": 28.6
     }
   },
   {
@@ -117,6 +177,96 @@
       "service_1y": 62,
       "return_1y": 40.7,
       "wr_clay_top50": 50.8
+    }
+  },
+  {
+    "joueur1": "Cobolli F.",
+    "joueur2": "Bergs Z.",
+    "surface": "clay",
+    "tournoi": "ATP Munich",
+    "favori": "Cobolli F.",
+    "confiance": "Élevée",
+    "niveauConfiance": 3,
+    "score1": 0.5517,
+    "score2": 0.4093,
+    "gap": 0.2104,
+    "stats_j1": {
+      "top50_1y": 66.7,
+      "win_rate_1y": 56.29,
+      "win_rate_clay": 59.91,
+      "win_rate_clay_1y": 58.05,
+      "service_1y": 61.3,
+      "return_1y": 39.5,
+      "wr_clay_top50": 45
+    },
+    "stats_j2": {
+      "top50_1y": 0,
+      "win_rate_1y": 56.72,
+      "win_rate_clay": 62.64,
+      "win_rate_clay_1y": 62.64,
+      "service_1y": 65.3,
+      "return_1y": 37.6,
+      "wr_clay_top50": 14.3
+    }
+  },
+  {
+    "joueur1": "Landaluce M.",
+    "joueur2": "Musetti L.",
+    "surface": "clay",
+    "tournoi": "ATP Barcelona",
+    "favori": "Musetti L.",
+    "confiance": "Élevée",
+    "niveauConfiance": 3,
+    "score1": 0.4801,
+    "score2": 0.6104,
+    "gap": 0.193,
+    "stats_j1": {
+      "top50_1y": 50,
+      "win_rate_1y": 46.79,
+      "win_rate_clay": 37.5,
+      "win_rate_clay_1y": 34.48,
+      "service_1y": 61.5,
+      "return_1y": 37.5,
+      "wr_clay_top50": 0
+    },
+    "stats_j2": {
+      "top50_1y": 70,
+      "win_rate_1y": 61.41,
+      "win_rate_clay": 66.92,
+      "win_rate_clay_1y": 66.92,
+      "service_1y": 64.7,
+      "return_1y": 38.8,
+      "wr_clay_top50": 62.3
+    }
+  },
+  {
+    "joueur1": "Norrie C.",
+    "joueur2": "Quinn E.",
+    "surface": "clay",
+    "tournoi": "ATP Barcelona",
+    "favori": "Norrie C.",
+    "confiance": "Élevée",
+    "niveauConfiance": 3,
+    "score1": 0.5428,
+    "score2": 0.416,
+    "gap": 0.1879,
+    "stats_j1": {
+      "top50_1y": 42.9,
+      "win_rate_1y": 60.33,
+      "win_rate_clay": 64,
+      "win_rate_clay_1y": 64,
+      "service_1y": 64,
+      "return_1y": 37.8,
+      "wr_clay_top50": 31.6
+    },
+    "stats_j2": {
+      "top50_1y": 0,
+      "win_rate_1y": 51.16,
+      "win_rate_clay": 46.43,
+      "win_rate_clay_1y": 46.43,
+      "service_1y": 63,
+      "return_1y": 36.5,
+      "wr_clay_top50": 20
     }
   },
   {
@@ -210,6 +360,36 @@
     }
   },
   {
+    "joueur1": "Rinderknech A.",
+    "joueur2": "Fonseca J.",
+    "surface": "clay",
+    "tournoi": "ATP Munich",
+    "favori": "Fonseca J.",
+    "confiance": "Élevée",
+    "niveauConfiance": 3,
+    "score1": 0.4162,
+    "score2": 0.5045,
+    "gap": 0.1317,
+    "stats_j1": {
+      "top50_1y": 20,
+      "win_rate_1y": 50.17,
+      "win_rate_clay": 56.16,
+      "win_rate_clay_1y": 56.16,
+      "service_1y": 66.3,
+      "return_1y": 33.1,
+      "wr_clay_top50": 29.4
+    },
+    "stats_j2": {
+      "top50_1y": 25,
+      "win_rate_1y": 61.48,
+      "win_rate_clay": 54.72,
+      "win_rate_clay_1y": 55.1,
+      "service_1y": 65.5,
+      "return_1y": 38,
+      "wr_clay_top50": 55.6
+    }
+  },
+  {
     "joueur1": "Altmaier D.",
     "joueur2": "Molcan A.",
     "surface": "clay",
@@ -237,6 +417,96 @@
       "service_1y": 61,
       "return_1y": 38.5,
       "wr_clay_top50": 27.3
+    }
+  },
+  {
+    "joueur1": "Nakashima B.",
+    "joueur2": "Cerundolo J. M.",
+    "surface": "clay",
+    "tournoi": "ATP Barcelona",
+    "favori": "Cerundolo J. M.",
+    "confiance": "Modérée",
+    "niveauConfiance": 2,
+    "score1": 0.4615,
+    "score2": 0.5414,
+    "gap": 0.1193,
+    "stats_j1": {
+      "top50_1y": 25,
+      "win_rate_1y": 53.08,
+      "win_rate_clay": 50,
+      "win_rate_clay_1y": 50,
+      "service_1y": 67.5,
+      "return_1y": 34.9,
+      "wr_clay_top50": 28.6
+    },
+    "stats_j2": {
+      "top50_1y": 55.6,
+      "win_rate_1y": 59.49,
+      "win_rate_clay": 62.21,
+      "win_rate_clay_1y": 63.18,
+      "service_1y": 59.8,
+      "return_1y": 41.4,
+      "wr_clay_top50": 50
+    }
+  },
+  {
+    "joueur1": "De Minaur A.",
+    "joueur2": "Medjedovic H.",
+    "surface": "clay",
+    "tournoi": "ATP Barcelona",
+    "favori": "De Minaur A.",
+    "confiance": "Modérée",
+    "niveauConfiance": 2,
+    "score1": 0.5793,
+    "score2": 0.5086,
+    "gap": 0.1057,
+    "stats_j1": {
+      "top50_1y": 40,
+      "win_rate_1y": 67.18,
+      "win_rate_clay": 58.73,
+      "win_rate_clay_1y": 58.73,
+      "service_1y": 65.1,
+      "return_1y": 41.6,
+      "wr_clay_top50": 50
+    },
+    "stats_j2": {
+      "top50_1y": 25,
+      "win_rate_1y": 64.71,
+      "win_rate_clay": 68.07,
+      "win_rate_clay_1y": 68.07,
+      "service_1y": 65.4,
+      "return_1y": 38.5,
+      "wr_clay_top50": 50
+    }
+  },
+  {
+    "joueur1": "Marozsan F.",
+    "joueur2": "Tsitsipas S.",
+    "surface": "clay",
+    "tournoi": "ATP Munich",
+    "favori": "Tsitsipas S.",
+    "confiance": "Modérée",
+    "niveauConfiance": 2,
+    "score1": 0.4734,
+    "score2": 0.5266,
+    "gap": 0.0796,
+    "stats_j1": {
+      "top50_1y": 28.6,
+      "win_rate_1y": 57.34,
+      "win_rate_clay": 66.88,
+      "win_rate_clay_1y": 66.88,
+      "service_1y": 64.2,
+      "return_1y": 38.6,
+      "wr_clay_top50": 34.8
+    },
+    "stats_j2": {
+      "top50_1y": 20,
+      "win_rate_1y": 65.87,
+      "win_rate_clay": 74.29,
+      "win_rate_clay_1y": 74.29,
+      "service_1y": 68.6,
+      "return_1y": 36.4,
+      "wr_clay_top50": 67.2
     }
   },
   {
@@ -300,6 +570,36 @@
     }
   },
   {
+    "joueur1": "De Minaur A.",
+    "joueur2": "Ofner S.",
+    "surface": "clay",
+    "tournoi": "ATP Barcelona",
+    "favori": "De Minaur A.",
+    "confiance": "Modérée",
+    "niveauConfiance": 2,
+    "score1": 0.5739,
+    "score2": 0.5294,
+    "gap": 0.0667,
+    "stats_j1": {
+      "top50_1y": 40,
+      "win_rate_1y": 67.18,
+      "win_rate_clay": 58.73,
+      "win_rate_clay_1y": 58.73,
+      "service_1y": 65.1,
+      "return_1y": 41.6,
+      "wr_clay_top50": 50
+    },
+    "stats_j2": {
+      "top50_1y": 42.9,
+      "win_rate_1y": 61.69,
+      "win_rate_clay": 65.96,
+      "win_rate_clay_1y": 65.96,
+      "service_1y": 64.1,
+      "return_1y": 38,
+      "wr_clay_top50": 45.8
+    }
+  },
+  {
     "joueur1": "Fonseca J.",
     "joueur2": "Shelton B.",
     "surface": "clay",
@@ -330,6 +630,126 @@
     }
   },
   {
+    "joueur1": "Machac T.",
+    "joueur2": "Baez S.",
+    "surface": "clay",
+    "tournoi": "ATP Barcelona",
+    "favori": "Machac T.",
+    "confiance": "Légère",
+    "niveauConfiance": 1,
+    "score1": 0.4794,
+    "score2": 0.448,
+    "gap": 0.0471,
+    "stats_j1": {
+      "top50_1y": 0,
+      "win_rate_1y": 63.04,
+      "win_rate_clay": 57.5,
+      "win_rate_clay_1y": 57.5,
+      "service_1y": 64.3,
+      "return_1y": 39.7,
+      "wr_clay_top50": 50
+    },
+    "stats_j2": {
+      "top50_1y": 40,
+      "win_rate_1y": 55.59,
+      "win_rate_clay": 63.19,
+      "win_rate_clay_1y": 63.19,
+      "service_1y": 61.1,
+      "return_1y": 39.9,
+      "wr_clay_top50": 34.1
+    }
+  },
+  {
+    "joueur1": "Blockx A.",
+    "joueur2": "Shelton B.",
+    "surface": "clay",
+    "tournoi": "ATP Munich",
+    "favori": "Shelton B.",
+    "confiance": "Très serré",
+    "niveauConfiance": 0,
+    "score1": 0.5336,
+    "score2": 0.5425,
+    "gap": 0.0133,
+    "stats_j1": {
+      "top50_1y": 0,
+      "win_rate_1y": 57.86,
+      "win_rate_clay": 58.82,
+      "win_rate_clay_1y": 58.82,
+      "service_1y": 63.7,
+      "return_1y": 38.2,
+      "wr_clay_top50": null
+    },
+    "stats_j2": {
+      "top50_1y": 50,
+      "win_rate_1y": 57.77,
+      "win_rate_clay": 48,
+      "win_rate_clay_1y": 48,
+      "service_1y": 68,
+      "return_1y": 33.2,
+      "wr_clay_top50": 30
+    }
+  },
+  {
+    "joueur1": "Ugo Carabelli C.",
+    "joueur2": "Khachanov K.",
+    "surface": "clay",
+    "tournoi": "ATP Barcelona",
+    "favori": "Khachanov K.",
+    "confiance": "Très serré",
+    "niveauConfiance": 0,
+    "score1": 0.4631,
+    "score2": 0.4702,
+    "gap": 0.0106,
+    "stats_j1": {
+      "top50_1y": 25,
+      "win_rate_1y": 58.77,
+      "win_rate_clay": 64.87,
+      "win_rate_clay_1y": 64.62,
+      "service_1y": 59.9,
+      "return_1y": 41,
+      "wr_clay_top50": 28.6
+    },
+    "stats_j2": {
+      "top50_1y": 16.7,
+      "win_rate_1y": 59.76,
+      "win_rate_clay": 63.01,
+      "win_rate_clay_1y": 63.01,
+      "service_1y": 66.1,
+      "return_1y": 37.3,
+      "wr_clay_top50": 40.5
+    }
+  },
+  {
+    "joueur1": "Navone M.",
+    "joueur2": "Rublev A.",
+    "surface": "clay",
+    "tournoi": "ATP Barcelona",
+    "favori": "Navone M.",
+    "confiance": "Très serré",
+    "niveauConfiance": 0,
+    "score1": 0.5402,
+    "score2": 0.5365,
+    "gap": 0.0055,
+    "stats_j1": {
+      "top50_1y": 22.2,
+      "win_rate_1y": 56.65,
+      "win_rate_clay": 65.37,
+      "win_rate_clay_1y": 62.62,
+      "service_1y": 58.3,
+      "return_1y": 44.2,
+      "wr_clay_top50": 39.1
+    },
+    "stats_j2": {
+      "top50_1y": 40,
+      "win_rate_1y": 65.84,
+      "win_rate_clay": 70.71,
+      "win_rate_clay_1y": 70.71,
+      "service_1y": 66.8,
+      "return_1y": 38.2,
+      "wr_clay_top50": 64.6
+    }
+  },
+  {
     "joueur1": "Shapovalov D.",
     "joueur2": "Marozsan F.",
     "surface": "clay",
@@ -357,6 +777,66 @@
       "service_1y": 64.2,
       "return_1y": 38.6,
       "wr_clay_top50": 34.8
+    }
+  },
+  {
+    "joueur1": "Borges N.",
+    "joueur2": "Etcheverry T. M.",
+    "surface": "clay",
+    "tournoi": "ATP Barcelona",
+    "favori": "Borges N.",
+    "confiance": "Très serré",
+    "niveauConfiance": 0,
+    "score1": 0.4525,
+    "score2": 0.4514,
+    "gap": 0.0016,
+    "stats_j1": {
+      "top50_1y": 33.3,
+      "win_rate_1y": 55.14,
+      "win_rate_clay": 60,
+      "win_rate_clay_1y": 58.16,
+      "service_1y": 64.2,
+      "return_1y": 36.6,
+      "wr_clay_top50": 33.3
+    },
+    "stats_j2": {
+      "top50_1y": 16.7,
+      "win_rate_1y": 55.73,
+      "win_rate_clay": 60.93,
+      "win_rate_clay_1y": 60.5,
+      "service_1y": 64.3,
+      "return_1y": 38.2,
+      "wr_clay_top50": 34.6
+    }
+  },
+  {
+    "joueur1": "Martinez P.",
+    "joueur2": "Sonego L.",
+    "surface": "clay",
+    "tournoi": "ATP Barcelona",
+    "favori": "Sonego L.",
+    "confiance": "Très serré",
+    "niveauConfiance": 0,
+    "score1": 0.4039,
+    "score2": 0.4043,
+    "gap": 0.0006,
+    "stats_j1": {
+      "top50_1y": 0,
+      "win_rate_1y": 46.84,
+      "win_rate_clay": 54.67,
+      "win_rate_clay_1y": 52.22,
+      "service_1y": 59.1,
+      "return_1y": 39.5,
+      "wr_clay_top50": 23.3
+    },
+    "stats_j2": {
+      "top50_1y": 33.3,
+      "win_rate_1y": 47.84,
+      "win_rate_clay": 47.44,
+      "win_rate_clay_1y": 47.44,
+      "service_1y": 65.5,
+      "return_1y": 34.8,
+      "wr_clay_top50": 40
     }
   }
 ]
