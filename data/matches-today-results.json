@@ -306,7 +306,7 @@
                 "globalRate": 0.8269230769230769,
                 "surfaceRate": 0.9090909090909091,
                 "top50MatchCount": 52,
-                "top100MatchCount": 17,
+                "top100MatchCount": 16,
                 "sourceUsed": "top50"
               }
             }
@@ -411,8 +411,8 @@
       "confiance": "Élevée",
       "niveauConfiance": 3,
       "hybridScore1": 0.4343,
-      "hybridScore2": 0.5252,
-      "gap": 0.1355
+      "hybridScore2": 0.5365,
+      "gap": 0.1521
     },
     "result": {
       "match": {
@@ -491,7 +491,7 @@
       },
       "verdict": {
         "favori": "Rublev A.",
-        "ecart": 0.0909,
+        "ecart": 0.1022,
         "confiance": "Élevée",
         "niveauConfiance": 3
       },
@@ -669,7 +669,7 @@
       },
       "comparison": {
         "scoreA": 0.4343,
-        "scoreB": 0.5252,
+        "scoreB": 0.5365,
         "winner": "Rublev A.",
         "confidence": {
           "label": "Élevée",
@@ -718,7 +718,7 @@
           "joueur2": {
             "long_term_block": 0.6169502699500001,
             "one_year_block": 0.619795782975,
-            "top50_block": 0.34285714285714286,
+            "top50_block": 0.38814814814814813,
             "recent_form_block": 0.372,
             "h2h_adjustment": 0,
             "raw": {
@@ -746,9 +746,9 @@
                 "avgDiff": 1.1
               },
               "top50": {
-                "globalRate": 0.35714285714285715,
-                "surfaceRate": 0.3333333333333333,
-                "top50MatchCount": 28,
+                "globalRate": 0.37037037037037035,
+                "surfaceRate": 0.4,
+                "top50MatchCount": 27,
                 "top100MatchCount": 15,
                 "sourceUsed": "top50"
               }
@@ -767,7 +767,7 @@
             "onSurface": true
           }
         },
-        "explanation": "Rublev A. est favori avec un avantage net sur clay, avec un score de 0.525 contre 0.434 (écart : 0.091). Ses principaux atouts sont : Stats long terme, Forme sur 1 an, Niveau contre top 50.",
+        "explanation": "Rublev A. est favori avec un avantage net sur clay, avec un score de 0.537 contre 0.434 (écart : 0.102). Ses principaux atouts sont : Stats long terme, Forme sur 1 an, Niveau contre top 50.",
         "key_advantages": [
           "Rublev A. › Stats long terme",
           "Rublev A. › Forme sur 1 an",
@@ -786,13 +786,13 @@
         "dataModel": {
           "winner": "Rublev A.",
           "score1": 0.4343,
-          "score2": 0.5252
+          "score2": 0.5365
         },
         "merged": {
           "winner": "Rublev A.",
-          "score1": 0.4322,
-          "score2": 0.5678,
-          "gap": 0.1355,
+          "score1": 0.4239,
+          "score2": 0.5761,
+          "gap": 0.1521,
           "confidence": {
             "label": "Élevée",
             "level": 3
@@ -2067,7 +2067,7 @@
           "E": null,
           "F": null,
           "G": -2,
-          "H": 1,
+          "H": 2,
           "I": -1,
           "J": 0,
           "K": 1,
@@ -2075,7 +2075,7 @@
           "M": -2,
           "N": 0,
           "O": -0.2884615384615385,
-          "TOTAL": -0.5884615384615384
+          "TOTAL": 0.4115384615384617
         },
         "joueur2": {
           "A": 1.7,
@@ -2383,7 +2383,7 @@
       "hybrid": {
         "mainModel": {
           "winner": "Molcan A.",
-          "total1": -0.5884615384615384,
+          "total1": 0.4115384615384617,
           "total2": 14.842857142857142,
           "score1": null,
           "score2": null
@@ -2818,11 +2818,11 @@
     "tournoi": "ATP Munich",
     "summary": {
       "favori": "Marozsan F.",
-      "confiance": "Légère",
-      "niveauConfiance": 1,
+      "confiance": "Très serré",
+      "niveauConfiance": 0,
       "hybridScore1": 0.4834,
-      "hybridScore2": 0.5003,
-      "gap": 0.0253
+      "hybridScore2": 0.4848,
+      "gap": 0.0021
     },
     "result": {
       "match": {
@@ -2888,7 +2888,7 @@
           "E": null,
           "F": null,
           "G": 2,
-          "H": 1,
+          "H": 2,
           "I": -1,
           "J": 0,
           "K": 1,
@@ -2896,14 +2896,14 @@
           "M": -2,
           "N": 0,
           "O": 2.755813953488372,
-          "TOTAL": 5.735813953488373
+          "TOTAL": 6.735813953488373
         }
       },
       "verdict": {
         "favori": "Marozsan F.",
-        "ecart": 0.0169,
-        "confiance": "Légère",
-        "niveauConfiance": 1
+        "ecart": 0.0014,
+        "confiance": "Très serré",
+        "niveauConfiance": 0
       },
       "reglesActivees": {
         "joueur1": [
@@ -3079,11 +3079,11 @@
       },
       "comparison": {
         "scoreA": 0.4834,
-        "scoreB": 0.5003,
+        "scoreB": 0.4848,
         "winner": "Marozsan F.",
         "confidence": {
-          "label": "Légère",
-          "level": 1
+          "label": "Très serré",
+          "level": 0
         },
         "details": {
           "joueur1": {
@@ -3128,7 +3128,7 @@
           "joueur2": {
             "long_term_block": 0.573481647315,
             "one_year_block": 0.5710294764924999,
-            "top50_block": 0.3625,
+            "top50_block": 0.3004608294930875,
             "recent_form_block": 0.38000000000000006,
             "h2h_adjustment": 0,
             "raw": {
@@ -3156,9 +3156,9 @@
                 "avgDiff": -0.5
               },
               "top50": {
-                "globalRate": 0.34375,
-                "surfaceRate": 0.375,
-                "top50MatchCount": 32,
+                "globalRate": 0.3225806451612903,
+                "surfaceRate": 0.2857142857142857,
+                "top50MatchCount": 31,
                 "top100MatchCount": 13,
                 "sourceUsed": "top50"
               }
@@ -3177,7 +3177,7 @@
             "onSurface": false
           }
         },
-        "explanation": "Marozsan F. est légèrement favori sur clay, avec un score de 0.500 contre 0.483 (écart : 0.017). Ses principaux atouts sont : Stats long terme, Forme sur 1 an. Shapovalov D. conserve néanmoins des arguments solides, notamment : Niveau contre top 50, Forme récente.",
+        "explanation": "Marozsan F. garde un très léger avantage dans un match extrêmement serré sur clay, avec un score de 0.485 contre 0.483 (écart : 0.001). Ses principaux atouts sont : Stats long terme, Forme sur 1 an. Shapovalov D. conserve néanmoins des arguments solides, notamment : Niveau contre top 50, Forme récente.",
         "key_advantages": [
           "Marozsan F. › Stats long terme",
           "Marozsan F. › Forme sur 1 an",
@@ -3189,23 +3189,23 @@
         "mainModel": {
           "winner": "Marozsan F.",
           "total1": -0.9714285714285713,
-          "total2": 5.735813953488373,
+          "total2": 6.735813953488373,
           "score1": null,
           "score2": null
         },
         "dataModel": {
           "winner": "Marozsan F.",
           "score1": 0.4834,
-          "score2": 0.5003
+          "score2": 0.4848
         },
         "merged": {
           "winner": "Marozsan F.",
-          "score1": 0.4873,
-          "score2": 0.5127,
-          "gap": 0.0253,
+          "score1": 0.499,
+          "score2": 0.501,
+          "gap": 0.0021,
           "confidence": {
-            "label": "Légère",
-            "level": 1
+            "label": "Très serré",
+            "level": 0
           }
         },
         "agreement": {
@@ -3692,7 +3692,7 @@
           "E": null,
           "F": null,
           "G": 0,
-          "H": 1,
+          "H": 2,
           "I": 1,
           "J": 0,
           "K": 1,
@@ -3700,7 +3700,7 @@
           "M": 2,
           "N": 0,
           "O": 4.4111111111111105,
-          "TOTAL": 14.411111111111111
+          "TOTAL": 15.411111111111111
         }
       },
       "verdict": {
@@ -3990,7 +3990,7 @@
         "mainModel": {
           "winner": "Jodar R.",
           "total1": 13.16793103448276,
-          "total2": 14.411111111111111,
+          "total2": 15.411111111111111,
           "score1": null,
           "score2": null
         },

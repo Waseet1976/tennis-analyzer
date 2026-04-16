@@ -307,27 +307,49 @@
 
   /* ── Stats visuelles par joueur ── */
   .stats-duo {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    display: flex;
+    flex-direction: column;
     gap: 10px;
+  }
+
+  .stats-col + .stats-col {
+    padding-top: 10px;
+    border-top: 1px solid #1e293b;
   }
 
   .stats-col-name {
     font-size: 0.72rem;
     font-weight: 700;
     color: #94a3b8;
-    margin-bottom: 5px;
+    margin-bottom: 6px;
     text-transform: uppercase;
     letter-spacing: 0.04em;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
   }
+
+  /* Avantage léger (4–2) : nom en jaune, badges légèrement illuminés */
+  .stats-slight .stats-col-name { color: #facc15; }
+  .stats-slight .stat-badge {
+    border-color: #422006;
+    background: #1c1408;
+  }
+  .stats-slight .stat-val { color: #fde68a; }
+
+  /* Domination (5–1 ou 6–0) : nom en vert, badges verts */
+  .stats-dominant .stats-col-name { color: #22c55e; }
+  .stats-dominant .stat-badge {
+    border-color: #14532d;
+    background: #052e16;
+  }
+  .stats-dominant .stat-val { color: #86efac; }
 
   .stat-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 4px;
+    gap: 5px;
+  }
+
+  @media (max-width: 480px) {
+    .stat-grid { grid-template-columns: repeat(2, 1fr); }
   }
 
   .stat-badge {
@@ -1825,7 +1847,6 @@ async function loadDailySummary() {
       }
 
       // ── Grille de stats visuelles ────────────────────────────────────────────
-      const fmt = (v, unit = '%') => v != null ? v.toFixed(1) + unit : '—';
       const badge = (label, v, unit = '%') => `
         <div class="stat-badge">
           <span class="stat-val">${v != null ? parseFloat(v).toFixed(1) + unit : '—'}</span>
@@ -1842,17 +1863,34 @@ async function loadDailySummary() {
           ${badge('Clay vs T50', s.wr_clay_top50)}
         </div>` : '';
 
+      // ── Score d'avantage stats : compte combien de cartes j1 > j2 ────────────
+      let winsJ1 = 0, winsJ2 = 0;
+      if (m.stats_j1 && m.stats_j2) {
+        const keys = ['top50_1y', 'win_rate_clay', 'win_rate_clay_1y', 'service_1y', 'return_1y', 'wr_clay_top50'];
+        for (const k of keys) {
+          const v1 = m.stats_j1[k], v2 = m.stats_j2[k];
+          if (v1 != null && v2 != null) {
+            if (v1 > v2) winsJ1++;
+            else if (v2 > v1) winsJ2++;
+          }
+        }
+      }
+
+      // Classe CSS selon le score (jamais les deux en même temps)
+      const hlJ1 = winsJ1 >= 5 ? 'stats-dominant' : winsJ1 === 4 ? 'stats-slight' : '';
+      const hlJ2 = winsJ2 >= 5 ? 'stats-dominant' : winsJ2 === 4 ? 'stats-slight' : '';
+
+      const playerBlock = (name, s, hlClass) => `
+        <div class="stats-col${hlClass ? ' ' + hlClass : ''}">
+          <div class="stats-col-name">${esc(name)}</div>
+          ${statsRow(s)}
+        </div>`;
+
       const statsHtml = (m.stats_j1 || m.stats_j2) ? `
         <div style="margin-top:10px;padding-top:10px;border-top:1px solid #1e293b">
           <div class="stats-duo">
-            <div class="stats-col">
-              <div class="stats-col-name">${esc(m.joueur1)}</div>
-              ${statsRow(m.stats_j1)}
-            </div>
-            <div class="stats-col">
-              <div class="stats-col-name">${esc(m.joueur2)}</div>
-              ${statsRow(m.stats_j2)}
-            </div>
+            ${playerBlock(m.joueur1, m.stats_j1, hlJ1)}
+            ${playerBlock(m.joueur2, m.stats_j2, hlJ2)}
           </div>
         </div>` : '';
 

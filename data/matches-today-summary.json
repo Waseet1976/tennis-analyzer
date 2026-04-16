@@ -188,8 +188,8 @@
     "confiance": "Élevée",
     "niveauConfiance": 3,
     "score1": 0.4343,
-    "score2": 0.5252,
-    "gap": 0.1355,
+    "score2": 0.5365,
+    "gap": 0.1521,
     "stats_j1": {
       "top50_1y": 33.3,
       "win_rate_1y": 47.84,
@@ -200,7 +200,7 @@
       "wr_clay_top50": 40
     },
     "stats_j2": {
-      "top50_1y": 33.3,
+      "top50_1y": 40,
       "win_rate_1y": 65.84,
       "win_rate_clay": 70.71,
       "win_rate_clay_1y": 70.71,
@@ -335,11 +335,11 @@
     "surface": "clay",
     "tournoi": "ATP Munich",
     "favori": "Marozsan F.",
-    "confiance": "Légère",
-    "niveauConfiance": 1,
+    "confiance": "Très serré",
+    "niveauConfiance": 0,
     "score1": 0.4834,
-    "score2": 0.5003,
-    "gap": 0.0253,
+    "score2": 0.4848,
+    "gap": 0.0021,
     "stats_j1": {
       "top50_1y": 50,
       "win_rate_1y": 52.02,
@@ -350,7 +350,7 @@
       "wr_clay_top50": 45.5
     },
     "stats_j2": {
-      "top50_1y": 37.5,
+      "top50_1y": 28.6,
       "win_rate_1y": 57.34,
       "win_rate_clay": 66.88,
       "win_rate_clay_1y": 66.88,
