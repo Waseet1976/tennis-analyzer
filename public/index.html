@@ -1886,15 +1886,18 @@ async function loadDailySummary() {
           ${badge('Clay vs T50', s.wr_clay_top50)}
         </div>` : '';
 
-      // ── Score d'avantage stats : compte combien de cartes j1 > j2 ────────────
+      // ── Score d'avantage stats : seuil minimum 5 % pour valider un avantage ──
+      const THRESHOLD = 5; // unité : points de % (valeurs stockées en %, ex: 88.8)
       let winsJ1 = 0, winsJ2 = 0;
       if (m.stats_j1 && m.stats_j2) {
         const keys = ['top50_1y', 'win_rate_clay', 'win_rate_clay_1y', 'service_1y', 'return_1y', 'wr_clay_top50'];
         for (const k of keys) {
           const v1 = m.stats_j1[k], v2 = m.stats_j2[k];
           if (v1 != null && v2 != null) {
-            if (v1 > v2) winsJ1++;
-            else if (v2 > v1) winsJ2++;
+            const diff = v1 - v2;
+            if      (diff >=  THRESHOLD) winsJ1++;
+            else if (diff <= -THRESHOLD) winsJ2++;
+            // |diff| < THRESHOLD → écart non significatif, ni j1 ni j2
           }
         }
       }
