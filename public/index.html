@@ -300,6 +300,17 @@
     color: #64748b;
   }
 
+  .daily-cotes {
+    font-size: 0.78rem;
+    color: #475569;
+    margin-top: 2px;
+  }
+
+  .daily-cotes strong {
+    color: #94a3b8;
+    font-weight: 600;
+  }
+
   .daily-error {
     color: #f87171;
     font-size: 0.85rem;
@@ -928,11 +939,18 @@ function afficherResultats(data) {
       winnerComparison:   data?.comparison?.winner,
     });
 
+    const cote1 = probA > 0 ? (1 / probA).toFixed(2) : '—';
+    const cote2 = probB > 0 ? (1 / probB).toFixed(2) : '—';
+
     probaEl.innerHTML =
       `<span style="color:#e2e8f0;font-weight:600">${esc(label1)}</span> ${pct1} %` +
       `&nbsp;&nbsp;·&nbsp;&nbsp;` +
       `<span style="color:#e2e8f0;font-weight:600">${esc(label2)}</span> ${pct2} %` +
-      `&nbsp;&nbsp;<span style="font-size:0.9rem">(écart ${Math.abs(parseFloat(gap)).toFixed(1)} pts)</span>`;
+      `&nbsp;&nbsp;<span style="font-size:0.9rem">(écart ${Math.abs(parseFloat(gap)).toFixed(1)} pts)</span>` +
+      `<div style="margin-top:5px;font-size:0.82rem;color:#64748b">` +
+      `Cotes théoriques&nbsp;: <span style="color:#cbd5e1">${esc(label1)} ${cote1}</span>` +
+      `&nbsp;·&nbsp;<span style="color:#cbd5e1">${esc(label2)} ${cote2}</span>` +
+      `</div>`;
     probaEl.style.display = 'block';
   } else if (probaEl) {
     probaEl.style.display = 'none';
@@ -1779,6 +1797,11 @@ async function loadDailySummary() {
           total: probA + probB,
         });
       }
+      const coteA = probA > 0 ? (1 / probA).toFixed(2) : '—';
+      const coteB = probB > 0 ? (1 / probB).toFixed(2) : '—';
+      const cotesHtml = probA !== null
+        ? `<div class="daily-cotes">Cotes théoriques&nbsp;: <strong>${esc(m.joueur1)}</strong> ${coteA}&nbsp;·&nbsp;<strong>${esc(m.joueur2)}</strong> ${coteB}</div>`
+        : '';
 
       // ── Lecture terrain (3 blocs indépendants, pas de modification du modèle) ─
       let terrainHtml = '';
@@ -1903,6 +1926,7 @@ async function loadDailySummary() {
           <div class="daily-scores">
             ${esc(m.joueur1)} ${pct1} · ${esc(m.joueur2)} ${pct2} · écart ${gap}
           </div>
+          ${cotesHtml}
           <div style="font-size:0.75rem; color:#475569">${esc(m.tournoi)} — ${esc(m.surface)}</div>
           ${statsHtml}
           ${terrainHtml}
