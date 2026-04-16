@@ -345,13 +345,21 @@
   }
   .stats-slight .stat-val { color: #fde68a; }
 
-  /* Domination (5–1 ou 6–0) : nom en vert, badges verts */
+  /* Domination (≥ 4 stats) : nom en vert, badges verts */
   .stats-dominant .stats-col-name { color: #22c55e; }
   .stats-dominant .stat-badge {
     border-color: #14532d;
     background: #052e16;
   }
   .stats-dominant .stat-val { color: #86efac; }
+
+  /* À surveiller (3 stats nettes, adversaire < 3) : bleu ciel */
+  .stats-watch .stats-col-name { color: #38bdf8; }
+  .stats-watch .stat-badge {
+    border-color: #0c4a6e;
+    background: #082f49;
+  }
+  .stats-watch .stat-val { color: #7dd3fc; }
 
   .stat-grid {
     display: grid;
@@ -1902,9 +1910,16 @@ async function loadDailySummary() {
         }
       }
 
-      // Classe CSS selon le score (jamais les deux en même temps)
-      const hlJ1 = winsJ1 >= 5 ? 'stats-dominant' : winsJ1 === 4 ? 'stats-slight' : '';
-      const hlJ2 = winsJ2 >= 5 ? 'stats-dominant' : winsJ2 === 4 ? 'stats-slight' : '';
+      // Classe CSS — priorité : dominant > watch > neutre, jamais les deux colorés
+      // winsJ1 >= 4          → vert  (tous les wins ont déjà diff >= THRESHOLD)
+      // winsJ1 === 3 seul    → bleu  (3 wins nets, l'autre joueur n'en a pas autant)
+      // sinon                → gris
+      const hlJ1 = winsJ1 >= 4                        ? 'stats-dominant'
+                 : (winsJ1 === 3 && winsJ2 < 3)       ? 'stats-watch'
+                 : '';
+      const hlJ2 = winsJ2 >= 4                        ? 'stats-dominant'
+                 : (winsJ2 === 3 && winsJ1 < 3)       ? 'stats-watch'
+                 : '';
 
       const playerBlock = (name, s, hlClass) => `
         <div class="stats-col${hlClass ? ' ' + hlClass : ''}">
