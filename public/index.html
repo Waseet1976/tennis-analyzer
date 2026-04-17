@@ -361,6 +361,18 @@
   }
   .stats-watch .stat-val { color: #7dd3fc; }
 
+  .badge-balanced {
+    display: inline-block;
+    background: #431407;
+    color: #fb923c;
+    border: 1px solid #c2410c;
+    border-radius: 4px;
+    padding: 2px 8px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin-top: 4px;
+  }
+
   .stat-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -1910,6 +1922,28 @@ async function loadDailySummary() {
         }
       }
 
+      // ── Détection match équilibré ───────────────────────────────────────────
+      // Condition : écart de proba ≤ 5 pts ET ≥ 4 stats proches sur 6
+      const BALANCE_STAT = 3;   // seuil "stat proche" en points de % (valeurs ex: 88.8)
+      const BALANCE_MIN  = 4;   // nb min de stats proches requis
+
+      let balancedMatch = false;
+      if (probA !== null && Math.abs(probA - probB) <= 0.05) {
+        let closeStats = 0;
+        if (m.stats_j1 && m.stats_j2) {
+          const bKeys = ['top50_1y', 'win_rate_clay', 'win_rate_clay_1y', 'service_1y', 'return_1y', 'wr_clay_top50'];
+          for (const k of bKeys) {
+            const v1 = m.stats_j1[k], v2 = m.stats_j2[k];
+            if (v1 != null && v2 != null && Math.abs(v1 - v2) <= BALANCE_STAT) closeStats++;
+          }
+        }
+        balancedMatch = closeStats >= BALANCE_MIN;
+      }
+
+      const balancedBadge = balancedMatch
+        ? `<div class="badge-balanced">⚖️ Match équilibré</div>`
+        : '';
+
       // Classe CSS — priorité : dominant > watch > neutre, jamais les deux colorés
       // winsJ1 >= 4          → vert  (tous les wins ont déjà diff >= THRESHOLD)
       // winsJ1 === 3 seul    → bleu  (3 wins nets, l'autre joueur n'en a pas autant)
@@ -1945,6 +1979,7 @@ async function loadDailySummary() {
             ${esc(m.joueur1)} ${pct1} · ${esc(m.joueur2)} ${pct2} · écart ${gap}
           </div>
           ${cotesHtml}
+          ${balancedBadge}
           <div style="font-size:0.75rem; color:#475569">${esc(m.tournoi)} — ${esc(m.surface)}</div>
           ${statsHtml}
           ${terrainHtml}
