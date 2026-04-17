@@ -1,186 +1,58 @@
 [
   {
-    "joueur1": "Alcaraz C.",
-    "joueur2": "Machac T.",
-    "surface": "clay",
-    "tournoi": "ATP Barcelona"
-  },
-  {
-    "joueur1": "Sonego L.",
-    "joueur2": "Rublev A.",
-    "surface": "clay",
-    "tournoi": "ATP Barcelona"
-  },
-  {
-    "joueur1": "Moutet C.",
-    "joueur2": "Musetti L.",
-    "surface": "clay",
-    "tournoi": "ATP Barcelona"
-  },
-  {
-    "joueur1": "Fils A.",
-    "joueur2": "Nakashima B.",
-    "surface": "clay",
-    "tournoi": "ATP Barcelona"
-  },
-  {
-    "joueur1": "Van De Zandschulp B.",
-    "joueur2": "Cerundolo F.",
-    "surface": "clay",
-    "tournoi": "ATP Munich"
-  },
-  {
-    "joueur1": "Altmaier D.",
-    "joueur2": "Molcan A.",
-    "surface": "clay",
-    "tournoi": "ATP Munich"
-  },
-  {
-    "joueur1": "Zverev A.",
-    "joueur2": "Diallo G.",
-    "surface": "clay",
-    "tournoi": "ATP Munich"
-  },
-  {
-    "joueur1": "Shapovalov D.",
-    "joueur2": "Marozsan F.",
-    "surface": "clay",
-    "tournoi": "ATP Munich"
-  },
-  {
     "joueur1": "Medjedovic H.",
     "joueur2": "Borges N.",
     "surface": "clay",
-    "tournoi": "ATP Barcelona"
+    "tournoi": "ATP Barcelona",
+    "time": "11:00"
+  },
+  {
+    "joueur1": "Machac T.",
+    "joueur2": "Rublev A.",
+    "surface": "clay",
+    "tournoi": "ATP Barcelona",
+    "time": "12:30"
+  },
+  {
+    "joueur1": "Fils A.",
+    "joueur2": "Musetti L.",
+    "surface": "clay",
+    "tournoi": "ATP Barcelona",
+    "time": "16:00"
   },
   {
     "joueur1": "Norrie C.",
     "joueur2": "Jodar R.",
     "surface": "clay",
-    "tournoi": "ATP Barcelona"
+    "tournoi": "ATP Barcelona",
+    "time": "17:30"
   },
   {
     "joueur1": "Cobolli F.",
     "joueur2": "Kopriva V.",
     "surface": "clay",
-    "tournoi": "ATP Munich"
+    "tournoi": "ATP Munich",
+    "time": "11:00"
+  },
+  {
+    "joueur1": "Zverev A.",
+    "joueur2": "Cerundolo F.",
+    "surface": "clay",
+    "tournoi": "ATP Munich",
+    "time": "12:30"
   },
   {
     "joueur1": "Fonseca J.",
     "joueur2": "Shelton B.",
     "surface": "clay",
-    "tournoi": "ATP Munich"
+    "tournoi": "ATP Munich",
+    "time": "14:00"
   },
   {
-    "date": "2026-04-14",
-    "joueur1": "De Minaur A.",
-    "joueur2": "Ofner S.",
+    "joueur1": "Shapovalov D.",
+    "joueur2": "Molcan A.",
     "surface": "clay",
-    "tournoi": "ATP Barcelona"
-  },
-  {
-    "date": "2026-04-14",
-    "joueur1": "Martinez P.",
-    "joueur2": "Sonego L.",
-    "surface": "clay",
-    "tournoi": "ATP Barcelona"
-  },
-  {
-    "date": "2026-04-14",
-    "joueur1": "Landaluce M.",
-    "joueur2": "Musetti L.",
-    "surface": "clay",
-    "tournoi": "ATP Barcelona"
-  },
-  {
-    "date": "2026-04-14",
-    "joueur1": "Ugo Carabelli C.",
-    "joueur2": "Khachanov K.",
-    "surface": "clay",
-    "tournoi": "ATP Barcelona"
-  },
-  {
-    "date": "2026-04-14",
-    "joueur1": "Machac T.",
-    "joueur2": "Baez S.",
-    "surface": "clay",
-    "tournoi": "ATP Barcelona"
-  },
-  {
-    "date": "2026-04-14",
-    "joueur1": "Alcaraz C.",
-    "joueur2": "Virtanen O.",
-    "surface": "clay",
-    "tournoi": "ATP Barcelona"
-  },
-  {
-    "date": "2026-04-14",
-    "joueur1": "Nakashima B.",
-    "joueur2": "Cerundolo J. M.",
-    "surface": "clay",
-    "tournoi": "ATP Barcelona"
-  },
-  {
-    "date": "2026-04-14",
-    "joueur1": "Navone M.",
-    "joueur2": "Rublev A.",
-    "surface": "clay",
-    "tournoi": "ATP Barcelona"
-  },
-  {
-    "date": "2026-04-15",
-    "joueur1": "Borges N.",
-    "joueur2": "Etcheverry T. M.",
-    "surface": "clay",
-    "tournoi": "ATP Barcelona"
-  },
-  {
-    "date": "2026-04-15",
-    "joueur1": "De Minaur A.",
-    "joueur2": "Medjedovic H.",
-    "surface": "clay",
-    "tournoi": "ATP Barcelona"
-  },
-  {
-    "date": "2026-04-15",
-    "joueur1": "Jodar R.",
-    "joueur2": "Ugo Carabelli C.",
-    "surface": "clay",
-    "tournoi": "ATP Barcelona"
-  },
-  {
-    "date": "2026-04-15",
-    "joueur1": "Norrie C.",
-    "joueur2": "Quinn E.",
-    "surface": "clay",
-    "tournoi": "ATP Barcelona"
-  },
-  {
-    "date": "2026-04-15",
-    "joueur1": "Rinderknech A.",
-    "joueur2": "Fonseca J.",
-    "surface": "clay",
-    "tournoi": "ATP Munich"
-  },
-  {
-    "date": "2026-04-15",
-    "joueur1": "Marozsan F.",
-    "joueur2": "Tsitsipas S.",
-    "surface": "clay",
-    "tournoi": "ATP Munich"
-  },
-  {
-    "date": "2026-04-15",
-    "joueur1": "Blockx A.",
-    "joueur2": "Shelton B.",
-    "surface": "clay",
-    "tournoi": "ATP Munich"
-  },
-  {
-    "date": "2026-04-15",
-    "joueur1": "Cobolli F.",
-    "joueur2": "Bergs Z.",
-    "surface": "clay",
-    "tournoi": "ATP Munich"
+    "tournoi": "ATP Munich",
+    "time": "15:30"
   }
 ]
