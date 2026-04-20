@@ -31,17 +31,34 @@ function normName(str) {
 
 /**
  * Extrait nom de famille + première initiale depuis un nom normalisé.
- * Format attendu : "Lastname F." ou "Lastname F. M." ou "Last Name F."
- * Exemple : "Etcheverry T. M." → { lastName: "etcheverry", firstInitial: "t" }
- *           "De Minaur A."    → { lastName: "de minaur",  firstInitial: "a" }
+ * Deux formats acceptés :
+ *   Abrégé  : "Lastname F."  / "Lastname F. M."  / "Last Name F."
+ *   Complet : "Carlos Alcaraz" / "Alex de Minaur" / "Tomas Martin Etcheverry"
+ *
+ * Exemples :
+ *   "Etcheverry T. M." → { lastName: "etcheverry",    firstInitial: "t" }
+ *   "De Minaur A."    → { lastName: "de minaur",      firstInitial: "a" }
+ *   "Carlos Alcaraz"  → { lastName: "alcaraz",         firstInitial: "c" }
+ *   "Alex de Minaur"  → { lastName: "de minaur",      firstInitial: "a" }
+ *   "Tomas Martin Etcheverry" → { lastName: "martin etcheverry", firstInitial: "t" }
  */
 function parseName(str) {
   const tokens = normName(str).split(' ');
-  // Un token est une initiale si c'est une seule lettre (points déjà supprimés)
   const firstInitialIdx = tokens.findIndex((t) => /^[a-z]$/.test(t));
-  if (firstInitialIdx <= 0) {
+
+  if (firstInitialIdx === -1) {
+    // Format complet (aucune initiale abrégée) : "Carlos Alcaraz", "Alex de Minaur"
+    // firstInitial = premier caractère du premier token ; lastName = le reste
+    return tokens.length >= 2
+      ? { lastName: tokens.slice(1).join(' '), firstInitial: tokens[0][0] ?? '' }
+      : { lastName: tokens[0] ?? '',           firstInitial: '' };
+  }
+
+  if (firstInitialIdx === 0) {
+    // Initiale en tête (cas rare), ancien comportement conservé
     return { lastName: tokens.join(' '), firstInitial: tokens[tokens.length - 1] ?? '' };
   }
+
   return {
     lastName:     tokens.slice(0, firstInitialIdx).join(' '),
     firstInitial: tokens[firstInitialIdx],
@@ -51,8 +68,9 @@ function parseName(str) {
 /**
  * Retourne true si deux noms désignent le même joueur.
  * Étape 1 — correspondance exacte (après normName).
- * Étape 2 — fallback : même nom de famille + même première initiale.
- *            "Etcheverry T." === "Etcheverry T. M." grâce à ce fallback.
+ * Étape 2 — même initiale + même nom de famille (exact).
+ * Étape 3 — même initiale + dernier mot du lastName identique
+ *            (gère "martin etcheverry" vs "etcheverry", "de minaur" vs "minaur").
  */
 function samePlayer(a, b) {
   const na = normName(a);
@@ -60,7 +78,12 @@ function samePlayer(a, b) {
   if (na === nb) return true;
   const pa = parseName(a);
   const pb = parseName(b);
-  return pa.lastName === pb.lastName && pa.firstInitial !== '' && pa.firstInitial === pb.firstInitial;
+  if (!pa.firstInitial || !pb.firstInitial || pa.firstInitial !== pb.firstInitial) return false;
+  if (pa.lastName === pb.lastName) return true;
+  // Fallback : noms composés — le dernier mot suffit
+  const lastA = pa.lastName.split(' ').pop();
+  const lastB = pb.lastName.split(' ').pop();
+  return lastA === lastB && lastA.length >= 3; // ≥ 3 lettres pour éviter faux positifs
 }
 
 /**
