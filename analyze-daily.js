@@ -166,6 +166,41 @@ function extractVisualStats(compDetails, playerStats) {
   return { top50_1y, win_rate_1y, win_rate_clay, win_rate_clay_1y, service_1y, return_1y, wr_clay_top50 };
 }
 
+// ─── Recalibration de la confiance ───────────────────────────────────────────
+
+/**
+ * Compte combien de stats (sur 6) le favori gagne face à l'adversaire,
+ * et vérifie si le vainqueur modèle est cohérent avec le vainqueur stats.
+ */
+function calcDominanceStats(s1, s2, favori, joueur1) {
+  const keys = ['win_rate_1y', 'win_rate_clay_1y', 'win_rate_clay', 'top50_1y', 'service_1y', 'return_1y'];
+  const isJ1Favori = favori === joueur1;
+  let favoriWins   = 0;
+  let opponentWins = 0;
+
+  for (const k of keys) {
+    const v1 = s1[k];
+    const v2 = s2[k];
+    if (v1 == null || v2 == null) continue;
+    if (v1 > v2) { isJ1Favori ? favoriWins++ : opponentWins++; }
+    else if (v2 > v1) { isJ1Favori ? opponentWins++ : favoriWins++; }
+  }
+
+  return { dominanceStats: favoriWins, coherent: favoriWins >= opponentWins };
+}
+
+/**
+ * Classifie la confiance depuis le gap probabiliste, la dominance stats et la cohérence.
+ * "Élevée" exige gap >= 0.12 ET dominanceStats >= 4 ET cohérence modèle/stats.
+ */
+function classifyConfidence(gap, dominanceStats, coherent) {
+  if (gap < 0.03) return { label: 'Très serré', level: 0 };
+  if (gap < 0.07) return { label: 'Légère',     level: 1 };
+  if (gap < 0.12) return { label: 'Modérée',    level: 2 };
+  if (dominanceStats >= 4 && coherent) return { label: 'Élevée', level: 3 };
+  return { label: 'Modérée', level: 2 };
+}
+
 function saveSummary(results) {
   const summary = results
     .filter(r => !r.error)
@@ -175,19 +210,27 @@ function saveSummary(results) {
       const ps1 = r.result?.playerStats?.joueur1;
       const ps2 = r.result?.playerStats?.joueur2;
 
+      const stats_j1 = extractVisualStats(d1, ps1);
+      const stats_j2 = extractVisualStats(d2, ps2);
+
+      const { dominanceStats, coherent } = calcDominanceStats(stats_j1, stats_j2, r.summary.favori, r.joueur1);
+      const newConf = classifyConfidence(r.summary.gap ?? 0, dominanceStats, coherent);
+
+      console.log(`[Confiance] gap=${(r.summary.gap ?? 0).toFixed(4)} dominance=${dominanceStats}/6 coherent=${coherent} → ${newConf.label}`);
+
       return {
         joueur1:         r.joueur1,
         joueur2:         r.joueur2,
         surface:         r.surface,
         tournoi:         r.tournoi,
         favori:          r.summary.favori,
-        confiance:       r.summary.confiance,
-        niveauConfiance: r.summary.niveauConfiance,
+        confiance:       newConf.label,
+        niveauConfiance: newConf.level,
         score1:          r.summary.hybridScore1,
         score2:          r.summary.hybridScore2,
         gap:             r.summary.gap,
-        stats_j1:        extractVisualStats(d1, ps1),
-        stats_j2:        extractVisualStats(d2, ps2),
+        stats_j1,
+        stats_j2,
       };
     })
     .sort((a, b) =>

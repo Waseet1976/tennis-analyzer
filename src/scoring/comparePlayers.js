@@ -518,6 +518,88 @@ function calcDominationBonus(ltA, ltB, oyA, oyB, t50A, t50B, formA, formB) {
   };
 }
 
+// ─── Bloc 5 : Clay Strength ───────────────────────────────────────────────────
+
+/**
+ * Calcule un score de force sur terre battue combinant :
+ *   winRate clay long terme + 1 an + qualité vs Top50/100 clay + performance service/retour.
+ * Chaque composante est pondérée par un facteur de fiabilité exponentiel (volume de matchs).
+ * Retourne { score: 0, available: false } si les données sont insuffisantes.
+ *
+ * @param {Object} data  - { stats, stats1y, allMatches }
+ * @returns {{ score: number, available: boolean, raw: Object }}
+ */
+function calculateClayStrength(data) {
+  const { stats, stats1y, allMatches = [] } = data;
+
+  // ── 1. WinRate clay long terme ──────────────────────────────────────────────
+  const rawWRClay   = safeFloat(stats?.win_rate_clay);
+  const winRateClay = rawWRClay !== null ? (rawWRClay > 1 ? rawWRClay / 100 : rawWRClay) : null;
+  const matchesClay = allMatches.filter(m => m.surface === 'clay').length;
+
+  // ── 2. WinRate clay 1 an ───────────────────────────────────────────────────
+  const rawWRClay1y   = safeFloat(stats1y?.win_rate_clay_1y);
+  const winRateClay1y = rawWRClay1y !== null ? (rawWRClay1y > 1 ? rawWRClay1y / 100 : rawWRClay1y) : null;
+  const cutoff1y      = new Date();
+  cutoff1y.setFullYear(cutoff1y.getFullYear() - 1);
+  const clay1y        = allMatches.filter(m => m.surface === 'clay' && m.date && new Date(m.date) >= cutoff1y);
+  const matchesClay1y = clay1y.length;
+
+  // ── 3. Victoires vs Top50 et Top100 sur clay (12 mois) ────────────────────
+  const hasRank = (m) => m.rangAdversaire !== null && m.rangAdversaire !== undefined;
+  const top50Clay    = clay1y.filter(m => hasRank(m) && Number(m.rangAdversaire) <= 50);
+  const top100Clay   = clay1y.filter(m => hasRank(m) && Number(m.rangAdversaire) > 50 && Number(m.rangAdversaire) <= 100);
+  const matchesTop50  = top50Clay.length;
+  const matchesTop100 = top100Clay.length;
+  const winRateTop50Clay  = matchesTop50  > 0 ? top50Clay.filter(m => m.resultat === 'V').length  / matchesTop50  : null;
+  const winRateTop100Clay = matchesTop100 > 0 ? top100Clay.filter(m => m.resultat === 'V').length / matchesTop100 : null;
+
+  // ── 4. Service + retour (1 an en priorité, long terme en fallback) ─────────
+  const srvRaw = safeFloat(stats1y?.service_points_won_avg_1y) ?? safeFloat(stats?.service_points_won_avg);
+  const retRaw = safeFloat(stats1y?.return_points_won_avg_1y)  ?? safeFloat(stats?.return_points_won_avg);
+  const servicePointsWon = srvRaw !== null ? srvRaw / 100 : null;
+  const returnPointsWon  = retRaw !== null ? retRaw / 100 : null;
+  const performance      = servicePointsWon !== null && returnPointsWon !== null
+    ? (servicePointsWon + returnPointsWon) / 2
+    : null;
+
+  // ── 5. Pondération fiabilité (exponential decay sur le volume de matchs) ───
+  const weightedClay   = winRateClay   !== null ? winRateClay   * (1 - Math.exp(-matchesClay   / 20)) : null;
+  const weightedClay1y = winRateClay1y !== null ? winRateClay1y * (1 - Math.exp(-matchesClay1y / 15)) : null;
+  const weightedTop50  = winRateTop50Clay  !== null ? winRateTop50Clay  * (1 - Math.exp(-matchesTop50  / 10)) : null;
+  const weightedTop100 = winRateTop100Clay !== null ? winRateTop100Clay * (1 - Math.exp(-matchesTop100 / 15)) : null;
+
+  // ── 6. Score composite (redistribution si composantes absentes) ────────────
+  let score = 0;
+  let totalWeight = 0;
+
+  if (weightedClay1y !== null) { score += 0.30 * weightedClay1y; totalWeight += 0.30; }
+  if (weightedClay   !== null) { score += 0.25 * weightedClay;   totalWeight += 0.25; }
+  if (weightedTop50  !== null) { score += 0.20 * weightedTop50;  totalWeight += 0.20; }
+  if (weightedTop100 !== null) { score += 0.10 * weightedTop100; totalWeight += 0.10; }
+  if (performance    !== null) { score += 0.15 * performance;    totalWeight += 0.15; }
+
+  if (totalWeight < 0.20) {
+    return { score: 0, available: false, raw: {} };
+  }
+
+  return {
+    score: clamp(score / totalWeight, 0, 1),
+    available: true,
+    raw: {
+      winRateClay, matchesClay,
+      winRateClay1y, matchesClay1y,
+      winRateTop50Clay, matchesTop50,
+      winRateTop100Clay, matchesTop100,
+      servicePointsWon, returnPointsWon, performance,
+      weightedClay, weightedClay1y, weightedTop50, weightedTop100,
+      totalWeight,
+    },
+  };
+}
+
+// ─── Comparaison principale ───────────────────────────────────────────────────
+
 function comparePlayers(dataA, dataB, surface, nameA, nameB) {
   console.log(`[Compare] ${nameA} vs ${nameB} — surface: ${surface}`);
 
@@ -541,28 +623,45 @@ console.log('[TOP50 1Y]', {
 });
 
 
+  // ─── Bloc Clay Strength (surface clay uniquement) ─────────────────────────
+  const clayA = surface === 'clay' ? calculateClayStrength(dataA) : { score: 0, available: false, raw: {} };
+  const clayB = surface === 'clay' ? calculateClayStrength(dataB) : { score: 0, available: false, raw: {} };
+  const useClayBlock = surface === 'clay' && (clayA.available || clayB.available);
+  const W_CLAY = useClayBlock ? 0.25 : 0;
+
+  if (useClayBlock) {
+    console.log(`[ClayStrength] ${nameA}: score=${clayA.available ? clayA.score.toFixed(3) : 'N/A'} available=${clayA.available}`);
+    console.log(`[ClayStrength] ${nameB}: score=${clayB.available ? clayB.score.toFixed(3) : 'N/A'} available=${clayB.available}`);
+  }
+
   const nameBNorm = norm(nameB);
   const nameANorm = norm(nameA);
   const h2hA = calcH2HAdjustment(dataA.allMatches ?? [], nameBNorm, surface);
   const h2hB = calcH2HAdjustment(dataB.allMatches ?? [], nameANorm, surface);
 
-  // ─── Poids fixes ─────────────────────────────────────────────────────────────
-  // LT(0.20) + 1Y(0.45) + Top50(0.25) + Form(0.10) = 1.00
-  const W_LT   = 0.20;
-  const W_1Y   = 0.45;
-  const W_T50  = 0.25;
-  const W_FORM = 0.10;
+  // ─── Poids ───────────────────────────────────────────────────────────────────
+  // Clay actif → 25% ; les 4 blocs existants sont réduits proportionnellement (×0.75)
+  // Clay inactif → W_CLAY=0, facteur=1, poids identiques à l'original
+  const _f     = 1 - W_CLAY;
+  const W_LT   = 0.20 * _f;
+  const W_1Y   = 0.45 * _f;
+  const W_T50  = 0.25 * _f;
+  const W_FORM = 0.10 * _f;
 
-  console.log(`[Compare] Poids fixes → LT=${W_LT} | 1Y=${W_1Y} | Top50=${W_T50} | Form=${W_FORM}`);
+  console.log(
+    `[Compare] Poids → LT=${W_LT.toFixed(3)} | 1Y=${W_1Y.toFixed(3)} | Top50=${W_T50.toFixed(3)} | Form=${W_FORM.toFixed(3)}` +
+    (useClayBlock ? ` | Clay=${W_CLAY.toFixed(3)}` : '')
+  );
 
-  const calcBaseScore = (lt, oy, top50, form) =>
-    (lt.score   * W_LT)   +
-    (oy.score   * W_1Y)   +
+  const calcBaseScore = (lt, oy, top50, form, clay) =>
+    (lt.score    * W_LT)   +
+    (oy.score    * W_1Y)   +
     (top50.score * W_T50)  +
-    (form.score * W_FORM);
+    (form.score  * W_FORM) +
+    ((clay.available ? clay.score : 0.5) * W_CLAY);
 
-  const baseA = calcBaseScore(ltA, oyA, t50A, formA);
-  const baseB = calcBaseScore(ltB, oyB, t50B, formB);
+  const baseA = calcBaseScore(ltA, oyA, t50A, formA, clayA);
+  const baseB = calcBaseScore(ltB, oyB, t50B, formB, clayB);
 
   // Score avant bonus (H2H inclus)
   const preA = clamp(baseA + h2hA.adjustment, 0, 1);
