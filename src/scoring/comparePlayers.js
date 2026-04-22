@@ -3,28 +3,27 @@
 /**
  * comparePlayers.js — Moteur de comparaison joueur vs joueur
  *
- * Utilise exclusivement les données issues des 4 feuilles Google Sheets :
- *   STATS        → performances long terme
- *   STATS_1Y     → performances des 12 derniers mois
- *   STATS_TOP50  → performances vs top 50 (qualitatif)
- *   2025-atp-season → forme récente + H2H
+ * Modèle en 4 grands blocs :
+ *   1. Surface du match        (win rate spécifique à la surface)
+ *   2. Niveau global           (1 an + 6 mois)
+ *   3. Qualité d'opposition    (Top 20 / Top 50 / Top 100)
+ *   4. Qualité de jeu          (service + retour)
  *
- * RÈGLE : aucune valeur inventée — si une donnée est absente, son bloc
- * est marqué unavailable et son poids est redistribué.
+ * Les poids varient selon la surface (hard / clay / grass).
+ * RÈGLE : aucune valeur inventée — si une donnée est absente, son poids
+ * est redistribué sur les composantes disponibles.
  */
 
 // ─── Utilitaires ──────────────────────────────────────────────────────────────
 
-/** Borne une valeur entre min et max. */
 function clamp(v, min, max) {
   return Math.min(Math.max(v, min), max);
 }
 
 /**
  * Parse une valeur de cellule Sheets en float.
- * Gère les formats "0.65", "65", "65%", "65,3", "57,50%".
- * Si la valeur porte un "%" → divise par 100 (stockage pourcentage Google Sheets).
- * Retourne `fallback` si la valeur est absente ou non parsable.
+ * Gère "0.65", "65", "65%", "65,3", "57,50%".
+ * Si "%" → divise par 100. Retourne `fallback` si absent ou non parsable.
  */
 function safeFloat(v, fallback = null) {
   if (v === null || v === undefined || v === '') return fallback;
@@ -40,272 +39,181 @@ function norm(s) {
   return (s ?? '').trim().toLowerCase();
 }
 
-// ─── Bloc 1 : Long terme (STATS) ──────────────────────────────────────────────
+// ─── Bloc 1 : Surface du match ────────────────────────────────────────────────
 
 /**
- * Calcule le bloc long terme depuis la feuille STATS.
- * score_global, score_surface  → 0..1 directs
- * win_rate_total               → 0..1 direct
- * games_diff_avg               → normalisé avec clamp((x+5)/10, 0, 1)
- * service_points_won_avg       → 0..100, divisé par 100
- * return_points_won_avg        → 0..100, divisé par 100
+ * Calcule le score du joueur sur la surface du match.
+ * Combine : win rate surface LT + win rate surface 1 an + historique brut.
+ * Fiabilité exponentielle sur l'historique (neutre si peu de matchs).
  *
- * @param {Object|null} stats   - Ligne STATS du joueur
- * @param {string}      surface - clay | hard | indoor_hard | grass
- * @returns {{ score: number, available: boolean, raw: Object }}
+ * @param {Object} stats     - Ligne STATS
+ * @param {Object} stats1y   - Ligne STATS_1Y
+ * @param {Array}  allMatches
+ * @param {string} surface   - clay | hard | grass
+ * @returns {{ score, available, matchCount }}
  */
-function calcLongTermBlock(stats, surface) {
-  if (!stats) return { score: 0, available: false, raw: {} };
+function calculateSurfaceBlock(stats, stats1y, allMatches, surface) {
+  const fieldLT = surface === 'clay'  ? 'win_rate_clay'
+    : surface === 'grass' ? 'win_rate_grass'
+    : 'win_rate_hard';
+  const field1y = surface === 'clay'  ? 'win_rate_clay_1y'
+    : surface === 'grass' ? 'win_rate_grass_1y'
+    : 'win_rate_hard_1y';
 
-  const score_global  = safeFloat(stats.score_global);
-  const score_surface = safeFloat(stats.score_surface);
-  const win_rate      = safeFloat(stats.win_rate_total);
-  const games_diff    = safeFloat(stats.games_diff_avg);
-  const service       = safeFloat(stats.service_points_won_avg);
-  const returnPts     = safeFloat(stats.return_points_won_avg);
+  const rawLT = safeFloat(stats?.[fieldLT])   ?? safeFloat(stats?.score_surface);
+  const raw1y = safeFloat(stats1y?.[field1y]) ?? safeFloat(stats1y?.score_surface_1y);
 
-  // Si les données essentielles sont toutes absentes, bloc indisponible
-  if ([score_global, score_surface, win_rate].every(v => v === null)) {
-    return { score: 0, available: false, raw: {} };
-  }
+  const wrLT = rawLT !== null ? (rawLT > 1 ? rawLT / 100 : rawLT) : null;
+  const wr1y = raw1y !== null ? (raw1y > 1 ? raw1y / 100 : raw1y) : null;
 
-  const sg  = score_global  ?? 0.5;
-  const ss  = score_surface ?? sg;          // fallback sur score_global
-  const wr  = win_rate      ?? 0.5;
-  const ngd = games_diff !== null ? clamp((games_diff + 5) / 10, 0, 1) : 0.5;
-  const srv = service   !== null ? service   / 100 : 0.5;
-  const ret = returnPts !== null ? returnPts / 100 : 0.5;
+  // Historique brut sur la surface
+  const onSurface  = (allMatches ?? []).filter(m => m.surface === surface);
+  const matchCount = onSurface.length;
+  const wins       = onSurface.filter(m => m.resultat === 'V').length;
+  const wrHist     = matchCount > 0 ? wins / matchCount : null;
 
-  const score =
-    (sg  * 0.30) +
-    (ss  * 0.20) +
-    (wr  * 0.10) +
-    (ngd * 0.15) +
-    (srv * 0.125) +
-    (ret * 0.125);
+  // Fiabilité (tend vers neutre si peu de matchs)
+  const reliab  = 1 - Math.exp(-matchCount / 20);
+  const wrHistW = wrHist !== null ? wrHist * reliab + 0.5 * (1 - reliab) : null;
+
+  // Pondération redistribuée sur les composantes disponibles
+  let score = 0;
+  let w     = 0;
+  if (wr1y    !== null) { score += 0.45 * wr1y;    w += 0.45; }
+  if (wrHistW !== null) { score += 0.35 * wrHistW; w += 0.35; }
+  if (wrLT    !== null) { score += 0.20 * wrLT;    w += 0.20; }
+
+  if (w < 0.20) return { score: 0.5, available: false, matchCount };
 
   return {
-    score: clamp(score, 0, 1),
-    available: true,
-    raw: { score_global, score_surface, win_rate, games_diff, service, returnPts },
+    score:      clamp(score / w, 0, 1),
+    available:  true,
+    matchCount,
   };
 }
 
-// ─── Bloc 2 : 1 an (STATS_1Y) ─────────────────────────────────────────────────
+// ─── Bloc 2 : Niveau global (1 an + 6 mois) ──────────────────────────────────
 
 /**
- * Identique au bloc long terme mais depuis STATS_1Y (champs suffixés _1y).
+ * Calcule le niveau général sur 1 an (STATS_1Y) et sur 6 mois (allMatches).
+ * Les deux sous-scores sont exposés séparément pour une pondération indépendante.
+ *
+ * @returns {{ score1y, score6m, available1y, available6m }}
  */
-function calcOneYearBlock(stats1y, surface) {
-  if (!stats1y) return { score: 0, available: false, raw: {} };
+function calculateTrendBlock(stats1y, allMatches) {
+  // Niveau 1 an — score_global_1y en priorité, win_rate_total_1y en fallback
+  const raw1y   = safeFloat(stats1y?.score_global_1y) ?? safeFloat(stats1y?.win_rate_total_1y);
+  const score1y = raw1y !== null ? (raw1y > 1 ? raw1y / 100 : raw1y) : null;
 
-  const score_global  = safeFloat(stats1y.score_global_1y);
-  const score_surface = safeFloat(stats1y.score_surface_1y);
-  const win_rate      = safeFloat(stats1y.win_rate_total_1y);
-  const games_diff    = safeFloat(stats1y.games_diff_avg_1y);
-  const service       = safeFloat(stats1y.service_points_won_avg_1y);
-  const returnPts     = safeFloat(stats1y.return_points_won_avg_1y);
+  // Niveau 6 mois — calculé depuis l'historique
+  const cutoff6m = new Date();
+  cutoff6m.setMonth(cutoff6m.getMonth() - 6);
+  const last6m   = (allMatches ?? []).filter(m => m.date && new Date(m.date) >= cutoff6m);
+  const wins6m   = last6m.filter(m => m.resultat === 'V').length;
 
-  if ([score_global, score_surface, win_rate].every(v => v === null)) {
-    return { score: 0, available: false, raw: {} };
-  }
-
-  const sg  = score_global  ?? 0.5;
-  const ss  = score_surface ?? sg;
-  const wr  = win_rate      ?? 0.5;
-  const ngd = games_diff !== null ? clamp((games_diff + 5) / 10, 0, 1) : 0.5;
-  const srv = service   !== null ? service   / 100 : 0.5;
-  const ret = returnPts !== null ? returnPts / 100 : 0.5;
-
-  const score =
-    (sg  * 0.30) +
-    (ss  * 0.20) +
-    (wr  * 0.10) +
-    (ngd * 0.15) +
-    (srv * 0.125) +
-    (ret * 0.125);
+  // Fiabilité 6 mois (min 3 matchs, tend vers neutre sinon)
+  const rawScore6m  = last6m.length >= 3 ? wins6m / last6m.length : null;
+  const reliab6m    = last6m.length >= 3 ? 1 - Math.exp(-last6m.length / 8) : 0;
+  const score6m     = rawScore6m !== null
+    ? rawScore6m * reliab6m + 0.5 * (1 - reliab6m)
+    : null;
 
   return {
-    score: clamp(score, 0, 1),
-    available: true,
-    raw: { score_global, score_surface, win_rate, games_diff, service, returnPts },
+    score1y:     score1y  ?? 0.5,
+    score6m:     score6m  ?? score1y ?? 0.5,
+    available1y: score1y  !== null,
+    available6m: last6m.length >= 3,
   };
 }
 
-// ─── Bloc 3 : Top 50 (STATS_TOP50) ────────────────────────────────────────────
+// ─── Bloc 3 : Qualité d'opposition (Top 20 / 50 / 100) ───────────────────────
 
 /**
- * Calcule le bloc top 50 depuis l'historique brut (12 derniers mois, adversaires ≤ 50).
- * Ne lit plus win_rate_*_vs_top50 (colonne corrompue dans Google Sheets).
+ * Calcule le score contre les meilleurs adversaires sur 12 mois.
+ * Hiérarchie : Top 20 (50%) > Top 50 (35%) > Top 100 (15%).
+ * Fiabilité exponentielle par palier (peu de matchs → poids faible).
+ * Expose raw.top50.surfaceRate pour la compatibilité avec analyze-daily.js.
  *
- * @returns {{ score, available, reduced, matchCount }}
+ * @returns {{ score, available, raw }}
  */
-/**
- * Parse un entier brut depuis une cellule Sheets (comptage de matchs/victoires).
- * Retourne 0 si absent ou non numérique.
- */
-function parseInt50(raw) {
-  if (raw === null || raw === undefined || raw === '') return 0;
-  const n = parseInt(String(raw).replace(',', '.').trim(), 10);
-  return isNaN(n) ? 0 : n;
-}
-
-/**
- * Calcule un win rate en 0–1 depuis les colonnes de comptage brutes.
- * Évite le bug où win_rate_vs_top50 = "1" (formule cassée dans la feuille).
- * Retourne null si matches = 0.
- */
-function calcRateFromCounts(winsRaw, matchesRaw) {
-  const m = parseInt50(matchesRaw);
-  const w = parseInt50(winsRaw);
-  if (m === 0) return null;
-  return clamp(w / m, 0, 1);
-}
-
-/**
- * Calcule un score global+surface depuis un ensemble de matchs filtrés.
- * Retourne null si aucun match.
- */
-function _calcRateFromMatches(filtered, surface) {
-  if (filtered.length === 0) return null;
-  const globalWins = filtered.filter(m => m.resultat === 'V').length;
-  const globalRate = clamp(globalWins / filtered.length, 0, 1);
-  const onSurface  = filtered.filter(m => m.surface === surface);
-  const surfaceRate = onSurface.length > 0
-    ? clamp(onSurface.filter(m => m.resultat === 'V').length / onSurface.length, 0, 1)
-    : globalRate;
-  return { globalRate, surfaceRate, matchCount: filtered.length };
-}
-
-function calcTop50Block(allMatches, surface) {
-  if (!allMatches || allMatches.length === 0) {
-    return { score: 0, available: false, reduced: false, matchCount: 0 };
-  }
-
+function calculateOppositionBlock(allMatches, surface) {
   const cutoff = new Date();
   cutoff.setFullYear(cutoff.getFullYear() - 1);
+  const recent  = (allMatches ?? []).filter(m => m.date && new Date(m.date) >= cutoff);
+  const hasRank = m => m.rangAdversaire != null && m.rangAdversaire !== '';
 
-  const inRange = (m) => m.date && new Date(m.date) >= cutoff;
-  const hasRank = (m) => m.rangAdversaire !== null && m.rangAdversaire !== undefined;
+  const top20  = recent.filter(m => hasRank(m) && Number(m.rangAdversaire) <= 20);
+  const top50  = recent.filter(m => hasRank(m) && Number(m.rangAdversaire) <= 50);
+  const top100 = recent.filter(m => hasRank(m) && Number(m.rangAdversaire) <= 100);
 
-  // Matchs 12 mois vs Top 50
-  const vs50 = allMatches.filter(m => inRange(m) && hasRank(m) && Number(m.rangAdversaire) <= 50);
-  // Matchs 12 mois vs Top 51–100 (complément)
-  const vs100 = allMatches.filter(m =>
-    inRange(m) && hasRank(m) &&
-    Number(m.rangAdversaire) > 50 && Number(m.rangAdversaire) <= 100
+  const calcWR = ms => ms.length > 0
+    ? ms.filter(m => m.resultat === 'V').length / ms.length
+    : null;
+
+  const wr20  = calcWR(top20);
+  const wr50  = calcWR(top50);
+  const wr100 = calcWR(top100);
+
+  // Fiabilité exponentielle (seuils calibrés ATP)
+  const rel20  = wr20  !== null ? 1 - Math.exp(-top20.length  /  8) : 0;
+  const rel50  = wr50  !== null ? 1 - Math.exp(-top50.length  / 10) : 0;
+  const rel100 = wr100 !== null ? 1 - Math.exp(-top100.length / 15) : 0;
+
+  const w20    = rel20  * 0.50;
+  const w50    = rel50  * 0.35;
+  const w100   = rel100 * 0.15;
+  const totalW = w20 + w50 + w100;
+
+  // Taux surface Top 50 pour compatibilité analyze-daily.js (extractVisualStats)
+  const top50onSurf = top50.filter(m => m.surface === surface);
+  const surfaceRate = top50onSurf.length > 0
+    ? top50onSurf.filter(m => m.resultat === 'V').length / top50onSurf.length
+    : (wr50 ?? null);
+
+  if (totalW < 0.05) {
+    return { score: 0.5, available: false, raw: { top50: { surfaceRate } } };
+  }
+
+  const score =
+    ((wr20  ?? 0.5) * w20 +
+     (wr50  ?? 0.5) * w50 +
+     (wr100 ?? 0.5) * w100) / totalW;
+
+  console.log(
+    `[Opposition] top20=${top20.length}(${(wr20 ?? 0).toFixed(2)}) ` +
+    `top50=${top50.length}(${(wr50 ?? 0).toFixed(2)}) ` +
+    `top100=${top100.length}(${(wr100 ?? 0).toFixed(2)}) → ${score.toFixed(3)}`
   );
 
-  const top50Count  = vs50.length;
-  const top100Count = vs100.length;
-
-  // Aucune donnée exploitable
-  if (top50Count === 0 && top100Count === 0) {
-    return { score: 0, available: false, reduced: false, matchCount: 0 };
-  }
-
-  const r50  = _calcRateFromMatches(vs50,  surface);
-  const r100 = _calcRateFromMatches(vs100, surface);
-
-  let score, sourceUsed;
-
-  // Poids dynamique Top 50 : croît linéairement de 0 à 1 entre 0 et 10 matchs
-  const weight50 = Math.min(1, top50Count / 10);
-
-  if (top50Count >= 10) {
-    // CAS 1 — données Top 50 suffisantes : Top 50 seul
-    const gr = r50.globalRate;
-    const sr = r50.surfaceRate;
-    score      = clamp((gr * 0.40) + (sr * 0.60), 0, 1);
-    sourceUsed = 'top50';
-
-  } else if (top50Count > 0) {
-    // CAS 2 — Top 50 partiel : pondération dynamique Top50 + Top100 (×0.30)
-    const gr50    = r50.globalRate;
-    const sr50    = r50.surfaceRate;
-    const score50 = clamp((gr50 * 0.40) + (sr50 * 0.60), 0, 1);
-
-    if (r100) {
-      const gr100    = r100.globalRate;
-      const sr100    = r100.surfaceRate;
-      const score100 = clamp((gr100 * 0.40) + (sr100 * 0.60), 0, 1);
-      score = clamp((score50 * weight50 + score100 * 0.30) / (weight50 + 0.30), 0, 1);
-      sourceUsed = 'top50+top100';
-    } else {
-      score = score50;
-      sourceUsed = 'top50';
-    }
-
-  } else {
-    // CAS 3 — 0 match Top 50 : Top 100 comme estimation de secours
-    const gr = r100.globalRate;
-    const sr = r100.surfaceRate;
-    score      = clamp((gr * 0.40) + (sr * 0.60), 0, 1);
-    sourceUsed = 'top100_only';
-  }
-
-  const matchCount = top50Count + (sourceUsed !== 'top50' ? top100Count : 0);
-  const reduced    = top50Count < 5;
-
-  console.log(`[Top50Block-1Y] surface=${surface} | top50=${top50Count} | top100=${top100Count} | source=${sourceUsed} | score=${score.toFixed(3)}`);
-
   return {
-    score,
+    score:     clamp(score, 0, 1),
     available: true,
-    reduced,
-    matchCount,
     raw: {
-      globalRate:     r50?.globalRate  ?? r100?.globalRate  ?? 0,
-      surfaceRate:    r50?.surfaceRate ?? r100?.surfaceRate ?? 0,
-      top50MatchCount:  top50Count,
-      top100MatchCount: top100Count,
-      sourceUsed,
+      top50: { surfaceRate },   // ← lu par extractVisualStats dans analyze-daily.js
     },
   };
 }
 
-// ─── Bloc 4 : Forme récente (2025-atp-season) ─────────────────────────────────
+// ─── Bloc 4 : Qualité de jeu (service + retour) ───────────────────────────────
 
 /**
- * Calcule le bloc forme récente depuis l'historique de matchs.
+ * Score basé sur le % de points gagnés au service et en retour.
+ * Priorité données 1 an, fallback long terme.
  *
- * @param {Array} allMatches - Matchs triés par date décroissante (du joueur)
- * @returns {{ score, available, raw }}
+ * @returns {{ score, available }}
  */
-function calcRecentFormBlock(allMatches) {
-  if (!allMatches || allMatches.length === 0) {
-    return { score: 0.5, available: false, raw: {} };
-  }
+function calculateServeReturnBlock(stats, stats1y) {
+  const srvRaw = safeFloat(stats1y?.service_points_won_avg_1y) ?? safeFloat(stats?.service_points_won_avg);
+  const retRaw = safeFloat(stats1y?.return_points_won_avg_1y)  ?? safeFloat(stats?.return_points_won_avg);
 
-  const atp   = allMatches.filter(m => m.niveau !== 'Challenger');
-  const last5  = atp.slice(0, 5);
-  const last10 = atp.slice(0, 10);
+  if (srvRaw === null && retRaw === null) return { score: 0.5, available: false };
 
-  // Taux de victoire
-  const last5_wins = last5.filter(m => m.resultat === 'V').length;
-  const last5_rate = last5.length > 0 ? last5_wins / last5.length : 0.5;
-
-  const last10_wins = last10.filter(m => m.resultat === 'V').length;
-  const last10_rate = last10.length > 0 ? last10_wins / last10.length : 0.5;
-
-  // Différentiel moyen de jeux sur les 10 derniers matchs
-  const withDiff = last10.filter(m => m.gameDiff !== null && m.gameDiff !== undefined);
-  const avgDiff  = withDiff.length > 0
-    ? withDiff.reduce((s, m) => s + m.gameDiff, 0) / withDiff.length
-    : 0;
-  const normDiff = clamp((avgDiff + 5) / 10, 0, 1);
-
-  const score = clamp(
-    (last5_rate * 0.50) +
-    (last10_rate * 0.30) +
-    (normDiff   * 0.20),
-    0, 1
-  );
+  const srv = srvRaw !== null ? (srvRaw > 1 ? srvRaw / 100 : srvRaw) : 0.5;
+  const ret = retRaw !== null ? (retRaw > 1 ? retRaw / 100 : retRaw) : 0.5;
 
   return {
-    score,
-    available: last5.length > 0,
-    raw: { last5_wins, last5_total: last5.length, last10_wins, last10_total: last10.length, avgDiff },
+    score:     clamp((srv + ret) / 2, 0, 1),
+    available: srvRaw !== null || retRaw !== null,
   };
 }
 
@@ -314,43 +222,34 @@ function calcRecentFormBlock(allMatches) {
 /**
  * Calcule l'ajustement H2H depuis la perspective du joueur A.
  *
- * Règles de plafond selon le nombre de matchs :
+ * Plafonds selon le nombre de matchs :
  *   0 → 0  |  1 → ±0.03  |  2–3 → ±0.06  |  4–6 → ±0.10  |  7+ → ±0.15
- *
- * surface_multiplier : 1.0 si H2H sur même surface, 0.6 sinon
- * recency_multiplier : 1.0 si le match le plus récent < 2 ans, 0.7 sinon
- *
- * @param {Array}  allMatchesA - Matchs du joueur A (adversaire = nom du joueur B)
- * @param {string} nameBNorm   - nom normalisé du joueur B
- * @param {string} surface
- * @returns {{ adjustment: number, total: number, wins: number, onSurface: boolean }}
+ * surface_multiplier : 1.0 si H2H sur même surface, 0.6 sinon.
+ * recency_multiplier : 1.0 si < 2 ans, 0.7 sinon.
  */
 function calcH2HAdjustment(allMatchesA, nameBNorm, surface) {
-  const h2h = allMatchesA.filter(m => norm(m.adversaire) === nameBNorm);
+  const h2h   = allMatchesA.filter(m => norm(m.adversaire) === nameBNorm);
   const total = h2h.length;
 
   if (total === 0) return { adjustment: 0, total: 0, wins: 0, onSurface: false };
 
-  const wins = h2h.filter(m => m.resultat === 'V').length;
+  const wins     = h2h.filter(m => m.resultat === 'V').length;
   const ratio    = wins / total;
-  const centered = (ratio - 0.5) / 0.5;   // -1..+1
+  const centered = (ratio - 0.5) / 0.5;
 
-  // Plafond selon nombre de matchs
   const maxBonus = total === 1 ? 0.03
-    : total <= 3 ? 0.06
-    : total <= 6 ? 0.10
+    : total <= 3  ? 0.06
+    : total <= 6  ? 0.10
     : 0.15;
 
-  // Surface multiplier : proportion des H2H sur la même surface
-  const onSurface = h2h.filter(m => m.surface === surface).length;
-  const surfMult  = onSurface > 0 ? 1.0 : 0.6;
+  const onSurface  = h2h.filter(m => m.surface === surface).length;
+  const surfMult   = onSurface > 0 ? 1.0 : 0.6;
 
-  // Recency : le match le plus récent dans les 2 dernières années ?
-  const twoYearsAgo = new Date();
+  const twoYearsAgo  = new Date();
   twoYearsAgo.setFullYear(twoYearsAgo.getFullYear() - 2);
-  const mostRecent = h2h[0]?.date ?? null;
-  const isRecent   = mostRecent && new Date(mostRecent) >= twoYearsAgo;
-  const recencyMult = isRecent ? 1.0 : 0.7;
+  const mostRecent   = h2h[0]?.date ?? null;
+  const isRecent     = mostRecent && new Date(mostRecent) >= twoYearsAgo;
+  const recencyMult  = isRecent ? 1.0 : 0.7;
 
   const adjustment = centered * maxBonus * surfMult * recencyMult;
 
@@ -366,51 +265,45 @@ function calcH2HAdjustment(allMatchesA, nameBNorm, surface) {
 // ─── Verdict et confiance ─────────────────────────────────────────────────────
 
 /**
- * Calcule le niveau de confiance en tenant compte :
- *   - de l'écart brut entre les deux scores finaux
- *   - de la proportion de blocs disponibles (data_confidence)
+ * Confiance brute (recalibrée dans analyze-daily.js par classifyConfidence).
  */
 function calcConfidence(scoreA, scoreB, blocksA, blocksB) {
   const gap = Math.abs(scoreA - scoreB);
 
   const totalBlocks = 4 * 2;
   const availBlocks =
-    (blocksA.lt.available ? 1 : 0) +
-    (blocksA.oy.available ? 1 : 0) +
+    (blocksA.lt.available    ? 1 : 0) +
+    (blocksA.oy.available    ? 1 : 0) +
     (blocksA.top50.available ? 1 : 0) +
-    (blocksA.form.available ? 1 : 0) +
-    (blocksB.lt.available ? 1 : 0) +
-    (blocksB.oy.available ? 1 : 0) +
+    (blocksA.form.available  ? 1 : 0) +
+    (blocksB.lt.available    ? 1 : 0) +
+    (blocksB.oy.available    ? 1 : 0) +
     (blocksB.top50.available ? 1 : 0) +
-    (blocksB.form.available ? 1 : 0);
+    (blocksB.form.available  ? 1 : 0);
 
   const dataCoverage = availBlocks / totalBlocks;
-  const adjustedGap = gap * dataCoverage;
+  const adjustedGap  = gap * dataCoverage;
 
-  if (adjustedGap >= 0.08) return { label: 'Élevée', level: 3 };
-  if (adjustedGap >= 0.04) return { label: 'Modérée', level: 2 };
-  if (adjustedGap >= 0.015) return { label: 'Légère', level: 1 };
-  return { label: 'Très serré', level: 0 };
+  if (adjustedGap >= 0.08)  return { label: 'Élevée',     level: 3 };
+  if (adjustedGap >= 0.04)  return { label: 'Modérée',    level: 2 };
+  if (adjustedGap >= 0.015) return { label: 'Légère',     level: 1 };
+  return                           { label: 'Très serré', level: 0 };
 }
 
 // ─── Génération de l'explication ─────────────────────────────────────────────
 
-/**
- * Génère un texte d'explication et une liste d'avantages clés.
- */
 function buildExplanation(nameA, nameB, scoreA, scoreB, detailsA, detailsB, h2hA, surface) {
-  const winner = scoreA >= scoreB ? nameA : nameB;
-  const loser  = scoreA >= scoreB ? nameB : nameA;
+  const winner        = scoreA >= scoreB ? nameA : nameB;
+  const loser         = scoreA >= scoreB ? nameB : nameA;
   const winnerDetails = scoreA >= scoreB ? detailsA : detailsB;
   const loserDetails  = scoreA >= scoreB ? detailsB : detailsA;
-
-  const gap = Math.abs(scoreA - scoreB);
+  const gap           = Math.abs(scoreA - scoreB);
 
   const blocks = [
-    ['long_term_block', 'Stats long terme'],
-    ['one_year_block', 'Forme sur 1 an'],
-    ['top50_block', 'Niveau contre top 50'],
-    ['recent_form_block', 'Forme récente']
+    ['long_term_block',   'Surface du match'],
+    ['one_year_block',    'Niveau sur 1 an'],
+    ['top50_block',       'Qualité d\'opposition'],
+    ['recent_form_block', 'Forme récente (6 mois)'],
   ];
 
   const advantages = [];
@@ -418,35 +311,29 @@ function buildExplanation(nameA, nameB, scoreA, scoreB, detailsA, detailsB, h2hA
   for (const [key, label] of blocks) {
     const w = winnerDetails[key];
     const l = loserDetails[key];
-
     if (w === null || l === null) continue;
-
-    if (w > l) {
-      advantages.push(`${winner} › ${label}`);
-    } else if (l > w) {
-     advantages.push(`${loser} › ${label}`);
-    }
+    if (w > l)      advantages.push(`${winner} › ${label}`);
+    else if (l > w) advantages.push(`${loser} › ${label}`);
   }
 
   if (Math.abs(h2hA.adjustment) >= 0.015) {
-  advantages.push(
-    h2hA.adjustment > 0
-     ? `${nameA} › Head-to-Head (${h2hA.wins}/${h2hA.total})`
-     : `${nameB} › Head-to-Head`
-  );
-}
+    advantages.push(
+      h2hA.adjustment > 0
+        ? `${nameA} › Head-to-Head (${h2hA.wins}/${h2hA.total})`
+        : `${nameB} › Head-to-Head`
+    );
+  }
 
   const winnerAdvantages = advantages.filter(a => a.startsWith(winner));
   const loserAdvantages  = advantages.filter(a => a.startsWith(loser));
 
   let intro;
-  if (gap >= 0.08) intro = `${winner} est favori avec un avantage net sur ${surface}`;
-  else if (gap >= 0.04) intro = `${winner} est favori avec un avantage assez clair sur ${surface}`;
+  if (gap >= 0.08)   intro = `${winner} est favori avec un avantage net sur ${surface}`;
+  else if (gap >= 0.04)  intro = `${winner} est favori avec un avantage assez clair sur ${surface}`;
   else if (gap >= 0.015) intro = `${winner} est légèrement favori sur ${surface}`;
-  else intro = `${winner} garde un très léger avantage dans un match extrêmement serré sur ${surface}`;
+  else                   intro = `${winner} garde un très léger avantage dans un match extrêmement serré sur ${surface}`;
 
-
-   let explanation =
+  let explanation =
     `${intro}, avec un score de ${Math.max(scoreA, scoreB).toFixed(3)} contre ${Math.min(scoreA, scoreB).toFixed(3)} ` +
     `(écart : ${gap.toFixed(3)}).`;
 
@@ -464,138 +351,7 @@ function buildExplanation(nameA, nameB, scoreA, scoreB, detailsA, detailsB, h2hA
       .join(', ')}.`;
   }
 
-  return {
-    explanation,
-    key_advantages: advantages
-  };
-}
-// ─── Bonus de domination élite ────────────────────────────────────────────────
-
-/**
- * Calcule un bonus d'élite pour le joueur qui domine clairement sur plusieurs blocs.
- * Chaque condition vérifiée ajoute STEP au bonus du joueur dominant.
- * Le bonus est plafonné à MAX_BONUS pour éviter les effets de bord.
- *
- * Conditions (seuils calibrés pour les matchs vraiment déséquilibrés) :
- *   LT   : score ≥ 0.80 vs adversaire ≤ 0.55
- *   1Y   : score ≥ 0.80 vs adversaire ≤ 0.55
- *   Top50: score ≥ 0.70 vs adversaire ≤ 0.45
- *   Forme: score ≥ 0.60 vs adversaire ≤ 0.40
- *
- * 3 conditions réunies → +0.075 (max effectif) ; plafond à +0.08.
- */
-function calcDominationBonus(ltA, ltB, oyA, oyB, t50A, t50B, formA, formB) {
-  const MAX_BONUS = 0.08;
-  const STEP      = 0.025;
-
-  let bonusA = 0;
-  let bonusB = 0;
-
-  // Long terme
-  if (ltA.available && ltB.available) {
-    if (ltA.score >= 0.80 && ltB.score <= 0.55) bonusA += STEP;
-    if (ltB.score >= 0.80 && ltA.score <= 0.55) bonusB += STEP;
-  }
-  // 1 an
-  if (oyA.available && oyB.available) {
-    if (oyA.score >= 0.80 && oyB.score <= 0.55) bonusA += STEP;
-    if (oyB.score >= 0.80 && oyA.score <= 0.55) bonusB += STEP;
-  }
-  // Top 50
-  if (t50A.available && t50B.available) {
-    if (t50A.score >= 0.70 && t50B.score <= 0.45) bonusA += STEP;
-    if (t50B.score >= 0.70 && t50A.score <= 0.45) bonusB += STEP;
-  }
-  // Forme récente
-  if (formA.available && formB.available) {
-    if (formA.score >= 0.60 && formB.score <= 0.40) bonusA += STEP;
-    if (formB.score >= 0.60 && formA.score <= 0.40) bonusB += STEP;
-  }
-
-  return {
-    bonusA: clamp(bonusA, 0, MAX_BONUS),
-    bonusB: clamp(bonusB, 0, MAX_BONUS),
-  };
-}
-
-// ─── Bloc 5 : Clay Strength ───────────────────────────────────────────────────
-
-/**
- * Calcule un score de force sur terre battue combinant :
- *   winRate clay long terme + 1 an + qualité vs Top50/100 clay + performance service/retour.
- * Chaque composante est pondérée par un facteur de fiabilité exponentiel (volume de matchs).
- * Retourne { score: 0, available: false } si les données sont insuffisantes.
- *
- * @param {Object} data  - { stats, stats1y, allMatches }
- * @returns {{ score: number, available: boolean, raw: Object }}
- */
-function calculateClayStrength(data) {
-  const { stats, stats1y, allMatches = [] } = data;
-
-  // ── 1. WinRate clay long terme ──────────────────────────────────────────────
-  const rawWRClay   = safeFloat(stats?.win_rate_clay);
-  const winRateClay = rawWRClay !== null ? (rawWRClay > 1 ? rawWRClay / 100 : rawWRClay) : null;
-  const matchesClay = allMatches.filter(m => m.surface === 'clay').length;
-
-  // ── 2. WinRate clay 1 an ───────────────────────────────────────────────────
-  const rawWRClay1y   = safeFloat(stats1y?.win_rate_clay_1y);
-  const winRateClay1y = rawWRClay1y !== null ? (rawWRClay1y > 1 ? rawWRClay1y / 100 : rawWRClay1y) : null;
-  const cutoff1y      = new Date();
-  cutoff1y.setFullYear(cutoff1y.getFullYear() - 1);
-  const clay1y        = allMatches.filter(m => m.surface === 'clay' && m.date && new Date(m.date) >= cutoff1y);
-  const matchesClay1y = clay1y.length;
-
-  // ── 3. Victoires vs Top50 et Top100 sur clay (12 mois) ────────────────────
-  const hasRank = (m) => m.rangAdversaire !== null && m.rangAdversaire !== undefined;
-  const top50Clay    = clay1y.filter(m => hasRank(m) && Number(m.rangAdversaire) <= 50);
-  const top100Clay   = clay1y.filter(m => hasRank(m) && Number(m.rangAdversaire) > 50 && Number(m.rangAdversaire) <= 100);
-  const matchesTop50  = top50Clay.length;
-  const matchesTop100 = top100Clay.length;
-  const winRateTop50Clay  = matchesTop50  > 0 ? top50Clay.filter(m => m.resultat === 'V').length  / matchesTop50  : null;
-  const winRateTop100Clay = matchesTop100 > 0 ? top100Clay.filter(m => m.resultat === 'V').length / matchesTop100 : null;
-
-  // ── 4. Service + retour (1 an en priorité, long terme en fallback) ─────────
-  const srvRaw = safeFloat(stats1y?.service_points_won_avg_1y) ?? safeFloat(stats?.service_points_won_avg);
-  const retRaw = safeFloat(stats1y?.return_points_won_avg_1y)  ?? safeFloat(stats?.return_points_won_avg);
-  const servicePointsWon = srvRaw !== null ? srvRaw / 100 : null;
-  const returnPointsWon  = retRaw !== null ? retRaw / 100 : null;
-  const performance      = servicePointsWon !== null && returnPointsWon !== null
-    ? (servicePointsWon + returnPointsWon) / 2
-    : null;
-
-  // ── 5. Pondération fiabilité (exponential decay sur le volume de matchs) ───
-  const weightedClay   = winRateClay   !== null ? winRateClay   * (1 - Math.exp(-matchesClay   / 20)) : null;
-  const weightedClay1y = winRateClay1y !== null ? winRateClay1y * (1 - Math.exp(-matchesClay1y / 15)) : null;
-  const weightedTop50  = winRateTop50Clay  !== null ? winRateTop50Clay  * (1 - Math.exp(-matchesTop50  / 10)) : null;
-  const weightedTop100 = winRateTop100Clay !== null ? winRateTop100Clay * (1 - Math.exp(-matchesTop100 / 15)) : null;
-
-  // ── 6. Score composite (redistribution si composantes absentes) ────────────
-  let score = 0;
-  let totalWeight = 0;
-
-  if (weightedClay1y !== null) { score += 0.30 * weightedClay1y; totalWeight += 0.30; }
-  if (weightedClay   !== null) { score += 0.25 * weightedClay;   totalWeight += 0.25; }
-  if (weightedTop50  !== null) { score += 0.20 * weightedTop50;  totalWeight += 0.20; }
-  if (weightedTop100 !== null) { score += 0.10 * weightedTop100; totalWeight += 0.10; }
-  if (performance    !== null) { score += 0.15 * performance;    totalWeight += 0.15; }
-
-  if (totalWeight < 0.20) {
-    return { score: 0, available: false, raw: {} };
-  }
-
-  return {
-    score: clamp(score / totalWeight, 0, 1),
-    available: true,
-    raw: {
-      winRateClay, matchesClay,
-      winRateClay1y, matchesClay1y,
-      winRateTop50Clay, matchesTop50,
-      winRateTop100Clay, matchesTop100,
-      servicePointsWon, returnPointsWon, performance,
-      weightedClay, weightedClay1y, weightedTop50, weightedTop100,
-      totalWeight,
-    },
-  };
+  return { explanation, key_advantages: advantages };
 }
 
 // ─── Comparaison principale ───────────────────────────────────────────────────
@@ -603,171 +359,114 @@ function calculateClayStrength(data) {
 function comparePlayers(dataA, dataB, surface, nameA, nameB) {
   console.log(`[Compare] ${nameA} vs ${nameB} — surface: ${surface}`);
 
-  const ltA   = calcLongTermBlock(dataA.stats, surface);
-  const ltB   = calcLongTermBlock(dataB.stats, surface);
-  const oyA   = calcOneYearBlock(dataA.stats1y, surface);
-  const oyB   = calcOneYearBlock(dataB.stats1y, surface);
-  const t50A  = calcTop50Block(dataA.allMatches ?? [], surface);
-  const t50B  = calcTop50Block(dataB.allMatches ?? [], surface);
-  const formA = calcRecentFormBlock(dataA.allMatches ?? []);
-  const formB = calcRecentFormBlock(dataB.allMatches ?? []);
+  // ─── 4 blocs par joueur ──────────────────────────────────────────────────────
+  const surfA  = calculateSurfaceBlock(dataA.stats, dataA.stats1y, dataA.allMatches ?? [], surface);
+  const surfB  = calculateSurfaceBlock(dataB.stats, dataB.stats1y, dataB.allMatches ?? [], surface);
 
-console.log('[TOP50 1Y]', {
-  surface,
-  matchCountA: t50A.matchCount,
-  matchCountB: t50B.matchCount,
-  scoreA: t50A.score,
-  scoreB: t50B.score,
-  reducedA: t50A.reduced,
-  reducedB: t50B.reduced
-});
+  const trendA = calculateTrendBlock(dataA.stats1y, dataA.allMatches ?? []);
+  const trendB = calculateTrendBlock(dataB.stats1y, dataB.allMatches ?? []);
 
+  const oppA   = calculateOppositionBlock(dataA.allMatches ?? [], surface);
+  const oppB   = calculateOppositionBlock(dataB.allMatches ?? [], surface);
 
-  // ─── Bloc Clay Strength (surface clay uniquement) ─────────────────────────
-  const clayA = surface === 'clay' ? calculateClayStrength(dataA) : { score: 0, available: false, raw: {} };
-  const clayB = surface === 'clay' ? calculateClayStrength(dataB) : { score: 0, available: false, raw: {} };
-  const useClayBlock = surface === 'clay' && (clayA.available || clayB.available);
-  const W_CLAY = useClayBlock ? 0.25 : 0;
+  const srA    = calculateServeReturnBlock(dataA.stats, dataA.stats1y);
+  const srB    = calculateServeReturnBlock(dataB.stats, dataB.stats1y);
 
-  if (useClayBlock) {
-    console.log(`[ClayStrength] ${nameA}: score=${clayA.available ? clayA.score.toFixed(3) : 'N/A'} available=${clayA.available}`);
-    console.log(`[ClayStrength] ${nameB}: score=${clayB.available ? clayB.score.toFixed(3) : 'N/A'} available=${clayB.available}`);
+  // ─── Pondération selon la surface ────────────────────────────────────────────
+  let W_SURF, W_1Y, W_6M, W_OPP, W_SR;
+
+  if (surface === 'clay') {
+    [W_SURF, W_1Y, W_6M, W_OPP, W_SR] = [0.30, 0.20, 0.15, 0.20, 0.15];
+  } else if (surface === 'grass') {
+    [W_SURF, W_1Y, W_6M, W_OPP, W_SR] = [0.30, 0.15, 0.20, 0.15, 0.20];
+  } else {
+    // hard (défaut)
+    [W_SURF, W_1Y, W_6M, W_OPP, W_SR] = [0.25, 0.20, 0.20, 0.20, 0.15];
   }
 
+  console.log(`[Compare] Poids → Surface=${W_SURF} 1Y=${W_1Y} 6M=${W_6M} Opp=${W_OPP} SR=${W_SR}`);
+
+  const calcScore = (surf, trend, opp, sr) =>
+    surf.score                              * W_SURF +
+    trend.score1y                           * W_1Y   +
+    trend.score6m                           * W_6M   +
+    (opp.available ? opp.score : 0.5)       * W_OPP  +
+    sr.score                                * W_SR;
+
+  // ─── H2H ─────────────────────────────────────────────────────────────────────
   const nameBNorm = norm(nameB);
   const nameANorm = norm(nameA);
   const h2hA = calcH2HAdjustment(dataA.allMatches ?? [], nameBNorm, surface);
   const h2hB = calcH2HAdjustment(dataB.allMatches ?? [], nameANorm, surface);
 
-  // ─── Poids ───────────────────────────────────────────────────────────────────
-  // Clay actif → 25% ; les 4 blocs existants sont réduits proportionnellement (×0.75)
-  // Clay inactif → W_CLAY=0, facteur=1, poids identiques à l'original
-  const _f     = 1 - W_CLAY;
-  const W_LT   = 0.20 * _f;
-  const W_1Y   = 0.45 * _f;
-  const W_T50  = 0.25 * _f;
-  const W_FORM = 0.10 * _f;
+  const baseA  = calcScore(surfA, trendA, oppA, srA);
+  const baseB  = calcScore(surfB, trendB, oppB, srB);
+  const finalA = clamp(baseA + h2hA.adjustment, 0, 1);
+  const finalB = clamp(baseB + h2hB.adjustment, 0, 1);
 
   console.log(
-    `[Compare] Poids → LT=${W_LT.toFixed(3)} | 1Y=${W_1Y.toFixed(3)} | Top50=${W_T50.toFixed(3)} | Form=${W_FORM.toFixed(3)}` +
-    (useClayBlock ? ` | Clay=${W_CLAY.toFixed(3)}` : '')
+    `[Compare] ${nameA}: surf=${surfA.score.toFixed(3)} 1y=${trendA.score1y.toFixed(3)} ` +
+    `6m=${trendA.score6m.toFixed(3)} opp=${oppA.score.toFixed(3)} sr=${srA.score.toFixed(3)} → ${finalA.toFixed(3)}`
+  );
+  console.log(
+    `[Compare] ${nameB}: surf=${surfB.score.toFixed(3)} 1y=${trendB.score1y.toFixed(3)} ` +
+    `6m=${trendB.score6m.toFixed(3)} opp=${oppB.score.toFixed(3)} sr=${srB.score.toFixed(3)} → ${finalB.toFixed(3)}`
   );
 
-  const calcBaseScore = (lt, oy, top50, form, clay) =>
-    (lt.score    * W_LT)   +
-    (oy.score    * W_1Y)   +
-    (top50.score * W_T50)  +
-    (form.score  * W_FORM) +
-    ((clay.available ? clay.score : 0.5) * W_CLAY);
-
-  const baseA = calcBaseScore(ltA, oyA, t50A, formA, clayA);
-  const baseB = calcBaseScore(ltB, oyB, t50B, formB, clayB);
-
-  // Score avant bonus (H2H inclus)
-  const preA = clamp(baseA + h2hA.adjustment, 0, 1);
-  const preB = clamp(baseB + h2hB.adjustment, 0, 1);
-
-  // ─── Bonus de domination élite ────────────────────────────────────────────
-  const domBonus = calcDominationBonus(ltA, ltB, oyA, oyB, t50A, t50B, formA, formB);
-
-  console.log(`[Compare] Domination → bonusA=${domBonus.bonusA.toFixed(3)} | bonusB=${domBonus.bonusB.toFixed(3)}`);
-  console.log(`[Compare] Scores avant bonus → ${nameA}=${preA.toFixed(3)} | ${nameB}=${preB.toFixed(3)}`);
-
-  let rawA = clamp(preA + domBonus.bonusA, 0, 1);
-  let rawB = clamp(preB + domBonus.bonusB, 0, 1);
-
-  // ─── Equilibrium adjustment ───────────────────────────────────────────────
-  // Si les blocs long terme et 1 an sont serrés mais qu'un seul bloc (ex. surface)
-  // tire le score vers un faux 60/40, on rapproche légèrement les scores finaux.
-  const deltaLT   = Math.abs(ltA.score   - ltB.score);
-  const delta1Y   = Math.abs(oyA.score   - oyB.score);
-  const deltaT50  = Math.abs(t50A.score  - t50B.score);
-  const deltaForm = Math.abs(formA.score - formB.score);
-  const deltaFinal = Math.abs(rawA - rawB);
-
-  // Top 50 compense en faveur du perdant actuel ?
-  const leaderRaw   = rawA >= rawB ? 'A' : 'B';
-  const t50Leader   = t50A.score >= t50B.score ? 'A' : 'B';
-  const top50Compensates = t50A.available && t50B.available && t50Leader !== leaderRaw;
-
-  const equilibriumDetected =
-    deltaLT   <= 0.08 &&
-    delta1Y   <= 0.08 &&
-    deltaForm <= 0.10 &&
-    top50Compensates;
-
-  let adjustmentApplied = 0;
-  let finalA = rawA;
-  let finalB = rawB;
-
-  if (equilibriumDetected && deltaFinal > 0.04) {
-    // Rapprocher les scores de 20%, sans les inverser
-    const ratio = 0.20;
-    const mid   = (rawA + rawB) / 2;
-    finalA = rawA + (mid - rawA) * ratio;
-    finalB = rawB + (mid - rawB) * ratio;
-    adjustmentApplied = ratio;
-  }
-
-  console.log(`[Equilibrium] deltaLT=${deltaLT.toFixed(3)} delta1Y=${delta1Y.toFixed(3)} deltaT50=${deltaT50.toFixed(3)} deltaForm=${deltaForm.toFixed(3)}`);
-  console.log(`[Equilibrium] top50Compensates=${top50Compensates} equilibriumDetected=${equilibriumDetected} adjustment=${adjustmentApplied} | ${nameA}: ${rawA.toFixed(3)}→${finalA.toFixed(3)} | ${nameB}: ${rawB.toFixed(3)}→${finalB.toFixed(3)}`);
-
+  // ─── Confiance ───────────────────────────────────────────────────────────────
   const confidence = calcConfidence(
     finalA, finalB,
-    { lt: ltA, oy: oyA, top50: t50A, form: formA },
-    { lt: ltB, oy: oyB, top50: t50B, form: formB }
+    { lt: { available: surfA.available },  oy: { available: trendA.available1y },
+      top50: { available: oppA.available }, form: { available: srA.available } },
+    { lt: { available: surfB.available },  oy: { available: trendB.available1y },
+      top50: { available: oppB.available }, form: { available: srB.available } }
   );
 
+  // ─── Détails (format compatible analyze-daily.js) ─────────────────────────
+  // Les clés long_term_block / one_year_block / top50_block / recent_form_block
+  // sont conservées pour que buildExplanation et extractVisualStats fonctionnent.
   const detailsA = {
-    long_term_block: ltA.available ? ltA.score : null,
-    one_year_block: oyA.available ? oyA.score : null,
-    top50_block: t50A.available ? t50A.score : null,
-    recent_form_block: formA.available ? formA.score : null,
-    h2h_adjustment: h2hA.adjustment,
-    raw: { lt: ltA.raw, oy: oyA.raw, form: formA.raw, top50: t50A.raw ?? null },
+    long_term_block:   surfA.available    ? surfA.score    : null,
+    one_year_block:    trendA.available1y ? trendA.score1y : null,
+    top50_block:       oppA.available     ? oppA.score     : null,
+    recent_form_block: trendA.available6m ? trendA.score6m : null,
+    h2h_adjustment:    h2hA.adjustment,
+    raw: { top50: oppA.raw?.top50 ?? null },
   };
 
   const detailsB = {
-    long_term_block: ltB.available ? ltB.score : null,
-    one_year_block: oyB.available ? oyB.score : null,
-    top50_block: t50B.available ? t50B.score : null,
-    recent_form_block: formB.available ? formB.score : null,
-    h2h_adjustment: h2hB.adjustment,
-    raw: { lt: ltB.raw, oy: oyB.raw, form: formB.raw, top50: t50B.raw ?? null },
+    long_term_block:   surfB.available    ? surfB.score    : null,
+    one_year_block:    trendB.available1y ? trendB.score1y : null,
+    top50_block:       oppB.available     ? oppB.score     : null,
+    recent_form_block: trendB.available6m ? trendB.score6m : null,
+    h2h_adjustment:    h2hB.adjustment,
+    raw: { top50: oppB.raw?.top50 ?? null },
   };
 
   const { explanation, key_advantages } = buildExplanation(
     nameA, nameB, finalA, finalB, detailsA, detailsB, h2hA, surface
   );
 
-  console.log(
-    `[Compare] ${nameA}: LT=${ltA.score.toFixed(3)} 1Y=${oyA.score.toFixed(3)}` +
-    ` T50=${t50A.score.toFixed(3)} Form=${formA.score.toFixed(3)} bonus=${domBonus.bonusA.toFixed(3)} raw=${rawA.toFixed(3)} Final=${finalA.toFixed(3)}`
-  );
-  console.log(
-    `[Compare] ${nameB}: LT=${ltB.score.toFixed(3)} 1Y=${oyB.score.toFixed(3)}` +
-    ` T50=${t50B.score.toFixed(3)} Form=${formB.score.toFixed(3)} bonus=${domBonus.bonusB.toFixed(3)} raw=${rawB.toFixed(3)} Final=${finalB.toFixed(3)}`
-  );
-
   return {
-    scoreA: parseFloat(finalA.toFixed(4)),
-    scoreB: parseFloat(finalB.toFixed(4)),
-    winner: finalA >= finalB ? nameA : nameB,
+    scoreA:  parseFloat(finalA.toFixed(4)),
+    scoreB:  parseFloat(finalB.toFixed(4)),
+    winner:  finalA >= finalB ? nameA : nameB,
     confidence,
     details: {
       joueur1: detailsA,
       joueur2: detailsB,
       weights: {
-        long_term:   W_LT,
-        one_year:    W_1Y,
-        top50:       W_T50,
-        recent_form: W_FORM,
+        surface:      W_SURF,
+        trend_1y:     W_1Y,
+        trend_6m:     W_6M,
+        opposition:   W_OPP,
+        serve_return: W_SR,
       },
       h2h: {
-        total: h2hA.total,
-        winsA: h2hA.wins,
-        winsB: h2hA.total - h2hA.wins,
-        onSurface: h2hA.onSurface
+        total:     h2hA.total,
+        winsA:     h2hA.wins,
+        winsB:     h2hA.total - h2hA.wins,
+        onSurface: h2hA.onSurface,
       },
     },
     explanation,
